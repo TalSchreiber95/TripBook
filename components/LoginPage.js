@@ -25,7 +25,7 @@ const LoginPage = ({
   const onLogin = () => {
     // const userExist = Users.filter(user => user.id === userName);
     for (let index = 0; index < Users.length; index++) {
-      if (Users[index].id === userName) {
+      if (Users[index].email === userName) {
         if (Users[index].pass === password) {
           navigation.navigate('Home');
           console.log(Users);

@@ -27,16 +27,29 @@ import {
   View,
 } from 'react-native';
 
-import {staticBlock} from '@babel/types';
+import {appendToMemberExpression, staticBlock} from '@babel/types';
 
 const Stack = createNativeStackNavigator();
 
 const App: () => Node = () => {
   const users = [
-    {id: 'A@a', pass: '1234'},
-    {id: 'B@b', pass: '0000'},
-    {id: 'C@c', pass: '1111'},
-    {id: 'a', pass: 'a'},
+    //email = Unique-Key
+    {
+      email: 'a',
+      pass: 'a',
+      firstName: 'a',
+      lastName: 'z',
+      passRecoverAnswer: '',
+      admin: false,
+    },
+  ];
+
+  const trips = [
+    {
+      tripName: '',
+      category: 'pet, relax',
+      location: '',
+    },
   ];
 
   const [Users, setUsers] = useState(users);
@@ -44,7 +57,9 @@ const App: () => Node = () => {
   const [password, setPassword] = useState('');
   const [newUser, setNewUser] = useState('');
   const [newPassword, setNewPassword] = useState('');
-
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [passRecoverAnswer, setPassRecoverAnswer] = useState('');
 
   const handleUsernameChange = userName => {
     setUserName(userName);
@@ -61,10 +76,20 @@ const App: () => Node = () => {
   const handleNewPasswordChange = newPassword => {
     setNewPassword(newPassword);
   };
+  const handleFirstNameChange = firstName => {
+    setFirstName(firstName);
+  };
+  const handleLastNameChange = lastName => {
+    setLastName(lastName);
+  };
+
+  const handlePassRecoverAnswerChange = passRecoverAnswer => {
+    setPassRecoverAnswer(passRecoverAnswer);
+  };
 
   const addNewUser = user => {
-    console.log(user);
-    console.log(Users);
+    // console.log(user);
+    // console.log(Users);
     setUsers([...Users, user]);
   };
 
@@ -90,23 +115,28 @@ const App: () => Node = () => {
               Users={Users}
               newUser={newUser}
               newPassword={newPassword}
+              firstName={firstName}
+              lastName={lastName}
+              passRecoverAnswer={passRecoverAnswer}
               handleNewUserChange={handleNewUserChange}
               handleNewPasswordChange={handleNewPasswordChange}
+              handleFirstNameChange={handleFirstNameChange}
+              handleLastNameChange={handleLastNameChange}
+              handlePassRecoverAnswerChange={handlePassRecoverAnswerChange}
               addNewUser={addNewUser}
             />
           )}
         </Stack.Screen>
-        <Stack.Screen name="Home" component={HomePage}  />
-        <Stack.Screen name="AddTrip" component={AddTrip}  />
-        <Stack.Screen name="TripsPage" component={TripsPage}  />
+        <Stack.Screen name="Home" component={HomePage} />
+        <Stack.Screen name="AddTrip">
+          {props => <AddTrip {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name="TripsPage" component={TripsPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-const styles = StyleSheet.create({
-  
-
-});
+const styles = StyleSheet.create({});
 
 export default App;

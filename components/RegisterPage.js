@@ -15,8 +15,14 @@ const RegisterPage = ({
   Users,
   newUser,
   newPassword,
+  firstName,
+  lastName,
+  passRecoverAnswer,
   handleNewUserChange,
   handleNewPasswordChange,
+  handleFirstNameChange,
+  handleLastNameChange,
+  handlePassRecoverAnswerChange,
   addNewUser,
   navigation,
 }) => {
@@ -27,9 +33,21 @@ const RegisterPage = ({
     if (userExist) {
       Alert.alert('UserName is already exists - choose other');
     } else {
-      const newuser = {id: newUser, pass: newPassword};
+
+      if (newUser != '' && newPassword != ''){
+        const newuser = {
+          email: newUser,
+          pass: newPassword,
+          firstName: firstName,
+          lastName: lastName,
+          passRecoverAnswer: passRecoverAnswer,
+          admin: false,
+        };
       addNewUser(newuser);
       navigation.navigate('Login');
+      } else {
+        Alert.alert('Email and Password required');
+      }
     }
   };
 
@@ -42,6 +60,25 @@ const RegisterPage = ({
           onButtonPress={onRegister}
           buttonText="Register"
           buttonStyle={styles.formButton}>
+          <FormItem
+            style={styles.inputView}
+            label="First Name"
+            labelStyle={styles.label}
+            isRequired
+            value={firstName}
+            onChangeText={handleFirstNameChange}
+            asterik
+          />
+          <FormItem
+            style={styles.inputView}
+            label="Last Name"
+            labelStyle={styles.label}
+            isRequired
+            value={lastName}
+            onChangeText={handleLastNameChange}
+            asterik
+          />
+
           <FormItem
             style={styles.inputView}
             label="UserName/Email"
@@ -60,12 +97,17 @@ const RegisterPage = ({
             onChangeText={handleNewPasswordChange}
             asterik
           />
+          <FormItem
+            style={styles.inputView}
+            label="if u forget your password you can recover it by anwering that question - 
+            what the name of your mother"
+            labelStyle={styles.label}
+            isRequired
+            value={passRecoverAnswer}
+            onChangeText={handlePassRecoverAnswerChange}
+            asterik
+          />
         </Form>
-        {/* <Button
-          title="Dont have an account? Sign up"
-          style={styles.register}
-          onPress={() => navigation.navigate('Register')}
-        /> */}
       </ScrollView>
     </SafeAreaView>
   );
