@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -13,8 +13,18 @@ import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 const AddTrip = ({navigation}) => {
-
-  const onAddTrip = () => {
+  const [tripName,setTripName] = useState('');
+  const [location,setLocation] = useState('');
+  const [isRelax, setIsRelax] = useState(false);
+  const [isDynamic, setIsDynamic] = useState(false);
+  const [isParty, setIsParty] = useState(false);
+  const [isPetAllowed, setIsPetAllowed] = useState(false);
+  const [isCarTravel, setIsCarTravel] = useState(false);
+  const [isPlaneTravel, setIsPlaneTravel] = useState(false);
+  const [isTrainTravel, setIsTrainTravel] = useState(false);
+  const [feedback, setFeedback] = useState('');
+  const [description,setDescription] = useState('');
+  const onAddTrip = () => { //there is an ISSUE here need to talk about it.
     // navigation.navigate('Home');
 
   }
@@ -26,13 +36,15 @@ const AddTrip = ({navigation}) => {
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
           <Text style={styles.title}>AddTrip</Text>
-          <Form onSubmit={onAddTrip} buttonStyle={styles.formButton} buttonText="Post Trip">
+          <Form onSubmit={onAddTrip} 
+            buttonStyle={styles.formButton}
+            buttonText="Post Trip">
             <FormItem
               style={styles.inputView}
               label="Trip Name"
               labelStyle={styles.label}
               isRequired
-              //   value={userName}
+              value={setTripName}
               asterik
             />
             <FormItem
@@ -40,10 +52,10 @@ const AddTrip = ({navigation}) => {
               label="Trip Location"
               labelStyle={styles.label}
               isRequired
-              //   value={password}
+              value={setLocation}
               asterik
             />
-            {/* <BouncyCheckbox
+            <BouncyCheckbox
               style={styles.checkbox}
               size={25}
               fillColor="black"
@@ -113,7 +125,19 @@ const AddTrip = ({navigation}) => {
               textStyle={styles.checkboxText}
               text="Train travel"
               onPress={setIsTrainTravel}
-            /> */}
+            />
+            <Text style={styles.label}> Describe the trip:</Text>
+            <TextInput placeholder='add description here'
+              style={styles.inputView}
+              multiline={true}
+              value={setDescription}
+            />
+            <Text style={styles.label}> Feedback:</Text>
+            <TextInput placeholder='add feedback here'
+              style={styles.inputView}
+              multiline={true}
+              value={setFeedback}
+            />
           </Form>
         </View>
       </ScrollView>
@@ -165,6 +189,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     borderColor: 'black',
+  },
+  styleFeedback: {
+    fontWeight: 'bold',
+    fontSize:24,
   },
 });
 

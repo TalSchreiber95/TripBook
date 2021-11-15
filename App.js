@@ -35,12 +35,20 @@ const App: () => Node = () => {
   const users = [
     //email = Unique-Key
     {
-      email: 'a',
-      pass: 'a',
-      firstName: 'a',
-      lastName: 'z',
+      email: 'user',
+      pass: 'user',
+      firstName: 'user',
+      lastName: 'user',
       passRecoverAnswer: '',
       admin: false,
+    },
+    {
+      email: 'admin',
+      pass: 'admin',
+      firstName: 'admin',
+      lastName: 'admin',
+      passRecoverAnswer: '',
+      admin: true,
     },
   ];
 
@@ -127,7 +135,15 @@ const App: () => Node = () => {
             />
           )}
         </Stack.Screen>
-        <Stack.Screen name="Home" component={HomePage} />
+        {/* <Stack.Screen name="Home" component={HomePage} /> */}
+        <Stack.Screen name="Home">
+          {props=>(
+            <HomePage
+               {...props}
+              name={firstName}
+            />
+          )}
+        </Stack.Screen>
         <Stack.Screen name="AddTrip">
           {props => <AddTrip {...props} />}
         </Stack.Screen>

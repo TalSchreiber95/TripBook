@@ -10,9 +10,8 @@ import {
 
 import Header from "./Header";
 import TripFilter from "./TripFilter";
-import AddTrip from "./AddTrip";
 
-const HomePage = ({Users, userName, password, navigation}) => {
+const HomePage = ({name,Users, userName, password, navigation}) => {
   const categories = [
     {
       relaxing: false,
@@ -49,12 +48,14 @@ const HomePage = ({Users, userName, password, navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Header title="TripBook" />
+      {/* <Text title='asadsad' color='white' /> */}
+      <Header title='TripBook' />
+        {/* name DOESN'T WORK HERE! */}
+       <Text>wellcome {name} !</Text> 
       <TripFilter updateFilter={updateFilter} navigation={navigation} />
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
