@@ -1,3 +1,3 @@
 Languages:
-Android Studio,react Native etc.. /br
+Android Studio,react Native etc.. <br />
 Server and data using FireBase
