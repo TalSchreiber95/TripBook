@@ -9,13 +9,16 @@ import {
     useColorScheme,
     View,
   } from 'react-native';
+import Header from './Header';
   
-const TripsPage = () => {
+const TripsPage = (name,tripInfo) => {
     return (
         <View>
-            <Text>TripsPage</Text>
+            {/* Note: For unknown reason name doesn't show in here */}
+          <Header title="TripBook" name={name}/>
+            {/* Note: Supposed to recognize tripInfo.location */}
+            <Text>location is= {tripInfo.location} </Text>
         </View>
     )
 }
-
 export default TripsPage

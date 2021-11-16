@@ -18,8 +18,8 @@ const AddTrip = ({addTrip, navigation}) => {
   const [location, setLocation] = useState('');
   const [feedback, setFeedback] = useState('');
   const [description, setDescription] = useState('');
-  const [priceInNis, setPriceInNis] = useState('');
-
+  const [priceInNis, setPriceInNis] = useState();
+  //categorys
   const [isRelax, setIsRelax] = useState(false);
   const [isDynamic, setIsDynamic] = useState(false);
   const [isParty, setIsParty] = useState(false);
@@ -33,10 +33,19 @@ const AddTrip = ({addTrip, navigation}) => {
     if (tripName != '' && location != '' && description != '' && priceInNis != null ) {
       const newTrip = {
         tripName: tripName,
+        category: {
+          isRelax: isRelax,
+          isDynamic: isDynamic,
+          isParty: isParty,
+          isPetAllowed: isPetAllowed,
+          isCarTravel: isCarTravel,
+          isPlaneTravel: isPlaneTravel,
+          isTrainTravel: isTrainTravel
+        },
         location: location,
-        category: '',
         description: description,
         feedback: [feedback],
+        priceInNis: priceInNis,
       };
       addTrip(newTrip);
       Alert.alert('trip posted succesfully');
@@ -59,25 +68,50 @@ const AddTrip = ({addTrip, navigation}) => {
             <FormItem
               style={styles.inputView}
               label="Trip Name"
+              placeholder="Add trip name here"
               labelStyle={styles.label}
-              isRequired
               value={tripName}
               multiline={true}
               onChangeText={name => {
                 setTripName(name);
               }}
+              isRequired
               asterik
             />
             <FormItem
               style={styles.inputView}
               label="Trip Location"
               labelStyle={styles.label}
-              isRequired
+              placeholder="Add location here"
               value={location}
               onChangeText={location => {
                 setLocation(location);
               }}
+              isRequired
               asterik
+            />
+            <FormItem
+              style={styles.inputView}
+              label="Price(NIS)"
+              labelStyle={styles.label}
+              value={priceInNis}
+              placeholder="Add price here"
+              onChangeText={price => {
+                setPriceInNis(price);
+              }}
+              isRequired
+              asterik
+            />
+            <Text style={styles.label} > Describe the trip: </Text>
+            <TextInput
+              placeholder="Add description here"
+              style={styles.inputView}
+              // labelStyle={styles.label}
+              multiline={true}
+              value={description}
+              onChangeText={description => {
+                setDescription(description);
+              }}
             />
             <View style={styles.checkboxesView}>
               <BouncyCheckbox
@@ -152,16 +186,6 @@ const AddTrip = ({addTrip, navigation}) => {
                 onPress={setIsTrainTravel}
               />
             </View>
-            <Text style={styles.label}> Describe the trip:</Text>
-            <TextInput
-              placeholder="add description here"
-              style={styles.inputView}
-              multiline={true}
-              value={description}
-              onChangeText={description => {
-                setDescription(description);
-              }}
-            />
             <Text style={styles.label}> Feedback:</Text>
             <TextInput
               placeholder="add feedback here"
@@ -202,7 +226,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
 
-    fontSize: 17,
+    fontSize: 15,
     borderRadius: 10,
   },
 

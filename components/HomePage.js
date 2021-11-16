@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -11,22 +11,7 @@ import {
 import Header from './Header';
 import TripFilter from './TripFilter';
 
-const HomePage = ({name, Users, userName, password, navigation}) => {
-  const categories = [
-    {
-      relaxing: false,
-      dynamic: false,
-      party: false,
-      petAllowed: false,
-      carTravel: false,
-      planeTravel: false,
-      trainTravel: false,
-    },
-  ];
-
-  const [category, setCategory] = useState(categories);
-  const [feedbacks, setFeedbacks] = useState([]);
-
+const HomePage = ({ name, tripSearch, navigation }) => {
   const updateFilter = (
     isRelax,
     isDynamic,
@@ -35,22 +20,29 @@ const HomePage = ({name, Users, userName, password, navigation}) => {
     isCarTravel,
     isPlaneTravel,
     isTrainTravel,
+    priceInNis,
+    location,
   ) => {
-    setCategory([
-      isRelax,
-      isDynamic,
-      isParty,
-      isPetAllowed,
-      isCarTravel,
-      isPlaneTravel,
-      isTrainTravel,
-    ]);
+    const tripInfo = {
+      category: {
+        isRelax: isRelax,
+        isDynamic: isDynamic,
+        isParty: isParty,
+        isPetAllowed: isPetAllowed,
+        isCarTravel: isCarTravel,
+        isPlaneTravel: isPlaneTravel,
+        isTrainTravel: isTrainTravel
+      },
+      location: location,
+      priceInNis: priceInNis,
+    };
+    //Note: for unknown reason this object doesn't get inside to tripSearch state
+    tripSearch(tripInfo);
   };
 
   return (
     <View style={styles.container}>
-      <Header title="TripBook" />
-      <Text>wellcome {name} !</Text>
+      <Header title="TripBook" name={name}/>
       <TripFilter updateFilter={updateFilter} navigation={navigation} />
     </View>
   );
@@ -59,6 +51,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  name: {
+    color: 'red',
+  }
 });
 
 export default HomePage;

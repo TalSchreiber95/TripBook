@@ -1,11 +1,15 @@
 import React from 'react';
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 
-const Header = ({title}) => {
+const Header = ({ title, name}) => {
   return (
     <View style={styles.header}>
       <Text style={styles.text}>{title}</Text>
+      <Text style={styles.name}>
+        Wellcome {name.firstName + ' ' + name.lastName} !
+      </Text>
     </View>
+
   );
 };
 Header.defaultProps = {
@@ -20,10 +24,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#001f3f',
   },
   text: {
-    color: 'white',
+    color: 'gold',
     fontSize: 23,
     textAlign: 'center',
     letterSpacing: 5,
   },
+  name: {
+    color: 'white',
+  }
 });
 export default Header;

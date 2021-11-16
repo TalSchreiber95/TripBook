@@ -14,7 +14,7 @@ import {
 
 import {Form, FormItem} from 'react-native-form-component';
 
-const LoginPage = ({Users, navigation}) => {
+const LoginPage = ({Users, navigation,ind}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -22,6 +22,7 @@ const LoginPage = ({Users, navigation}) => {
     for (let index = 0; index < Users.length; index++) {
       if (Users[index].email === email) {
         if (Users[index].pass === password) {
+          ind(index)
           navigation.navigate('Home');
           console.log(Users);
           return;
