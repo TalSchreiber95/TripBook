@@ -28,9 +28,13 @@ const AddTrip = ({addTrip, navigation}) => {
   const [isPlaneTravel, setIsPlaneTravel] = useState(false);
   const [isTrainTravel, setIsTrainTravel] = useState(false);
 
-
   const onAddTrip = () => {
-    if (tripName != '' && location != '' && description != '' && priceInNis != null ) {
+    if (
+      tripName != '' &&
+      location != '' &&
+      description != '' &&
+      priceInNis != null
+    ) {
       const newTrip = {
         tripName: tripName,
         category: {
@@ -40,7 +44,7 @@ const AddTrip = ({addTrip, navigation}) => {
           isPetAllowed: isPetAllowed,
           isCarTravel: isCarTravel,
           isPlaneTravel: isPlaneTravel,
-          isTrainTravel: isTrainTravel
+          isTrainTravel: isTrainTravel,
         },
         location: location,
         description: description,
@@ -60,7 +64,8 @@ const AddTrip = ({addTrip, navigation}) => {
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
-          <Text style={styles.title}>AddTrip</Text>
+          <Text style={styles.title}>Add a Trip</Text>
+          <Text style={styles.subTitle}>Fill the details below:</Text>
           <Form
             onButtonPress={onAddTrip}
             buttonStyle={styles.formButton}
@@ -91,27 +96,29 @@ const AddTrip = ({addTrip, navigation}) => {
               asterik
             />
             <FormItem
+              placeholder="Add price here"
               style={styles.inputView}
               label="Price(NIS)"
               labelStyle={styles.label}
               value={priceInNis}
-              placeholder="Add price here"
               onChangeText={price => {
                 setPriceInNis(price);
               }}
               isRequired
               asterik
             />
-            <Text style={styles.label} > Describe the trip: </Text>
-            <TextInput
+            <FormItem
               placeholder="Add description here"
-              style={styles.inputView}
-              // labelStyle={styles.label}
+              style={styles.description}
+              label="Describe the trip:"
+              labelStyle={styles.label}
               multiline={true}
               value={description}
               onChangeText={description => {
                 setDescription(description);
               }}
+              isRequired
+              asterik
             />
             <View style={styles.checkboxesView}>
               <BouncyCheckbox
@@ -186,10 +193,11 @@ const AddTrip = ({addTrip, navigation}) => {
                 onPress={setIsTrainTravel}
               />
             </View>
-            <Text style={styles.label}> Feedback:</Text>
-            <TextInput
+            <FormItem
               placeholder="add feedback here"
               style={styles.inputView}
+              label="Feedback:"
+              labelStyle={styles.feedback}
               multiline={true}
               value={feedback}
               onChangeText={feedback => {
@@ -206,17 +214,31 @@ const AddTrip = ({addTrip, navigation}) => {
 const styles = StyleSheet.create({
   title: {
     fontSize: 40,
+    fontWeight: '400',
+    // paddingBottom: 20,
+    paddingTop: 25,
+    paddingLeft: 25,
+    color: 'gold',
+    backgroundColor: '#001f3f',
+    // borderColor: 'black',
+    // borderRadius: 30
+  },
+  subTitle: {
+    fontSize: 20,
     fontWeight: '300',
-    marginBottom: 30,
-    marginTop: 30,
-    marginLeft: 30,
-    color: 'black',
+    paddingBottom: 20,
+    paddingTop: 10,
+    paddingLeft: 25,
+    color: 'white',
+    backgroundColor: '#001f3f'
   },
   label: {
     color: 'black',
-    marginLeft: 30,
+    paddingLeft: 30,
     fontWeight: 'bold',
     fontSize: 17,
+    paddingTop: 2,
+    paddingBottom: 2,
   },
   inputView: {
     flex: 0.3,
@@ -225,7 +247,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginLeft: 20,
     marginRight: 20,
-
     fontSize: 15,
     borderRadius: 10,
   },
@@ -234,13 +255,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'firebrick',
     marginLeft: 100,
     marginRight: 100,
+    marginTop: 10,
     borderRadius: 20,
     color: 'black',
   },
   checkbox: {
     color: 'white',
-    marginLeft: 20,
-    marginBottom: 10,
+    paddingLeft: 20,
+    paddingBottom: 10,
   },
   checkboxText: {
     fontFamily: 'JosefinSans-Regular',
@@ -249,9 +271,22 @@ const styles = StyleSheet.create({
   icon: {
     borderColor: 'black',
   },
-  styleFeedback: {
+  feedback: {
+    color: 'black',
+    paddingLeft: 30,
     fontWeight: 'bold',
-    fontSize: 24,
+    fontSize: 17,
+    paddingTop: 20,
+  },
+  description: {
+    flex: 0.3,
+    backgroundColor: 'lightblue',
+    borderWidth: 0.5,
+    marginBottom: 30,
+    marginLeft: 20,
+    marginRight: 20,
+    fontSize: 15,
+    borderRadius: 10,
   },
   checkboxesView: {
     alignItems: 'stretch',

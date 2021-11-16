@@ -19,18 +19,22 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 60,
     // margin: 15,
     backgroundColor: '#001f3f',
   },
   text: {
     color: 'gold',
-    fontSize: 23,
+    fontSize: 40,
     textAlign: 'center',
     letterSpacing: 5,
+    paddingTop: 25,
+
   },
   name: {
     color: 'white',
+    fontSize: 20,
+    paddingBottom: 20,
+    paddingTop: 10,
   }
 });
 export default Header;

@@ -6,16 +6,16 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import HomePage from './components/HomePage';
 import AddTrip from './components/AddTrip';
 import TripsPage from './components/TripsPage';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import type { Node } from 'react';
+import type {Node} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -27,7 +27,7 @@ import {
   View,
 } from 'react-native';
 
-import { appendToMemberExpression, staticBlock } from '@babel/types';
+import {appendToMemberExpression, staticBlock} from '@babel/types';
 
 const Stack = createNativeStackNavigator();
 
@@ -70,7 +70,7 @@ const App: () => Node = () => {
         isPetAllowed: false,
         isCarTravel: false,
         isPlaneTravel: false,
-        isTrainTravel: false
+        isTrainTravel: false,
       },
       location: '',
       description: '',
@@ -87,24 +87,18 @@ const App: () => Node = () => {
       isPetAllowed: false,
       isCarTravel: false,
       isPlaneTravel: false,
-      isTrainTravel: false
+      isTrainTravel: false,
     },
-    location: "none",
+    location: 'none',
     priceInNis: 0,
   };
   const [Users, setUsers] = useState(users);
   const [Trips, setTrips] = useState(trips);
-  //Note: The index state is created to declare 
-  //      the current index of the user that logged in
   const [Index, setIndex] = useState(0);
   //Note: This object created for search page information
   const [TripInfo, setTripInfo] = useState(tripInfo);
 
-
-
   const addNewUser = user => {
-    // console.log(user);
-    // console.log(Users);
     setUsers([...Users, user]);
     setIndex(Users.length - 1);
   };
@@ -114,9 +108,9 @@ const App: () => Node = () => {
     console.log(Trips);
   };
   const addTripInfo = tripInfo => {
-    setTripInfo(tripInfo)
-  }
-  
+    setTripInfo(tripInfo);
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
@@ -129,17 +123,17 @@ const App: () => Node = () => {
           )}
         </Stack.Screen>
         <Stack.Screen name="Home">
-          {props => <HomePage {...props}
-            name={Users[Index]}
-            tripSearch={addTripInfo} />}
+          {props => (
+            <HomePage {...props} name={Users[Index]} tripSearch={addTripInfo} />
+          )}
         </Stack.Screen>
         <Stack.Screen name="AddTrip">
           {props => <AddTrip {...props} addTrip={addTrip} />}
         </Stack.Screen>
         <Stack.Screen name="TripsPage">
-          {props => <TripsPage {...props}
-            name={Users[Index]}
-            tripInfo={TripInfo} />}
+          {props => (
+            <TripsPage {...props} Trips={Trips} name={Users[Index]} tripInfo={TripInfo} />
+          )}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
