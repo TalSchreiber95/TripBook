@@ -43,6 +43,14 @@ const App: () => Node = () => {
       admin: false,
     },
     {
+      email: 'a',
+      pass: 'a',
+      firstName: 'a',
+      lastName: 'a',
+      passRecoverAnswer: '',
+      admin: true,
+    },
+    {
       email: 'admin',
       pass: 'admin',
       firstName: 'admin',
@@ -57,43 +65,14 @@ const App: () => Node = () => {
       tripName: '',
       category: 'pet, relax',
       location: '',
+      description: '',
+      feedback: [''],
+      priceInNis: 0,
     },
   ];
 
   const [Users, setUsers] = useState(users);
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-  const [newUser, setNewUser] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [passRecoverAnswer, setPassRecoverAnswer] = useState('');
-
-  const handleUsernameChange = userName => {
-    setUserName(userName);
-  };
-
-  const handleNewUserChange = newUser => {
-    setNewUser(newUser);
-  };
-
-  const handlePasswordChange = password => {
-    setPassword(password);
-  };
-
-  const handleNewPasswordChange = newPassword => {
-    setNewPassword(newPassword);
-  };
-  const handleFirstNameChange = firstName => {
-    setFirstName(firstName);
-  };
-  const handleLastNameChange = lastName => {
-    setLastName(lastName);
-  };
-
-  const handlePassRecoverAnswerChange = passRecoverAnswer => {
-    setPassRecoverAnswer(passRecoverAnswer);
-  };
+  const [Trips, setTrips] = useState(trips);
 
   const addNewUser = user => {
     // console.log(user);
@@ -101,51 +80,27 @@ const App: () => Node = () => {
     setUsers([...Users, user]);
   };
 
+  const addTrip = trip => {
+    setTrips([...Trips, trip]);
+    console.log(Trips);
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login">
-          {props => (
-            <LoginPage
-              {...props}
-              Users={Users}
-              userName={userName}
-              password={password}
-              handleUsernameChange={handleUsernameChange}
-              handlePasswordChange={handlePasswordChange}
-            />
-          )}
+          {props => <LoginPage {...props} Users={Users} />}
         </Stack.Screen>
         <Stack.Screen name="Register">
           {props => (
-            <RegisterPage
-              {...props}
-              Users={Users}
-              newUser={newUser}
-              newPassword={newPassword}
-              firstName={firstName}
-              lastName={lastName}
-              passRecoverAnswer={passRecoverAnswer}
-              handleNewUserChange={handleNewUserChange}
-              handleNewPasswordChange={handleNewPasswordChange}
-              handleFirstNameChange={handleFirstNameChange}
-              handleLastNameChange={handleLastNameChange}
-              handlePassRecoverAnswerChange={handlePassRecoverAnswerChange}
-              addNewUser={addNewUser}
-            />
+            <RegisterPage {...props} Users={Users} addNewUser={addNewUser} />
           )}
         </Stack.Screen>
-        {/* <Stack.Screen name="Home" component={HomePage} /> */}
         <Stack.Screen name="Home">
-          {props=>(
-            <HomePage
-               {...props}
-              name={firstName}
-            />
-          )}
+          {props => <HomePage {...props} name={users[1].firstName} />}
         </Stack.Screen>
         <Stack.Screen name="AddTrip">
-          {props => <AddTrip {...props} />}
+          {props => <AddTrip {...props} addTrip={addTrip} />}
         </Stack.Screen>
         <Stack.Screen name="TripsPage" component={TripsPage} />
       </Stack.Navigator>

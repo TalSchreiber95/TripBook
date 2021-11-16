@@ -8,10 +8,10 @@ import {
   View,
 } from 'react-native';
 
-import Header from "./Header";
-import TripFilter from "./TripFilter";
+import Header from './Header';
+import TripFilter from './TripFilter';
 
-const HomePage = ({name,Users, userName, password, navigation}) => {
+const HomePage = ({name, Users, userName, password, navigation}) => {
   const categories = [
     {
       relaxing: false,
@@ -24,8 +24,9 @@ const HomePage = ({name,Users, userName, password, navigation}) => {
     },
   ];
 
-
   const [category, setCategory] = useState(categories);
+  const [feedbacks, setFeedbacks] = useState([]);
+
   const updateFilter = (
     isRelax,
     isDynamic,
@@ -48,10 +49,8 @@ const HomePage = ({name,Users, userName, password, navigation}) => {
 
   return (
     <View style={styles.container}>
-      {/* <Text title='asadsad' color='white' /> */}
-      <Header title='TripBook' />
-        {/* name DOESN'T WORK HERE! */}
-       <Text>wellcome {name} !</Text> 
+      <Header title="TripBook" />
+      <Text>wellcome {name} !</Text>
       <TripFilter updateFilter={updateFilter} navigation={navigation} />
     </View>
   );
@@ -59,7 +58,6 @@ const HomePage = ({name,Users, userName, password, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: 'azure',
   },
 });
 

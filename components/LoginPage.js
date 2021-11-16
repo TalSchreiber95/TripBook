@@ -14,18 +14,13 @@ import {
 
 import {Form, FormItem} from 'react-native-form-component';
 
-const LoginPage = ({
-  Users,
-  userName,
-  password,
-  handleUsernameChange,
-  handlePasswordChange,
-  navigation,
-}) => {
+const LoginPage = ({Users, navigation}) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const onLogin = () => {
-    // const userExist = Users.filter(user => user.id === userName);
     for (let index = 0; index < Users.length; index++) {
-      if (Users[index].email === userName) {
+      if (Users[index].email === email) {
         if (Users[index].pass === password) {
           navigation.navigate('Home');
           console.log(Users);
@@ -38,7 +33,6 @@ const LoginPage = ({
     }
 
     Alert.alert('user not exist');
-
   };
 
   return (
@@ -51,20 +45,26 @@ const LoginPage = ({
           buttonStyle={styles.formButton}
           buttonText="Login">
           <FormItem
+            placeholder="Enter a Valid Email"
             style={styles.inputView}
-            label="Username/Email"
+            label="Email:"
             labelStyle={styles.label}
             isRequired
-            value={userName}
-            onChangeText={handleUsernameChange}
+            value={email}
+            onChangeText={email => {
+              setEmail(email);
+            }}
             asterik
           />
           <FormItem
+            placeholder="Enter a Valid Password"
             style={styles.inputView}
-            label="Password"
+            label="Password:"
             labelStyle={styles.label}
             value={password}
-            onChangeText={handlePasswordChange}
+            onChangeText={password => {
+              setPassword(password);
+            }}
             asterik
           />
         </Form>

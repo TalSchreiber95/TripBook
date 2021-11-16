@@ -1,5 +1,6 @@
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import {
+  Alert,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -12,9 +13,13 @@ import {
 import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
-const AddTrip = ({navigation}) => {
-  const [tripName,setTripName] = useState('');
-  const [location,setLocation] = useState('');
+const AddTrip = ({addTrip, navigation}) => {
+  const [tripName, setTripName] = useState('');
+  const [location, setLocation] = useState('');
+  const [feedback, setFeedback] = useState('');
+  const [description, setDescription] = useState('');
+  const [priceInNis, setPriceInNis] = useState('');
+
   const [isRelax, setIsRelax] = useState(false);
   const [isDynamic, setIsDynamic] = useState(false);
   const [isParty, setIsParty] = useState(false);
@@ -22,13 +27,24 @@ const AddTrip = ({navigation}) => {
   const [isCarTravel, setIsCarTravel] = useState(false);
   const [isPlaneTravel, setIsPlaneTravel] = useState(false);
   const [isTrainTravel, setIsTrainTravel] = useState(false);
-  const [feedback, setFeedback] = useState('');
-  const [description,setDescription] = useState('');
-  const onAddTrip = () => { //there is an ISSUE here need to talk about it.
-    // navigation.navigate('Home');
 
-  }
 
+  const onAddTrip = () => {
+    if (tripName != '' && location != '' && description != '' && priceInNis != null ) {
+      const newTrip = {
+        tripName: tripName,
+        location: location,
+        category: '',
+        description: description,
+        feedback: [feedback],
+      };
+      addTrip(newTrip);
+      Alert.alert('trip posted succesfully');
+      navigation.navigate('Home');
+    } else {
+      Alert.alert('Fill all the required fields !');
+    }
+  };
 
   return (
     <SafeAreaView>
@@ -36,7 +52,8 @@ const AddTrip = ({navigation}) => {
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
           <Text style={styles.title}>AddTrip</Text>
-          <Form onSubmit={onAddTrip} 
+          <Form
+            onButtonPress={onAddTrip}
             buttonStyle={styles.formButton}
             buttonText="Post Trip">
             <FormItem
@@ -44,7 +61,11 @@ const AddTrip = ({navigation}) => {
               label="Trip Name"
               labelStyle={styles.label}
               isRequired
-              value={setTripName}
+              value={tripName}
+              multiline={true}
+              onChangeText={name => {
+                setTripName(name);
+              }}
               asterik
             />
             <FormItem
@@ -52,91 +73,104 @@ const AddTrip = ({navigation}) => {
               label="Trip Location"
               labelStyle={styles.label}
               isRequired
-              value={setLocation}
+              value={location}
+              onChangeText={location => {
+                setLocation(location);
+              }}
               asterik
             />
-            <BouncyCheckbox
-              style={styles.checkbox}
-              size={25}
-              fillColor="black"
-              unfillColor="silver"
-              iconStyle={styles.icon}
-              textStyle={styles.checkboxText}
-              text="Relax"
-              onPress={setIsRelax}
-            />
-            <BouncyCheckbox
-              style={styles.checkbox}
-              size={25}
-              fillColor="black"
-              unfillColor="silver"
-              iconStyle={styles.icon}
-              textStyle={styles.checkboxText}
-              text="Dynamic"
-              onPress={setIsDynamic}
-            />
-            <BouncyCheckbox
-              style={styles.checkbox}
-              size={25}
-              fillColor="black"
-              unfillColor="silver"
-              iconStyle={styles.icon}
-              textStyle={styles.checkboxText}
-              text="Party"
-              onPress={setIsParty}
-            />
-            <BouncyCheckbox
-              style={styles.checkbox}
-              size={25}
-              fillColor="black"
-              unfillColor="silver"
-              iconStyle={styles.icon}
-              textStyle={styles.checkboxText}
-              text="Pet"
-              onPress={setIsPetAllowed}
-            />
-            <BouncyCheckbox
-              style={styles.checkbox}
-              size={25}
-              fillColor="black"
-              unfillColor="silver"
-              iconStyle={styles.icon}
-              textStyle={styles.checkboxText}
-              text="Car travel"
-              onPress={setIsCarTravel}
-              setIsPlaneTravel
-            />
-            <BouncyCheckbox
-              style={styles.checkbox}
-              size={25}
-              fillColor="black"
-              unfillColor="silver"
-              iconStyle={styles.icon}
-              textStyle={styles.checkboxText}
-              text="Plane travel"
-              onPress={setIsPlaneTravel}
-            />
-            <BouncyCheckbox
-              style={styles.checkbox}
-              size={25}
-              fillColor="black"
-              unfillColor="silver"
-              iconStyle={styles.icon}
-              textStyle={styles.checkboxText}
-              text="Train travel"
-              onPress={setIsTrainTravel}
-            />
+            <View style={styles.checkboxesView}>
+              <BouncyCheckbox
+                style={styles.checkbox}
+                size={25}
+                fillColor="black"
+                unfillColor="silver"
+                iconStyle={styles.icon}
+                textStyle={styles.checkboxText}
+                text="Relax"
+                onPress={setIsRelax}
+              />
+              <BouncyCheckbox
+                style={styles.checkbox}
+                size={25}
+                fillColor="black"
+                unfillColor="silver"
+                iconStyle={styles.icon}
+                textStyle={styles.checkboxText}
+                text="Dynamic"
+                onPress={setIsDynamic}
+              />
+              <BouncyCheckbox
+                style={styles.checkbox}
+                size={25}
+                fillColor="black"
+                unfillColor="silver"
+                iconStyle={styles.icon}
+                textStyle={styles.checkboxText}
+                text="Party"
+                onPress={setIsParty}
+              />
+              <BouncyCheckbox
+                style={styles.checkbox}
+                size={25}
+                fillColor="black"
+                unfillColor="silver"
+                iconStyle={styles.icon}
+                textStyle={styles.checkboxText}
+                text="Pet"
+                onPress={setIsPetAllowed}
+              />
+              <BouncyCheckbox
+                style={styles.checkbox}
+                size={25}
+                fillColor="black"
+                unfillColor="silver"
+                iconStyle={styles.icon}
+                textStyle={styles.checkboxText}
+                text="Car travel"
+                onPress={setIsCarTravel}
+                setIsPlaneTravel
+              />
+              <BouncyCheckbox
+                style={styles.checkbox}
+                size={25}
+                fillColor="black"
+                unfillColor="silver"
+                iconStyle={styles.icon}
+                textStyle={styles.checkboxText}
+                text="Plane travel"
+                onPress={setIsPlaneTravel}
+              />
+              <BouncyCheckbox
+                style={styles.checkbox}
+                size={25}
+                fillColor="black"
+                unfillColor="silver"
+                iconStyle={styles.icon}
+                textStyle={styles.checkboxText}
+                text="Train travel"
+                onPress={setIsTrainTravel}
+              />
+            </View>
             <Text style={styles.label}> Describe the trip:</Text>
-            <TextInput placeholder='add description here'
+            <TextInput
+              placeholder="add description here"
               style={styles.inputView}
               multiline={true}
-              value={setDescription}
+              value={description}
+              onChangeText={description => {
+                setDescription(description);
+              }}
             />
             <Text style={styles.label}> Feedback:</Text>
-            <TextInput placeholder='add feedback here'
+            <TextInput
+              placeholder="add feedback here"
               style={styles.inputView}
               multiline={true}
-              value={setFeedback}
+              value={feedback}
+              onChangeText={feedback => {
+                setFeedback(feedback);
+              }}
             />
           </Form>
         </View>
@@ -164,9 +198,10 @@ const styles = StyleSheet.create({
     flex: 0.3,
     backgroundColor: 'lightblue',
     borderWidth: 0.5,
-    marginBottom: 10,
+    marginBottom: 20,
     marginLeft: 20,
     marginRight: 20,
+
     fontSize: 17,
     borderRadius: 10,
   },
@@ -180,7 +215,7 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     color: 'white',
-    marginLeft: 5,
+    marginLeft: 20,
     marginBottom: 10,
   },
   checkboxText: {
@@ -192,7 +227,13 @@ const styles = StyleSheet.create({
   },
   styleFeedback: {
     fontWeight: 'bold',
-    fontSize:24,
+    fontSize: 24,
+  },
+  checkboxesView: {
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    alignContent: 'center',
+    display: 'flex',
   },
 });
 

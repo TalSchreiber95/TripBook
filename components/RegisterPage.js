@@ -11,21 +11,14 @@ import {
 
 import {Form, FormItem} from 'react-native-form-component';
 
-const RegisterPage = ({
-  Users,
-  newUser,
-  newPassword,
-  firstName,
-  lastName,
-  passRecoverAnswer,
-  handleNewUserChange,
-  handleNewPasswordChange,
-  handleFirstNameChange,
-  handleLastNameChange,
-  handlePassRecoverAnswerChange,
-  addNewUser,
-  navigation,
-}) => {
+const RegisterPage = ({Users, addNewUser, navigation}) => {
+  
+  const [newUser, setNewUser] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [passRecoverAnswer, setPassRecoverAnswer] = useState('');
+
   const onRegister = () => {
     const userExist = Users.find(user => {
       return user.id === newUser;
@@ -33,8 +26,7 @@ const RegisterPage = ({
     if (userExist) {
       Alert.alert('UserName is already exists - choose other');
     } else {
-
-      if (newUser != '' && newPassword != ''){
+      if (newUser != '' && newPassword != '') {
         const newuser = {
           email: newUser,
           pass: newPassword,
@@ -43,8 +35,8 @@ const RegisterPage = ({
           passRecoverAnswer: passRecoverAnswer,
           admin: false,
         };
-      addNewUser(newuser);
-      navigation.navigate('Login');
+        addNewUser(newuser);
+        navigation.navigate('Login');
       } else {
         Alert.alert('Email and Password required');
       }
@@ -66,7 +58,9 @@ const RegisterPage = ({
             labelStyle={styles.label}
             isRequired
             value={firstName}
-            onChangeText={handleFirstNameChange}
+            onChangeText={firstName => {
+              setFirstName(firstName);
+            }}
             asterik
           />
           <FormItem
@@ -75,7 +69,9 @@ const RegisterPage = ({
             labelStyle={styles.label}
             isRequired
             value={lastName}
-            onChangeText={handleLastNameChange}
+            onChangeText={lastName => {
+              setLastName(lastName);
+            }}
             asterik
           />
 
@@ -85,7 +81,9 @@ const RegisterPage = ({
             labelStyle={styles.label}
             isRequired
             value={newUser}
-            onChangeText={handleNewUserChange}
+            onChangeText={newUser => {
+              setNewUser(newUser);
+            }}
             asterik
           />
           <FormItem
@@ -94,7 +92,9 @@ const RegisterPage = ({
             labelStyle={styles.label}
             isRequired
             value={newPassword}
-            onChangeText={handleNewPasswordChange}
+            onChangeText={newPassword => {
+              setNewPassword(newPassword);
+            }}
             asterik
           />
           <FormItem
@@ -104,7 +104,9 @@ const RegisterPage = ({
             labelStyle={styles.label}
             isRequired
             value={passRecoverAnswer}
-            onChangeText={handlePassRecoverAnswerChange}
+            onChangeText={passRecoverAnswer => {
+              setPassRecoverAnswer(passRecoverAnswer);
+            }}
             asterik
           />
         </Form>
