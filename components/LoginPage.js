@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 
 import {Form, FormItem} from 'react-native-form-component';
-import ForgetPassword from './ForgetPassword';
 
 const LoginPage = ({Users, navigation,ind}) => {
   const [email, setEmail] = useState('');
@@ -72,8 +71,8 @@ const LoginPage = ({Users, navigation,ind}) => {
         </Form>
         <Pressable
           style={styles.buttonf}
-          onPress={() => navigation.navigate('ForgetPassword')}>
-          <Text style={styles.buttonTextf}>Forget the password?! Press here!</Text>
+          onPress={() => navigation.navigate('ForgotPassword')}>
+          <Text style={styles.buttonTextf}>Forgot your password?! Press here!</Text>
         </Pressable>
         <Pressable
           style={styles.button}
@@ -87,12 +86,12 @@ const LoginPage = ({Users, navigation,ind}) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 80,
+    fontSize: 90,
     fontWeight: '300',
     textAlign: 'center',
-    marginBottom: 50,
-    marginTop: 30,
-    color: 'black',
+    marginBottom: 15,
+    color: 'gold',
+    backgroundColor:'#001f3f',
   },
   label: {
     color: 'black',
@@ -136,9 +135,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     elevation: 3,
     backgroundColor: 'firebrick',
-    marginLeft: 45,
-    marginRight: 45,
-    marginBottom:10
+    marginLeft: 42.5,
+    marginRight: 42.5,
+    marginBottom:5
   },
   buttonTextf:{
     fontSize: 16,
@@ -152,6 +151,7 @@ const styles = StyleSheet.create({
     marginLeft: 100,
     marginRight: 100,
     borderRadius: 20,
+    marginBottom:25
   },
 });
 

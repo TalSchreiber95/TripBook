@@ -117,12 +117,12 @@ const RegisterPage = ({Users, addNewUser, navigation}) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 80,
+    fontSize: 90,
     fontWeight: '300',
     textAlign: 'center',
-    marginBottom: 50,
-    marginTop: 30,
-    color: 'black',
+    marginBottom: 15,
+    color: 'gold',
+    backgroundColor:'#001f3f',
   },
   label: {
     color: 'black',

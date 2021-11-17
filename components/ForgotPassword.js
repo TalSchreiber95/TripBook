@@ -15,7 +15,7 @@ import {
 import { Form, FormItem } from 'react-native-form-component';
 import Header from './Header';
 
-const ForgetPassword = ({ Users, navigation, ind }) => {
+const ForgotPassword = ({ Users, navigation, ind }) => {
     const [email, setEmail] = useState('');
     const [answer, setAnswer] = useState('');
 
@@ -41,7 +41,8 @@ const ForgetPassword = ({ Users, navigation, ind }) => {
 
     return (
         <View style={styles.container}>
-            <Header title="TripBook" name={""} />
+            {/* <Header title="TripBook" name={""} /> */}
+            <Text style={styles.title}>TripBook</Text>
             <Form
                 onButtonPress={onRestorePass}
                 buttonStyle={styles.formButton}
@@ -79,13 +80,13 @@ const ForgetPassword = ({ Users, navigation, ind }) => {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 80,
+        fontSize: 90,
         fontWeight: '300',
         textAlign: 'center',
-        marginBottom: 50,
-        marginTop: 30,
-        color: 'black',
-    },
+        marginBottom: 15,
+        color: 'gold',
+        backgroundColor:'#001f3f',
+      },
     container: {
         flex: 1,
     },
@@ -138,4 +139,4 @@ const styles = StyleSheet.create({
       },
 });
 
-export default ForgetPassword;
+export default ForgotPassword;

@@ -12,7 +12,7 @@ import RegisterPage from './components/RegisterPage';
 import HomePage from './components/HomePage';
 import AddTrip from './components/AddTrip';
 import TripsPage from './components/TripsPage';
-import ForgetPassword from './components/ForgetPassword';
+import ForgotPassword from './components/ForgotPassword';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -78,6 +78,7 @@ const App: () => Node = () => {
       description: 'The sky is blue and infinite ',
       feedback: ['feedback'],
       priceInNis: 60,
+
     },
   ];
 
@@ -124,9 +125,9 @@ const App: () => Node = () => {
             <RegisterPage {...props} Users={Users} addNewUser={addNewUser} />
           )}
         </Stack.Screen>
-        <Stack.Screen name="ForgetPassword">
+        <Stack.Screen name="ForgotPassword">
           {props => (
-            <ForgetPassword {...props} Users={Users} ind={setIndex} />
+            <ForgotPassword {...props} Users={Users} ind={setIndex} />
           )}
         </Stack.Screen>
         <Stack.Screen name="Home">
