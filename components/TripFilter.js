@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
-import { Button, View, Text, StyleSheet, Alert, ScrollView, SafeAreaView, StatusBar } from 'react-native';
+import React, {useState} from 'react';
+import {
+  Button,
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  SafeAreaView,
+  StatusBar,
+} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import { Form, FormItem } from 'react-native-form-component';
+import {Form, FormItem} from 'react-native-form-component';
 
-const TripFilter = ({ updateFilter,tripSearch, navigation }) => {
+const TripFilter = ({updateFilter, tripSearch, navigation}) => {
   const [isRelax, setIsRelax] = useState(false);
   const [isDynamic, setIsDynamic] = useState(false);
   const [isParty, setIsParty] = useState(false);
@@ -11,10 +20,10 @@ const TripFilter = ({ updateFilter,tripSearch, navigation }) => {
   const [isCarTravel, setIsCarTravel] = useState(false);
   const [isPlaneTravel, setIsPlaneTravel] = useState(false);
   const [isTrainTravel, setIsTrainTravel] = useState(false);
-  const [priceInNis, setPriceInNis] = useState();
+  const [priceInNis, setPriceInNis] = useState(0.0);
   const [location, setLocation] = useState('');
 
-  const onSubmit = () => {
+  const onSearch = () => {
     updateFilter(
       isRelax,
       isDynamic,
@@ -38,12 +47,16 @@ const TripFilter = ({ updateFilter,tripSearch, navigation }) => {
     navigation.navigate('TripsPage');
   };
   return (
-    <SafeAreaView>
-        <ScrollView contentInsetAdjustmentBehavior="automatic">
-          <Text style={styles.text}>Enter your trip info</Text>
+    // <SafeAreaView>
+      <View >
+        <Form
+          onButtonPress={onSearch}
+          buttonStyle={styles.formButton}
+          buttonText="Search Trip">
+          <Text style={styles.text}>Enter your trip info: </Text>
           <FormItem
             style={styles.inputView}
-            label="Price(NIS)"
+            label="Price limit (NIS)"
             labelStyle={styles.label}
             value={priceInNis}
             placeholder="Add price here"
@@ -137,20 +150,13 @@ const TripFilter = ({ updateFilter,tripSearch, navigation }) => {
             text="Train travel"
             onPress={setIsTrainTravel}
           />
-          <View style={styles.searchButtonView}>
-            <Button title="Search" onPress={onSubmit} />
-          </View>
-          <View style={styles.addButtonView}>
-            <Button
-              title="Add trip +"
-              color="red"
-              onPress={() => navigation.navigate('AddTrip')}
-            />
-          </View>
-          <Text/><Text/><Text/><Text/><Text/>
-          <Text/><Text/>
-          </ScrollView> 
-    </SafeAreaView>
+        </Form>
+        <Button
+          title="Add trip +"
+          color="red"
+          onPress={() => navigation.navigate('AddTrip')}
+        />
+      </View>
   );
 };
 TripFilter.defaultProps = {
@@ -161,6 +167,7 @@ const styles = StyleSheet.create({
     height: 250,
     // backgroundColor: 'black',
   },
+  form: {},
   icon: {
     borderColor: 'black',
   },
@@ -177,7 +184,7 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     color: 'white',
-    marginLeft: 5,
+    marginLeft: 20,
     marginBottom: 10,
   },
   label: {
@@ -189,8 +196,9 @@ const styles = StyleSheet.create({
   text: {
     color: 'black',
     fontSize: 23,
-    marginLeft: 5,
-    marginBottom: 0,
+    marginLeft: 20,
+    marginBottom: 10,
+    marginTop: 10,
   },
   checkboxText: {
     fontFamily: 'JosefinSans-Regular',
@@ -201,6 +209,14 @@ const styles = StyleSheet.create({
   },
   addButtonView: {
     marginTop: 5,
+  },
+  formButton: {
+    backgroundColor: 'firebrick',
+    marginLeft: 100,
+    marginRight: 100,
+    marginTop: 10,
+    borderRadius: 20,
+    color: 'black',
   },
 });
 export default TripFilter;

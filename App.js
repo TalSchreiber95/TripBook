@@ -62,6 +62,7 @@ const App: () => Node = () => {
 
   const trips = [
     {
+      id: 1,
       tripName: 'sky',
       category: {
         isRelax: false,
@@ -72,10 +73,10 @@ const App: () => Node = () => {
         isPlaneTravel: false,
         isTrainTravel: false,
       },
-      location: '',
-      description: '',
-      feedback: [''],
-      priceInNis: 0,
+      location: 'location',
+      description: 'The sky is blue and infinite ',
+      feedback: ['feedback'],
+      priceInNis: 60,
     },
   ];
 
@@ -89,7 +90,7 @@ const App: () => Node = () => {
       isPlaneTravel: false,
       isTrainTravel: false,
     },
-    location: 'none',
+    location: 'North',
     priceInNis: 0,
   };
   const [Users, setUsers] = useState(users);

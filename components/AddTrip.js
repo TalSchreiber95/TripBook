@@ -226,8 +226,7 @@ const styles = StyleSheet.create({
   subTitle: {
     fontSize: 20,
     fontWeight: '300',
-    paddingBottom: 20,
-    paddingTop: 10,
+ 
     paddingLeft: 25,
     color: 'white',
     backgroundColor: '#001f3f'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -11,7 +11,7 @@ import {
 import Header from './Header';
 import TripFilter from './TripFilter';
 
-const HomePage = ({ name, tripSearch, navigation }) => {
+const HomePage = ({name, tripSearch, navigation}) => {
   const updateFilter = (
     isRelax,
     isDynamic,
@@ -31,7 +31,7 @@ const HomePage = ({ name, tripSearch, navigation }) => {
         isPetAllowed: isPetAllowed,
         isCarTravel: isCarTravel,
         isPlaneTravel: isPlaneTravel,
-        isTrainTravel: isTrainTravel
+        isTrainTravel: isTrainTravel,
       },
       location: location,
       priceInNis: priceInNis,
@@ -41,10 +41,14 @@ const HomePage = ({ name, tripSearch, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Header title="TripBook" name={name}/>
-      <TripFilter updateFilter={updateFilter} navigation={navigation} />
-    </View>
+    <SafeAreaView>
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
+        <View style={styles.container}>
+          <Header title="TripBook" name={name} />
+          <TripFilter updateFilter={updateFilter} navigation={navigation} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
@@ -53,7 +57,7 @@ const styles = StyleSheet.create({
   },
   name: {
     color: 'red',
-  }
+  },
 });
 
 export default HomePage;
