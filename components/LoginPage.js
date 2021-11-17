@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import {Form, FormItem} from 'react-native-form-component';
+import ForgetPassword from './ForgetPassword';
 
 const LoginPage = ({Users, navigation,ind}) => {
   const [email, setEmail] = useState('');
@@ -70,6 +71,11 @@ const LoginPage = ({Users, navigation,ind}) => {
           />
         </Form>
         <Pressable
+          style={styles.buttonf}
+          onPress={() => navigation.navigate('ForgetPassword')}>
+          <Text style={styles.buttonTextf}>Forget the password?! Press here!</Text>
+        </Pressable>
+        <Pressable
           style={styles.button}
           onPress={() => navigation.navigate('Register')}>
           <Text style={styles.buttonText}>Dont have an account? Sign up</Text>
@@ -116,6 +122,25 @@ const styles = StyleSheet.create({
     marginRight: 50,
   },
   buttonText: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: 'white',
+  },
+  buttonf: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 32,
+    borderRadius: 20,
+    elevation: 3,
+    backgroundColor: 'firebrick',
+    marginLeft: 45,
+    marginRight: 45,
+    marginBottom:10
+  },
+  buttonTextf:{
     fontSize: 16,
     lineHeight: 21,
     fontWeight: 'bold',

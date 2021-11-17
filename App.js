@@ -12,6 +12,7 @@ import RegisterPage from './components/RegisterPage';
 import HomePage from './components/HomePage';
 import AddTrip from './components/AddTrip';
 import TripsPage from './components/TripsPage';
+import ForgetPassword from './components/ForgetPassword';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -47,7 +48,7 @@ const App: () => Node = () => {
       pass: 'a',
       firstName: 'Tal',
       lastName: 'Schreiber',
-      passRecoverAnswer: '',
+      passRecoverAnswer: 'av',
       admin: true,
     },
     {
@@ -121,6 +122,11 @@ const App: () => Node = () => {
         <Stack.Screen name="Register">
           {props => (
             <RegisterPage {...props} Users={Users} addNewUser={addNewUser} />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="ForgetPassword">
+          {props => (
+            <ForgetPassword {...props} Users={Users} ind={setIndex} />
           )}
         </Stack.Screen>
         <Stack.Screen name="Home">

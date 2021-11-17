@@ -20,7 +20,7 @@ const TripFilter = ({updateFilter, tripSearch, navigation}) => {
   const [isCarTravel, setIsCarTravel] = useState(false);
   const [isPlaneTravel, setIsPlaneTravel] = useState(false);
   const [isTrainTravel, setIsTrainTravel] = useState(false);
-  const [priceInNis, setPriceInNis] = useState(0.0);
+  const [priceInNis, setPriceInNis] = useState();
   const [location, setLocation] = useState('');
 
   const onSearch = () => {
@@ -35,15 +35,15 @@ const TripFilter = ({updateFilter, tripSearch, navigation}) => {
       priceInNis,
       location,
     );
-    // setIsRelax(false);
-    // setIsDynamic(false);
-    // setIsParty(false);
-    // setIsPetAllowed(false);
-    // setIsCarTravel(false);
-    // setIsPlaneTravel(false);
-    // setIsTrainTravel(false);
-    // setPriceInNis()
-    // setLocation('')
+    setIsRelax(false);
+    setIsDynamic(false);
+    setIsParty(false);
+    setIsPetAllowed(false);
+    setIsCarTravel(false);
+    setIsPlaneTravel(false);
+    setIsTrainTravel(false);
+    setPriceInNis()
+    setLocation('')
     navigation.navigate('TripsPage');
   };
   return (

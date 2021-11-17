@@ -4,6 +4,8 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 const TripCard = ({trip}) => {
   return (
     //need work here
+    //Right, for some reason the TripCard doesn't apper , 
+    //I think its because the if in the fillter on the TripPage
     <View style={styles.card}>
       <Text style={styles.title}>{trip.tripName}</Text>
       <Text style={styles.text}>{trip.description}</Text>

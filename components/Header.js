@@ -9,11 +9,12 @@ const Header = ({ title, name}) => {
         Wellcome {name.firstName + ' ' + name.lastName} !
       </Text>
     </View>
-
   );
 };
 Header.defaultProps = {
   title: 'Header title',
+  name:'a'
+
 };
 const styles = StyleSheet.create({
   header: {

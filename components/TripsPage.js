@@ -27,8 +27,8 @@ const TripsPage = ({Trips, name, tripInfo}) => {
       {Trips.filter(
         trip =>
           trip.location === tripInfo.location &&
-          trip.category === tripInfo.category &&
-          trip.priceInNis >= tripInfo.priceInNis,
+          trip.category.isRelax === tripInfo.category.isRelax &&
+          trip.priceInNis >= tripInfo.priceInNis
       ).map(trip => (
         <TripCard key={trip.id} trip={trip} />
       ))}
