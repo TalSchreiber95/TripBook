@@ -12,8 +12,9 @@ import {
 } from 'react-native';
 import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import Header from './Header';
 
-const AddTrip = ({addTrip, navigation}) => {
+const AddTrip = ({addTrip, navigation, name}) => {
   const [tripName, setTripName] = useState('');
   const [location, setLocation] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -64,8 +65,9 @@ const AddTrip = ({addTrip, navigation}) => {
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
-          <Text style={styles.title}>Add a Trip</Text>
-          <Text style={styles.subTitle}>Fill the details below:</Text>
+          {/* <Text style={styles.title}>Add a Trip</Text> */}
+          <Header title="Add Trip" name={name}/>
+          <Text style={styles.text}>Fill the details below:</Text>
           <Form
             onButtonPress={onAddTrip}
             buttonStyle={styles.formButton}
@@ -76,7 +78,6 @@ const AddTrip = ({addTrip, navigation}) => {
               placeholder="Add trip name here"
               labelStyle={styles.label}
               value={tripName}
-              multiline={true}
               onChangeText={name => {
                 setTripName(name);
               }}
@@ -212,24 +213,11 @@ const AddTrip = ({addTrip, navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 40,
-    fontWeight: '400',
-    // paddingBottom: 20,
-    paddingTop: 25,
-    paddingLeft: 25,
-    color: 'gold',
-    backgroundColor: '#001f3f',
-    // borderColor: 'black',
-    // borderRadius: 30
-  },
-  subTitle: {
-    fontSize: 20,
-    fontWeight: '300',
- 
-    paddingLeft: 25,
-    color: 'white',
-    backgroundColor: '#001f3f'
+  text: {
+    color: 'black',
+    fontSize: 23,
+    marginLeft: 20,
+    marginBottom: 20,
   },
   label: {
     color: 'black',
@@ -244,8 +232,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightblue',
     borderWidth: 0.5,
     marginBottom: 20,
-    marginLeft: 20,
-    marginRight: 20,
+    marginLeft: 15,
+    marginRight: 15,
     fontSize: 15,
     borderRadius: 10,
   },
@@ -260,7 +248,8 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     color: 'white',
-    paddingLeft: 20,
+    marginLeft: 15,
+    marginRight: 15,    
     paddingBottom: 10,
   },
   checkboxText: {
@@ -282,8 +271,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightblue',
     borderWidth: 0.5,
     marginBottom: 30,
-    marginLeft: 20,
-    marginRight: 20,
+    marginLeft: 15,
+    marginRight: 15,
     fontSize: 15,
     borderRadius: 10,
   },
@@ -293,6 +282,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     display: 'flex',
   },
+
 });
 
 export default AddTrip;

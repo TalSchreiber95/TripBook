@@ -118,7 +118,7 @@ const App: () => Node = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login">
-          {props => <LoginPage {...props} Users={Users} ind={setIndex} />}
+          {props => <LoginPage {...props} Users={Users} name={Users[Index]} ind={setIndex} />}
         </Stack.Screen>
         <Stack.Screen name="Register">
           {props => (
@@ -136,7 +136,7 @@ const App: () => Node = () => {
           )}
         </Stack.Screen>
         <Stack.Screen name="AddTrip">
-          {props => <AddTrip {...props} addTrip={addTrip} />}
+          {props => <AddTrip {...props} addTrip={addTrip} name={Users[Index]}/>}
         </Stack.Screen>
         <Stack.Screen name="TripsPage">
           {props => (

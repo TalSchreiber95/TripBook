@@ -18,18 +18,14 @@ import {useState} from 'react';
 const TripsPage = ({Trips, name, tripInfo}) => {
   return (
     <View>
-      <Header title="Trip Book" name={name} />
+      <Header name={name} />
+      <Text style={styles.text}>Search Results:</Text>
       <Text style={styles.locationText}>
         {' '}
         Showing trips located in {tripInfo.location} not over{' '}
         {tripInfo.priceInNis} ILS{' '}
       </Text>
-      {Trips.filter(
-        trip =>
-          trip.location === tripInfo.location &&
-          trip.category.isRelax === tripInfo.category.isRelax &&
-          trip.priceInNis >= tripInfo.priceInNis
-      ).map(trip => (
+      {Trips.map(trip => (
         <TripCard key={trip.id} trip={trip} />
       ))}
     </View>
@@ -37,9 +33,15 @@ const TripsPage = ({Trips, name, tripInfo}) => {
 };
 
 const styles = StyleSheet.create({
+  text: {
+    color: 'black',
+    fontSize: 23,
+    marginLeft: 20,
+    // marginBottom: 20,
+  },
   locationText: {
-    // textAlign: 'left',
     margin: 10,
+    marginLeft: 20,
     fontSize: 15,
     color: 'black',
   },
@@ -48,5 +50,10 @@ const styles = StyleSheet.create({
 export default TripsPage;
 
 /*
-
+.filter(
+        trip =>
+          trip.location === tripInfo.location &&
+          trip.category.isRelax === tripInfo.category.isRelax &&
+          trip.priceInNis >= tripInfo.priceInNis
+      )
  */

@@ -197,8 +197,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 23,
     marginLeft: 20,
-    marginBottom: 10,
-    marginTop: 10,
+    marginBottom: 20,
   },
   checkboxText: {
     fontFamily: 'JosefinSans-Regular',

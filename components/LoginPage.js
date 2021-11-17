@@ -13,8 +13,9 @@ import {
 } from 'react-native';
 
 import {Form, FormItem} from 'react-native-form-component';
+import Header from './Header'
 
-const LoginPage = ({Users, navigation,ind}) => {
+const LoginPage = ({Users, navigation, ind, name}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -22,7 +23,7 @@ const LoginPage = ({Users, navigation,ind}) => {
     for (let index = 0; index < Users.length; index++) {
       if (Users[index].email === email) {
         if (Users[index].pass === password) {
-          ind(index)
+          ind(index);
           navigation.navigate('Home');
           console.log(Users);
           return;
@@ -40,7 +41,8 @@ const LoginPage = ({Users, navigation,ind}) => {
     <SafeAreaView>
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Text style={styles.title}>TripBook</Text>
+        {/* <Text style={styles.title}>TripBook</Text> */}
+        <Header title='TripBook' />
         <Form
           onButtonPress={onLogin}
           buttonStyle={styles.formButton}
@@ -72,7 +74,9 @@ const LoginPage = ({Users, navigation,ind}) => {
         <Pressable
           style={styles.buttonf}
           onPress={() => navigation.navigate('ForgotPassword')}>
-          <Text style={styles.buttonTextf}>Forgot your password?! Press here!</Text>
+          <Text style={styles.buttonTextf}>
+            Forgot your password?! Press here!
+          </Text>
         </Pressable>
         <Pressable
           style={styles.button}
@@ -91,7 +95,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 15,
     color: 'gold',
-    backgroundColor:'#001f3f',
+    backgroundColor: '#001f3f',
   },
   label: {
     color: 'black',
@@ -137,9 +141,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'firebrick',
     marginLeft: 42.5,
     marginRight: 42.5,
-    marginBottom:5
+    marginBottom: 20,
   },
-  buttonTextf:{
+  buttonTextf: {
     fontSize: 16,
     lineHeight: 21,
     fontWeight: 'bold',
@@ -151,7 +155,7 @@ const styles = StyleSheet.create({
     marginLeft: 100,
     marginRight: 100,
     borderRadius: 20,
-    marginBottom:25
+    marginBottom: 25,
   },
 });
 

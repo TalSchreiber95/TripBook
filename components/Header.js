@@ -1,20 +1,22 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import {View, Text, StyleSheet, ImageBackground} from 'react-native';
 
-const Header = ({ title, name}) => {
+const Header = ({title, name}) => {
   return (
     <View style={styles.header}>
       <Text style={styles.text}>{title}</Text>
       <Text style={styles.name}>
-        Wellcome {name.firstName + ' ' + name.lastName} !
+        Wellcome {name.firstName + ' ' + name.lastName}!
       </Text>
     </View>
   );
 };
 Header.defaultProps = {
-  title: 'Header title',
-  name:'a'
-
+  title: 'TripBook',
+  name: {
+    firstName: '',
+    lastName: '',
+  },
 };
 const styles = StyleSheet.create({
   header: {
@@ -22,6 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     // margin: 15,
     backgroundColor: '#001f3f',
+    marginBottom: 30,
   },
   text: {
     color: 'gold',
@@ -29,13 +32,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     letterSpacing: 5,
     paddingTop: 25,
-
   },
   name: {
     color: 'white',
     fontSize: 20,
     paddingBottom: 20,
     paddingTop: 10,
-  }
+  },
 });
 export default Header;
