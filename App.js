@@ -125,7 +125,6 @@ const App: () => Node = () => {
   const [Users, setUsers] = useState(users);
   const [Trips, setTrips] = useState(trips);
   const [Index, setIndex] = useState(0);
-  //Note: This object created for search page information
   const [TripInfo, setTripInfo] = useState(tripInfo);
 
   const addNewUser = user => {
@@ -148,7 +147,7 @@ const App: () => Node = () => {
           {props => <LoginPage {...props} Users={Users} name={Users[Index]} ind={setIndex} />}
         </Stack.Screen>
         <Stack.Screen name="Register">
-          {props => (
+          {props => ( 
             <RegisterPage {...props} Users={Users} addNewUser={addNewUser} />
           )}
         </Stack.Screen>
