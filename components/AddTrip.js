@@ -14,12 +14,17 @@ import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Header from './Header';
 
-const AddTrip = ({addTrip, navigation, name}) => {
+const AddTrip = ({addTrip, navigation, name,getId}) => {
   const [tripName, setTripName] = useState('');
   const [location, setLocation] = useState('');
   const [feedback, setFeedback] = useState('');
-  const [description, setDescription] = useState('');
   const [priceInNis, setPriceInNis] = useState();
+
+  const [description, setDescription] = useState('');
+  const [pictureOne, setPictureOne] = useState("");// supposed to add a
+  const [pictureTwo, setPictureTwo] = useState("");// button to add 3 pictures
+  const [pictureThree, setPictureThree] = useState("");
+
   //categorys
   const [isRelax, setIsRelax] = useState(false);
   const [isDynamic, setIsDynamic] = useState(false);
@@ -29,6 +34,7 @@ const AddTrip = ({addTrip, navigation, name}) => {
   const [isPlaneTravel, setIsPlaneTravel] = useState(false);
   const [isTrainTravel, setIsTrainTravel] = useState(false);
 
+
   const onAddTrip = () => {
     if (
       tripName != '' &&
@@ -37,6 +43,7 @@ const AddTrip = ({addTrip, navigation, name}) => {
       priceInNis != null
     ) {
       const newTrip = {
+        id:getId,
         tripName: tripName,
         category: {
           isRelax: isRelax,
@@ -47,6 +54,11 @@ const AddTrip = ({addTrip, navigation, name}) => {
           isPlaneTravel: isPlaneTravel,
           isTrainTravel: isTrainTravel,
         },
+        pictures:{
+          one:pictureOne ,
+          two:pictureTwo,
+          three:pictureThree,
+         },
         location: location,
         description: description,
         feedback: [feedback],

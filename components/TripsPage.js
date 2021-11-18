@@ -17,7 +17,7 @@ import {useState} from 'react';
 
 const TripsPage = ({Trips, name, tripInfo}) => {
   return (
-    <View>
+    <ScrollView>
       <Header name={name} />
       <Text style={styles.text}>Search Results:</Text>
       <Text style={styles.locationText}>
@@ -28,7 +28,7 @@ const TripsPage = ({Trips, name, tripInfo}) => {
       {Trips.map(trip => (
         <TripCard key={trip.id} trip={trip} />
       ))}
-    </View>
+    </ScrollView>
   );
 };
 

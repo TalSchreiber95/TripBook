@@ -1,21 +1,25 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native';
+import CardFooter from './CardFooter';
+import CardHeader from './CardHeader';
 
-const TripCard = ({trip}) => {
+const TripCard = ({ trip }) => {
+  const pic1=trip.pictures.one
+  const pic2=trip.pictures.two
+  const pic3=trip.pictures.three
+
   return (
-    //need work here
-    //Right, for some reason the TripCard doesn't apper ,
-    //I think its because the if in the fillter on the TripPage
-    //You are right my friend i cut it down for now
     <View style={styles.card}>
-      <Text style={styles.title}>{trip.tripName}</Text>
-      <Text style={styles.text}>{trip.description}</Text>
-      <Image
+      {/* <Text>{trip.tripName}as</Text> */}
+      <CardHeader trip={trip}/> 
+      <ImageBackground
         style={styles.logo}
         source={{
-          uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
-        }} 
-      />
+          uri: pic1
+        }} >
+      </ImageBackground>
+      
+      <CardFooter trip={trip}/> 
     </View>
   );
 };
@@ -29,20 +33,22 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'black',
-    fontSize: 40,
-    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: 'right',
     letterSpacing: 5,
   },
   text: {
-    color: 'black',
-    fontSize: 20,
-    paddingBottom: 20,
-    paddingTop: 10,
-    textAlign: 'center',
+    color: 'gold',
+    fontSize: 15,
+    // textAlign: 'center',
+    // flexDirection:'row-reverse',
+    letterSpacing: 2,
+    paddingTop: 5,
   },
   logo: {
-    width: 66,
-    height: 58,
+    width: 390,
+    height: 150,
   },
 });
 export default TripCard;

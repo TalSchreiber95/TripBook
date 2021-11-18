@@ -6,17 +6,17 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import HomePage from './components/HomePage';
 import AddTrip from './components/AddTrip';
 import TripsPage from './components/TripsPage';
 import ForgotPassword from './components/ForgotPassword';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import type {Node} from 'react';
+import type { Node } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -28,7 +28,7 @@ import {
   View,
 } from 'react-native';
 
-import {appendToMemberExpression, staticBlock} from '@babel/types';
+import { appendToMemberExpression, staticBlock } from '@babel/types';
 
 const Stack = createNativeStackNavigator();
 
@@ -74,8 +74,35 @@ const App: () => Node = () => {
         isPlaneTravel: false,
         isTrainTravel: false,
       },
+      pictures: {
+        one: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSjzoRJBCcaW-Tj1pn9kaj3J1-FJjRN26Gsw&usqp=CAU",
+        two: "",
+        three: "",
+      },
       location: 'location',
       description: 'The sky is blue and infinite ',
+      feedback: ['feedback'],
+      priceInNis: 60,
+    },
+    {
+      id: 2,
+      tripName: 'movie',
+      category: {
+        isRelax: false,
+        isDynamic: false,
+        isParty: false,
+        isPetAllowed: false,
+        isCarTravel: false,
+        isPlaneTravel: false,
+        isTrainTravel: false,
+      },
+      pictures: {
+        one: "https://i.ibb.co/McYBzxw/medium-Value.jpg",
+        two: "",
+        three: "",
+      },
+      location: 'location',
+      description: 'Watch now the new movie of Pokemon! ',
       feedback: ['feedback'],
       priceInNis: 60,
 
@@ -136,7 +163,8 @@ const App: () => Node = () => {
           )}
         </Stack.Screen>
         <Stack.Screen name="AddTrip">
-          {props => <AddTrip {...props} addTrip={addTrip} name={Users[Index]}/>}
+          {props => <AddTrip {...props} addTrip={addTrip} name={Users[Index]}
+            getId={Trips.length}/>}
         </Stack.Screen>
         <Stack.Screen name="TripsPage">
           {props => (
