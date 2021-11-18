@@ -40,9 +40,10 @@ const ForgotPassword = ({ Users, navigation, ind }) => {
     };
 
     return (
-        <View style={styles.container}>
+        <ScrollView >
             {/* <Header title="TripBook" name={""} /> */}
-            <Text style={styles.title}>TripBook</Text>
+            {/* <Text style={styles.title}>TripBook</Text> */}
+            <Header />
             <Form
                 onButtonPress={onRestorePass}
                 buttonStyle={styles.formButton}
@@ -74,7 +75,7 @@ const ForgotPassword = ({ Users, navigation, ind }) => {
                     asterik
                 />
             </Form>
-        </View>
+        </ScrollView>
     );
 };
 
@@ -87,16 +88,16 @@ const styles = StyleSheet.create({
         color: 'gold',
         backgroundColor:'#001f3f',
       },
-    container: {
-        flex: 1,
-    },
+    // container: {
+    //     flex: 1,
+    // },
     label: {
         color: 'black',
         marginLeft: 30,
         fontWeight: 'bold',
         fontSize: 17,
-    },
-    inputView: {
+      },
+      inputView: {
         flex: 0.3,
         backgroundColor: 'lightblue',
         borderWidth: 0.5,
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
         marginRight: 20,
         fontSize: 17,
         borderRadius: 30,
-    },
+      },
     button: {
         alignItems: 'center',
         justifyContent: 'center',

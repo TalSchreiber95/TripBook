@@ -13,9 +13,9 @@ const TripCard = ({trip}) => {
       <Image
         style={styles.logo}
         source={{
-          uri: 'C:/Users/omer2/Desktop/CS/Web Development/images/800px-Sunflower_from_Silesia2.jpg',
-        }}
-        success="none"></Image>
+          uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+        }} 
+      />
     </View>
   );
 };

@@ -55,7 +55,7 @@ const App: () => Node = () => {
       email: 'admin',
       pass: 'admin',
       firstName: 'Omer',
-      lastName: 'shalom',
+      lastName: 'Shalom',
       passRecoverAnswer: '',
       admin: true,
     },

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import {Form, FormItem} from 'react-native-form-component';
+import Header from './Header'
 
 const RegisterPage = ({Users, addNewUser, navigation}) => {
   
@@ -47,7 +48,8 @@ const RegisterPage = ({Users, addNewUser, navigation}) => {
     <SafeAreaView>
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Text style={styles.title}>TripBook</Text>
+        {/* <Text style={styles.title}>TripBook</Text> */}
+        <Header />
         <Form
           onButtonPress={onRegister}
           buttonText="Register"
@@ -99,8 +101,8 @@ const RegisterPage = ({Users, addNewUser, navigation}) => {
           />
           <FormItem
             style={styles.inputView}
-            label="if u forget your password you can recover it by anwering that question - 
-            what the name of your mother"
+            label="if u forget your password you can recover it by anwering that question.
+            what the name of your mother ?"
             labelStyle={styles.label}
             isRequired
             value={passRecoverAnswer}

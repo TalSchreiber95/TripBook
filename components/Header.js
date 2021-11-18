@@ -21,10 +21,8 @@ Header.defaultProps = {
 const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
-    justifyContent: 'center',
-    // margin: 15,
     backgroundColor: '#001f3f',
-    marginBottom: 30,
+    marginBottom: 20,
   },
   text: {
     color: 'gold',

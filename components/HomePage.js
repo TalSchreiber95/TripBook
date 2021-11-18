@@ -44,7 +44,7 @@ const HomePage = ({name, tripSearch, navigation}) => {
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={styles.container}>
-          <Header title="TripBook" name={name} />
+          <Header name={name} />
           <TripFilter updateFilter={updateFilter} navigation={navigation} />
         </View>
       </ScrollView>
