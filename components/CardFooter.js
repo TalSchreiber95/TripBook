@@ -8,12 +8,12 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const CardFooter = ({ trip }) => {
     return (
-        <View style={styles.CardFooter}>
+        <View style={styles.cardFooter}>
             <Header 
                 ViewComponent={LinearGradient}
                 linearGradientProps={{
-                    colors: ['black', 'blue'],
-                    start: { x: 1, y: 1.5 },
+                    colors: ['silver', 'steelblue'],
+                    start: { x: 1, y: 3.5 },
                     end: { x: 0, y: 0.5 },
                 }}
                 leftComponent={<LeftCardFooter />}
