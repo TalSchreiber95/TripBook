@@ -10,7 +10,15 @@ const LeftCardHeader = ({trip}) => {
 
   return (
     <View style={styles.container}>
-      <Button title="Weather" onPress={ToggleWeather} style={styles.button} raised />
+      <Button
+        title="Weather"
+        onPress={ToggleWeather}
+        type="secondary"
+        titleStyle={styles.button}
+        containerStyle={styles.buttonContainer}
+        raised
+      />
+
       {toggleWeather && (
         <View style={styles.popUp}>
           <Text style={styles.text}>20°C</Text>
@@ -48,7 +56,10 @@ const styles = StyleSheet.create({
     // position: 'absolute',
   },
   button: {
-    // width: 80,
+    // backgroundColor: 'black',
+  },
+  buttonContainer: {
+    backgroundColor: 'black',
   },
   text: {
     // flex: 0.1,

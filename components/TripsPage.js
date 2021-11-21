@@ -26,7 +26,7 @@ const TripsPage = ({Trips, name, tripInfo}) => {
         {tripInfo.priceInNis} ILS{' '}
       </Text>
       {Trips.map(trip => (
-        <TripCard key={trip.id} trip={trip} />
+        <TripCard key={trip.id} trip={trip}  />
       ))}
     </ScrollView>
   );

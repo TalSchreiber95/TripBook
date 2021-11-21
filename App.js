@@ -6,17 +6,17 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import HomePage from './components/HomePage';
 import AddTrip from './components/AddTrip';
 import TripsPage from './components/TripsPage';
 import ForgotPassword from './components/ForgotPassword';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import type { Node } from 'react';
+import type {Node} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -28,7 +28,7 @@ import {
   View,
 } from 'react-native';
 
-import { appendToMemberExpression, staticBlock } from '@babel/types';
+import {appendToMemberExpression, staticBlock} from '@babel/types';
 
 const Stack = createNativeStackNavigator();
 
@@ -75,13 +75,14 @@ const App: () => Node = () => {
         isTrainTravel: false,
       },
       pictures: {
-        one: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSjzoRJBCcaW-Tj1pn9kaj3J1-FJjRN26Gsw&usqp=CAU",
-        two: "",
-        three: "",
+        one: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSjzoRJBCcaW-Tj1pn9kaj3J1-FJjRN26Gsw&usqp=CAU',
+        two: '',
+        three: '',
       },
       location: 'location',
       description: 'The sky is blue and infinite ',
-      feedback: ['feedback'],
+      feedbacks: ['beautifull sky', 'Blue deep sky', 'Tal the PoliceOfficer'],
+      feedbacksLive: ['Live', 'Im Liveee'],
       priceInNis: 60,
     },
     {
@@ -97,15 +98,15 @@ const App: () => Node = () => {
         isTrainTravel: false,
       },
       pictures: {
-        one: "https://i.ibb.co/McYBzxw/medium-Value.jpg",
-        two: "",
-        three: "",
+        one: 'https://i.ibb.co/McYBzxw/medium-Value.jpg',
+        two: '',
+        three: '',
       },
       location: 'location',
       description: 'Watch now the new movie of Pokemon! ',
-      feedback: ['feedback'],
+      feedbacks: ['lovely and fun place', 'beautiful place'],
+      feedbacksLive: ['not a regular feedback', 'you can call me live feedback'],
       priceInNis: 60,
-
     },
   ];
 
@@ -127,6 +128,10 @@ const App: () => Node = () => {
   const [Index, setIndex] = useState(0);
   const [TripInfo, setTripInfo] = useState(tripInfo);
 
+  const getFeedback = trip => {
+    return trip.feedback[0];
+  };
+
   const addNewUser = user => {
     setUsers([...Users, user]);
     setIndex(Users.length - 1);
@@ -142,19 +147,24 @@ const App: () => Node = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="TripsPage">
         <Stack.Screen name="Login">
-          {props => <LoginPage {...props} Users={Users} name={Users[Index]} ind={setIndex} />}
+          {props => (
+            <LoginPage
+              {...props}
+              Users={Users}
+              name={Users[Index]}
+              ind={setIndex}
+            />
+          )}
         </Stack.Screen>
         <Stack.Screen name="Register">
-          {props => ( 
+          {props => (
             <RegisterPage {...props} Users={Users} addNewUser={addNewUser} />
           )}
         </Stack.Screen>
         <Stack.Screen name="ForgotPassword">
-          {props => (
-            <ForgotPassword {...props} Users={Users} ind={setIndex} />
-          )}
+          {props => <ForgotPassword {...props} Users={Users} ind={setIndex} />}
         </Stack.Screen>
         <Stack.Screen name="Home">
           {props => (
@@ -162,12 +172,23 @@ const App: () => Node = () => {
           )}
         </Stack.Screen>
         <Stack.Screen name="AddTrip">
-          {props => <AddTrip {...props} addTrip={addTrip} name={Users[Index]}
-            getId={Trips.length}/>}
+          {props => (
+            <AddTrip
+              {...props}
+              addTrip={addTrip}
+              name={Users[Index]}
+              getId={Trips.length}
+            />
+          )}
         </Stack.Screen>
         <Stack.Screen name="TripsPage">
           {props => (
-            <TripsPage {...props} Trips={Trips} name={Users[Index]} tripInfo={TripInfo} />
+            <TripsPage
+              {...props}
+              Trips={Trips}
+              name={Users[Index]}
+              tripInfo={TripInfo}
+            />
           )}
         </Stack.Screen>
       </Stack.Navigator>

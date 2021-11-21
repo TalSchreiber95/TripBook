@@ -14,16 +14,17 @@ import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Header from './Header';
 
-const AddTrip = ({addTrip, navigation, name,getId}) => {
+const AddTrip = ({addTrip, navigation, name, getId}) => {
   const [tripName, setTripName] = useState('');
   const [location, setLocation] = useState('');
   const [feedback, setFeedback] = useState('');
+  const [feedbackLive, setFeedbackLive] = useState('');
   const [priceInNis, setPriceInNis] = useState();
 
   const [description, setDescription] = useState('');
-  const [pictureOne, setPictureOne] = useState("");// supposed to add a
-  const [pictureTwo, setPictureTwo] = useState("");// button to add 3 pictures
-  const [pictureThree, setPictureThree] = useState("");
+  const [pictureOne, setPictureOne] = useState(''); // supposed to add a
+  const [pictureTwo, setPictureTwo] = useState(''); // button to add 3 pictures
+  const [pictureThree, setPictureThree] = useState('');
 
   //categorys
   const [isRelax, setIsRelax] = useState(false);
@@ -34,7 +35,6 @@ const AddTrip = ({addTrip, navigation, name,getId}) => {
   const [isPlaneTravel, setIsPlaneTravel] = useState(false);
   const [isTrainTravel, setIsTrainTravel] = useState(false);
 
-
   const onAddTrip = () => {
     if (
       tripName != '' &&
@@ -43,7 +43,7 @@ const AddTrip = ({addTrip, navigation, name,getId}) => {
       priceInNis != null
     ) {
       const newTrip = {
-        id:getId,
+        id: getId,
         tripName: tripName,
         category: {
           isRelax: isRelax,
@@ -54,14 +54,15 @@ const AddTrip = ({addTrip, navigation, name,getId}) => {
           isPlaneTravel: isPlaneTravel,
           isTrainTravel: isTrainTravel,
         },
-        pictures:{
-          one:pictureOne ,
-          two:pictureTwo,
-          three:pictureThree,
-         },
+        pictures: {
+          one: pictureOne,
+          two: pictureTwo,
+          three: pictureThree,
+        },
         location: location,
         description: description,
-        feedback: [feedback],
+        feedbacks: [feedback],
+        feedbacksLive: [],
         priceInNis: priceInNis,
       };
       addTrip(newTrip);
@@ -78,16 +79,16 @@ const AddTrip = ({addTrip, navigation, name,getId}) => {
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
           {/* <Text style={styles.title}>Add a Trip</Text> */}
-          <Header title="Add Trip" name={name}/>
+          <Header title="Add Trip" name={name} />
           <Text style={styles.text}>Fill the details below:</Text>
           <Form
             onButtonPress={onAddTrip}
             buttonStyle={styles.formButton}
             buttonText="Post Trip">
             <FormItem
+              placeholder="Add trip name here"
               style={styles.inputView}
               label="Trip Name"
-              placeholder="Add trip name here"
               labelStyle={styles.label}
               value={tripName}
               onChangeText={name => {
@@ -97,10 +98,10 @@ const AddTrip = ({addTrip, navigation, name,getId}) => {
               asterik
             />
             <FormItem
+              placeholder="Add location here"
               style={styles.inputView}
               label="Trip Location"
               labelStyle={styles.label}
-              placeholder="Add location here"
               value={location}
               onChangeText={location => {
                 setLocation(location);
@@ -207,7 +208,7 @@ const AddTrip = ({addTrip, navigation, name,getId}) => {
               />
             </View>
             <FormItem
-              placeholder="add feedback here"
+              placeholder="Add feedback here"
               style={styles.inputView}
               label="Feedback:"
               labelStyle={styles.feedback}
@@ -215,6 +216,17 @@ const AddTrip = ({addTrip, navigation, name,getId}) => {
               value={feedback}
               onChangeText={feedback => {
                 setFeedback(feedback);
+              }}
+            />
+            <FormItem
+              placeholder="Add live feedback here"
+              style={styles.inputView}
+              label="Feedback Live:"
+              labelStyle={styles.feedback}
+              multiline={true}
+              value={feedbackLive}
+              onChangeText={feedbackLive => {
+                setFeedbackLive(feedbackLive);
               }}
             />
           </Form>
@@ -261,7 +273,7 @@ const styles = StyleSheet.create({
   checkbox: {
     color: 'white',
     marginLeft: 15,
-    marginRight: 15,    
+    marginRight: 15,
     paddingBottom: 10,
   },
   checkboxText: {
@@ -294,7 +306,6 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     display: 'flex',
   },
-
 });
 
 export default AddTrip;
