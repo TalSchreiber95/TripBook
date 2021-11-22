@@ -25,6 +25,7 @@ const TripsPage = ({Trips, name, tripInfo}) => {
         Showing trips located in {tripInfo.location} not over{' '}
         {tripInfo.priceInNis} ILS{' '}
       </Text>
+      {/* Should implement The filter algorithm include the sort */}
       {Trips.map(trip => (
         <TripCard key={trip.id} trip={trip}  />
       ))}

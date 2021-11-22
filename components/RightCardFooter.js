@@ -1,14 +1,14 @@
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {Button, CheckBox} from 'react-native-elements';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Button, CheckBox } from 'react-native-elements';
 // import {CheckBox} from 'react-native-elements/dist/checkbox/CheckBox';
 // import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome';
-import {Form, FormItem} from 'react-native-form-component';
+import { Form, FormItem } from 'react-native-form-component';
 
 
-const LeftCardFooter = ({trip, getFeedback}) => {
-  const [feedbackIndex, setFeedbackIndex] = useState(0);
-  const [feedbackLiveIndex, setFeedbackLiveIndex] = useState(0);
+const LeftCardFooter = ({ trip ,setOtherToggle}) => {
+  const [feedback, setFeedback] = useState('');
+  const [feedbackLive, setFeedbackLive] = useState('');
 
   const [toggleFeedback, setToggleFeedback] = useState(false);
   const [toggleFeedbackLive, setToggleFeedbackLive] = useState(false);
@@ -16,38 +16,21 @@ const LeftCardFooter = ({trip, getFeedback}) => {
 
   const ToggleFeedback = () => {
     setToggleFeedback(!toggleFeedback);
+    setOtherToggle(false);
+    setToggleName('LeftCardFooter')
   };
   const ToggleFeedbackLive = () => {
     setToggleFeedbackLive(!toggleFeedbackLive);
   };
-
-  const switchFeedbackRight = () => {
-    toggleFeedbackLive
-      ? setFeedbackLiveIndex(
-          (feedbackLiveIndex + 1) % trip.feedbacksLive.length,
-        )
-      : setFeedbackIndex((feedbackIndex + 1) % trip.feedbacks.length);
-  };
-
-  const switchFeedbackLeft = () => {
-    toggleFeedbackLive
-      ? setFeedbackLiveIndex(
-          (feedbackLiveIndex - 1 + trip.feedbacksLive.length) %
-            trip.feedbacksLive.length,
-        )
-      : setFeedbackIndex(
-          (feedbackIndex - 1 + trip.feedbacks.length) % trip.feedbacks.length,
-        );
-  };
+  const onAddFeedback = () => {
+    toggleFeedbackLive ? trip.feedbacksLive.push(feedbackLive)
+      : trip.feedbacks.push(feedback)
+  }
 
   return (
     <View style={styles.container}>
       <Button
-        title={
-          toggleFeedback
-            ? (!toggleFeedbackLive ? 'Add Regular' : 'Add Live') + ' Feedback'
-            : 'Add Feedback'
-        }
+        title={'Add Feedback'}
         onPress={ToggleFeedback}
         type="secondary"
         titleStyle={styles.button}
@@ -68,18 +51,24 @@ const LeftCardFooter = ({trip, getFeedback}) => {
               containerStyle={styles.checkbox}
             />
           </View>
-          <Form>
+          <Form
+            onButtonPress={onAddFeedback}
+            buttonStyle={styles.formButton}
+            buttonText="Submit">
             <FormItem
-              placeholder="Enter Your Feedback Here"
+              placeholder={!toggleFeedbackLive ? "Add feedback here" :
+                "Add live feedback here"}
               style={styles.inputView}
-              label="Feedback:"
-              labelStyle={styles.label}
-              isRequired
-            //   value={email}
-            //   onChangeText={email => {
-            //     setEmail(email);
-            //   }}
-              asterik
+              label={!toggleFeedbackLive ? "Regular Feedback:" : "Live Feedback:"}
+              labelStyle={styles.feedback}
+              multiline={true}
+              value={!toggleFeedbackLive ? feedback : feedbackLive}
+              onChangeText={fb => {
+                {
+                  !toggleFeedbackLive ? setFeedback(fb) :
+                    setFeedbackLive(fb)
+                }
+              }}
             />
           </Form>
         </View>
@@ -120,6 +109,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '120%',
+    alignSelf: 'flex-end',
   },
   //   RLbuttons: {
   //     width: 40,
@@ -147,6 +137,21 @@ const styles = StyleSheet.create({
     marginRight: 20,
     fontSize: 17,
     borderRadius: 30,
+  },
+  feedback: {
+    color: 'black',
+    paddingLeft: 30,
+    fontWeight: 'bold',
+    fontSize: 17,
+    paddingTop: 20,
+  },
+  formButton: {
+    backgroundColor: 'firebrick',
+    marginLeft: 100,
+    marginRight: 100,
+    marginTop: 10,
+    borderRadius: 20,
+    color: 'black',
   },
   RLbuttonsView: {
     flex: 2,

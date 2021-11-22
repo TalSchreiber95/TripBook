@@ -1,6 +1,8 @@
 import {View, Text, StyleSheet, ImageBackground} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Button, CheckBox} from 'react-native-elements';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
+
 // import {CheckBox} from 'react-native-elements/dist/checkbox/CheckBox';
 // import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome';
 
@@ -55,16 +57,16 @@ const LeftCardFooter = ({trip, getFeedback}) => {
       {toggleFeedback && (
         <View style={styles.popUp}>
           <View style={styles.RLbuttonsView}>
-            <CheckBox
-              title="Live"
-              checked={toggleCheckbox}
-              iconType="material"
-              checkedIcon="close"
-              uncheckedIcon="add"
-              onPress={ToggleFeedbackLive}
-              style={styles.checkbox}
-              containerStyle={styles.checkbox}
-            />
+          <BouncyCheckbox
+            style={styles.checkbox}
+            size={25}
+            fillColor="black"
+            unfillColor="silver"
+            // iconStyle={styles.icon}
+            // textStyle={styles.checkboxText}
+            text="Live"
+            onPress={ToggleFeedbackLive}
+          />
             <Button
               title="<"
               onPress={switchFeedbackLeft}

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   SafeAreaView,
@@ -10,11 +10,11 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import {Form, FormItem} from 'react-native-form-component';
+import { Form, FormItem } from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Header from './Header';
 
-const AddTrip = ({addTrip, navigation, name, getId}) => {
+const AddTrip = ({ addTrip, navigation, name, getId }) => {
   const [tripName, setTripName] = useState('');
   const [location, setLocation] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -22,9 +22,7 @@ const AddTrip = ({addTrip, navigation, name, getId}) => {
   const [priceInNis, setPriceInNis] = useState();
 
   const [description, setDescription] = useState('');
-  const [pictureOne, setPictureOne] = useState(''); // supposed to add a
-  const [pictureTwo, setPictureTwo] = useState(''); // button to add 3 pictures
-  const [pictureThree, setPictureThree] = useState('');
+  const [picture, setPicture] = useState('');
 
   //categorys
   const [isRelax, setIsRelax] = useState(false);
@@ -54,11 +52,9 @@ const AddTrip = ({addTrip, navigation, name, getId}) => {
           isPlaneTravel: isPlaneTravel,
           isTrainTravel: isTrainTravel,
         },
-        pictures: {
-          one: pictureOne,
-          two: pictureTwo,
-          three: pictureThree,
-        },
+        pictures: [
+          picture
+        ],
         location: location,
         description: description,
         feedbacks: [feedback],
@@ -130,6 +126,19 @@ const AddTrip = ({addTrip, navigation, name, getId}) => {
               value={description}
               onChangeText={description => {
                 setDescription(description);
+              }}
+              isRequired
+              asterik
+            />
+            <FormItem
+              placeholder="Add url pic here"
+              style={styles.description}
+              label="url pic:"
+              labelStyle={styles.label}
+              multiline={true}
+              value={picture}
+              onChangeText={pic => {
+                setPicture(pic);
               }}
               isRequired
               asterik

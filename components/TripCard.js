@@ -5,13 +5,12 @@ import CardHeader from './CardHeader';
 import { useState } from 'react';
 
 const TripCard = ({trip}) => {
-  const pic1 = trip.pictures.one;
-  const pic2 = trip.pictures.two;
-  const pic3 = trip.pictures.three;
 
-  const [feedbackIndex, setFeedbackIndex] = useState(0);
+  const [pic, setPicture] = useState(0);
 
-
+  const updatePicture=(ind)=>{
+    setPicture(ind);
+  }
   return (
     <View style={styles.card}>
       <CardHeader trip={trip} />
@@ -22,10 +21,10 @@ const TripCard = ({trip}) => {
         <ImageBackground
           style={styles.logo}
           source={{
-            uri: pic1,
+            uri: trip.pictures[pic],
           }}></ImageBackground>
       </View>
-      <CardFooter trip={trip} />
+      <CardFooter trip={trip} setPicture={updatePicture}/>
     </View>
   );
 };

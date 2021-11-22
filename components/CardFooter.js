@@ -3,9 +3,10 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Header} from 'react-native-elements';
 import RightCardFooter from './RightCardFooter';
 import LeftCardFooter from './LeftCardFooter';
+import CenterCardFooter from './CenterCardFooter';
 import LinearGradient from 'react-native-linear-gradient';
 
-const CardFooter = ({trip}) => {
+const CardFooter = ({trip,setPicture}) => {
   return (
     <View style={styles.cardFooter}>
       <Header
@@ -16,11 +17,7 @@ const CardFooter = ({trip}) => {
           end: {x: 0, y: 0.5},
         }}
         leftComponent={<LeftCardFooter trip={trip} />}
-        centerComponent={
-          <View>
-            <Text style={styles.text}> Gallery </Text>
-          </View>
-        }
+        centerComponent={<CenterCardFooter trip={trip} setPicture={setPicture} />}
         rightComponent={<RightCardFooter trip={trip} />}
       />
     </View>

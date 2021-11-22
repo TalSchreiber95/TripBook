@@ -74,11 +74,10 @@ const App: () => Node = () => {
         isPlaneTravel: false,
         isTrainTravel: false,
       },
-      pictures: {
-        one: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSjzoRJBCcaW-Tj1pn9kaj3J1-FJjRN26Gsw&usqp=CAU',
-        two: '',
-        three: '',
-      },
+      pictures: [
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSjzoRJBCcaW-Tj1pn9kaj3J1-FJjRN26Gsw&usqp=CAU',
+        'https://i.ibb.co/McYBzxw/medium-Value.jpg',
+      ],
       location: 'location',
       description: 'The sky is blue and infinite ',
       feedbacks: ['beautifull sky', 'Blue deep sky', 'Tal the PoliceOfficer', 'eofkldnslkvf sdklfndslkfdslk fsdklfdslkmkldsf'],
@@ -97,11 +96,10 @@ const App: () => Node = () => {
         isPlaneTravel: false,
         isTrainTravel: false,
       },
-      pictures: {
-        one: 'https://i.ibb.co/McYBzxw/medium-Value.jpg',
-        two: '',
-        three: '',
-      },
+      pictures: [
+        'https://i.ibb.co/McYBzxw/medium-Value.jpg',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSjzoRJBCcaW-Tj1pn9kaj3J1-FJjRN26Gsw&usqp=CAU',
+      ],
       location: 'location',
       description: 'Watch now the new movie of Pokemon! ',
       feedbacks: ['lovely and fun place', 'beautiful place'],
