@@ -1,7 +1,8 @@
 import {View, Text, StyleSheet, ImageBackground} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {Button} from 'react-native-elements';
-import {CheckBox} from 'react-native-elements/dist/checkbox/CheckBox';
+import {Button, CheckBox} from 'react-native-elements';
+// import {CheckBox} from 'react-native-elements/dist/checkbox/CheckBox';
+// import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome';
 
 const LeftCardFooter = ({trip, getFeedback}) => {
   const [feedbackIndex, setFeedbackIndex] = useState(0);
@@ -9,6 +10,7 @@ const LeftCardFooter = ({trip, getFeedback}) => {
 
   const [toggleFeedback, setToggleFeedback] = useState(false);
   const [toggleFeedbackLive, setToggleFeedbackLive] = useState(false);
+  const [toggleCheckbox, setToggleCheckbox] = useState(false);
 
   const ToggleFeedback = () => {
     setToggleFeedback(!toggleFeedback);
@@ -20,8 +22,8 @@ const LeftCardFooter = ({trip, getFeedback}) => {
   const switchFeedbackRight = () => {
     toggleFeedbackLive
       ? setFeedbackLiveIndex(
-          (feedbackLiveIndex + 1) % trip.feedbacksLive.length
-        ) 
+          (feedbackLiveIndex + 1) % trip.feedbacksLive.length,
+        )
       : setFeedbackIndex((feedbackIndex + 1) % trip.feedbacks.length);
   };
 
@@ -29,10 +31,10 @@ const LeftCardFooter = ({trip, getFeedback}) => {
     toggleFeedbackLive
       ? setFeedbackLiveIndex(
           (feedbackLiveIndex - 1 + trip.feedbacksLive.length) %
-            trip.feedbacksLive.length
+            trip.feedbacksLive.length,
         )
       : setFeedbackIndex(
-          (feedbackIndex - 1 + trip.feedbacks.length) % trip.feedbacks.length
+          (feedbackIndex - 1 + trip.feedbacks.length) % trip.feedbacks.length,
         );
   };
 
@@ -52,35 +54,37 @@ const LeftCardFooter = ({trip, getFeedback}) => {
       />
       {toggleFeedback && (
         <View style={styles.popUp}>
-          <View style={styles.buttonsView}>
+          <View style={styles.RLbuttonsView}>
             <CheckBox
               title="Live"
+              checked={toggleCheckbox}
+              iconType="material"
+              checkedIcon="close"
+              uncheckedIcon="add"
               onPress={ToggleFeedbackLive}
-              // type="secondary"
-              // titleStyle={styles.button}
-              // containerStyle={styles.buttonContainer}
-              // raised
+              style={styles.checkbox}
+              containerStyle={styles.checkbox}
             />
             <Button
               title="<"
               onPress={switchFeedbackLeft}
-              type="secondary"
-              titleStyle={styles.button}
-              containerStyle={styles.buttonLeft}
-              raised
+              type="outline"
+              titleStyle={styles.titleArrowButtons}
+              // containerStyle={styles.buttonContainer}
+              buttonStyle={styles.RLbuttons}
             />
             <Button
               title=">"
               onPress={switchFeedbackRight}
-              type="secondary"
-              titleStyle={styles.button}
-              containerStyle={styles.buttonRight}
-              raised
+              type="outline"
+              titleStyle={styles.titleArrowButtons}
+              //   containerStyle={styles.buttonRight}
+              buttonStyle={styles.RLbuttons}
             />
           </View>
           <Text style={styles.text}>
             {toggleFeedbackLive
-              ? trip.feedbacksLive[feedbackIndex]
+              ? trip.feedbacksLive[feedbackLiveIndex]
               : trip.feedbacks[feedbackIndex]}
           </Text>
         </View>
@@ -101,41 +105,63 @@ const styles = StyleSheet.create({
 
   popUp: {
     //   flex: 0.1,
-    // marginBottom: 20,
+    marginTop: 10,
     height: 'auto',
-    width: '500%',
+    width: 300,
     borderRadius: 5,
     position: 'relative',
     // top: 65,
     // left: 10,
     elevation: 2,
-    // backgroundColor: '#000000c0',
     justifyContent: 'center',
-
-    // position: 'absolute',
+    // backgroundColor: '#000000c0',
   },
   button: {
     // backgroundColor: 'black',
   },
+
+  titleArrowButtons: {
+    color: 'white',
+  },
   buttonContainer: {
-    backgroundColor: 'black',
-    width: 83,
+    width: '120%',
   },
-  buttonLeft: {
-    width: 20,
+  RLbuttons: {
+    width: 40,
+    height: 40,
+    // margin: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    borderRadius: 35,
+    borderColor: 'white',
+    borderWidth: 0.8,
   },
-  buttonRight: {
-    width: 20,
+
+  RLbuttonsView: {
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    padding: 10,
   },
 
   text: {
-    // flex: 0.1,
     color: 'white',
     fontSize: 18,
     letterSpacing: 2,
-    // position: 'relative',
+    margin: 15,
     marginTop: -3,
     textAlign: 'center',
+  },
+
+  checkbox: {
+    flex: 0.8,
+    alignSelf: 'center',
+    // width: 70,
+    // height: 30,
+    fontSize: 5,
+    textAlign: 'center',
+    backgroundColor: 'transparent',
+    borderColor: 'transparent'
   },
 });
 export default LeftCardFooter;

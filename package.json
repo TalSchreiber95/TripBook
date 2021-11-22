@@ -10,8 +10,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@fortawesome/react-fontawesome": "^0.1.16",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "material-design-icons": "^3.0.1",
     "react": "17.0.2",
     "react-native": "^0.66.2",
     "react-native-bouncy-checkbox": "^2.1.7",
@@ -20,6 +22,7 @@
     "react-native-linear-gradient": "^2.5.6",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.9.0",
+    "react-native-vector-icons": "^9.0.0",
     "yarn": "^1.22.17"
   },
   "devDependencies": {

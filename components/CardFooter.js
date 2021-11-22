@@ -18,7 +18,7 @@ const CardFooter = ({trip}) => {
         leftComponent={<LeftCardFooter trip={trip} />}
         centerComponent={
           <View>
-            <Text style={styles.text}> Add Live/other feedback</Text>
+            <Text style={styles.text}> Gallery </Text>
           </View>
         }
         rightComponent={<RightCardFooter trip={trip} />}

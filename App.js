@@ -81,7 +81,7 @@ const App: () => Node = () => {
       },
       location: 'location',
       description: 'The sky is blue and infinite ',
-      feedbacks: ['beautifull sky', 'Blue deep sky', 'Tal the PoliceOfficer'],
+      feedbacks: ['beautifull sky', 'Blue deep sky', 'Tal the PoliceOfficer', 'eofkldnslkvf sdklfndslkfdslk fsdklfdslkmkldsf'],
       feedbacksLive: ['Live', 'Im Liveee'],
       priceInNis: 60,
     },
