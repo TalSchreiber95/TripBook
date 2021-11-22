@@ -57,16 +57,16 @@ const LeftCardFooter = ({trip, getFeedback}) => {
       {toggleFeedback && (
         <View style={styles.popUp}>
           <View style={styles.RLbuttonsView}>
-          <BouncyCheckbox
-            style={styles.checkbox}
-            size={25}
-            fillColor="black"
-            unfillColor="silver"
-            // iconStyle={styles.icon}
-            // textStyle={styles.checkboxText}
-            text="Live"
-            onPress={ToggleFeedbackLive}
-          />
+            <BouncyCheckbox
+              style={styles.checkbox}
+              size={25}
+              fillColor="black"
+              unfillColor="silver"
+              // iconStyle={styles.icon}
+              // textStyle={styles.checkboxText}
+              text="Live"
+              onPress={ToggleFeedbackLive}
+            />
             <Button
               title="<"
               onPress={switchFeedbackLeft}
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     fontSize: 5,
     textAlign: 'center',
     backgroundColor: 'transparent',
-    borderColor: 'transparent'
+    borderColor: 'transparent',
   },
 });
 export default LeftCardFooter;

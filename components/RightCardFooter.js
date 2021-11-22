@@ -1,12 +1,11 @@
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { Button, CheckBox } from 'react-native-elements';
+import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Button, CheckBox} from 'react-native-elements';
 // import {CheckBox} from 'react-native-elements/dist/checkbox/CheckBox';
 // import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome';
-import { Form, FormItem } from 'react-native-form-component';
+import {Form, FormItem} from 'react-native-form-component';
 
-
-const LeftCardFooter = ({ trip ,setOtherToggle}) => {
+const LeftCardFooter = ({trip}) => {
   const [feedback, setFeedback] = useState('');
   const [feedbackLive, setFeedbackLive] = useState('');
 
@@ -16,16 +15,15 @@ const LeftCardFooter = ({ trip ,setOtherToggle}) => {
 
   const ToggleFeedback = () => {
     setToggleFeedback(!toggleFeedback);
-    setOtherToggle(false);
-    setToggleName('LeftCardFooter')
   };
   const ToggleFeedbackLive = () => {
     setToggleFeedbackLive(!toggleFeedbackLive);
   };
   const onAddFeedback = () => {
-    toggleFeedbackLive ? trip.feedbacksLive.push(feedbackLive)
-      : trip.feedbacks.push(feedback)
-  }
+    toggleFeedbackLive
+      ? trip.feedbacksLive.push(feedbackLive)
+      : trip.feedbacks.push(feedback);
+  };
 
   return (
     <View style={styles.container}>
@@ -56,17 +54,21 @@ const LeftCardFooter = ({ trip ,setOtherToggle}) => {
             buttonStyle={styles.formButton}
             buttonText="Submit">
             <FormItem
-              placeholder={!toggleFeedbackLive ? "Add feedback here" :
-                "Add live feedback here"}
+              placeholder={
+                !toggleFeedbackLive
+                  ? 'Add feedback here'
+                  : 'Add live feedback here'
+              }
               style={styles.inputView}
-              label={!toggleFeedbackLive ? "Regular Feedback:" : "Live Feedback:"}
+              label={
+                !toggleFeedbackLive ? 'Regular Feedback:' : 'Live Feedback:'
+              }
               labelStyle={styles.feedback}
               multiline={true}
               value={!toggleFeedbackLive ? feedback : feedbackLive}
               onChangeText={fb => {
                 {
-                  !toggleFeedbackLive ? setFeedback(fb) :
-                    setFeedbackLive(fb)
+                  !toggleFeedbackLive ? setFeedback(fb) : setFeedbackLive(fb);
                 }
               }}
             />

@@ -2,15 +2,14 @@ import React from 'react';
 import {View, Text, StyleSheet, Image, ImageBackground} from 'react-native';
 import CardFooter from './CardFooter';
 import CardHeader from './CardHeader';
-import { useState } from 'react';
+import {useState} from 'react';
 
 const TripCard = ({trip}) => {
-
   const [pic, setPicture] = useState(0);
 
-  const updatePicture=(ind)=>{
+  const updatePicture = ind => {
     setPicture(ind);
-  }
+  };
   return (
     <View style={styles.card}>
       <CardHeader trip={trip} />
@@ -24,7 +23,7 @@ const TripCard = ({trip}) => {
             uri: trip.pictures[pic],
           }}></ImageBackground>
       </View>
-      <CardFooter trip={trip} setPicture={updatePicture}/>
+      <CardFooter trip={trip} setPicture={updatePicture} />
     </View>
   );
 };
