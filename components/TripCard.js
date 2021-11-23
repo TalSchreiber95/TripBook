@@ -30,11 +30,12 @@ const TripCard = ({trip}) => {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 4,
+    borderRadius: 5,
     borderWidth: 1,
     borderColor: 'grey',
     margin: 10,
     flex: 1,
+    elevation: 2,
   },
   title: {
     color: 'black',

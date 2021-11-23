@@ -10,6 +10,7 @@ const CardFooter = ({trip, setPicture}) => {
   return (
     <View style={styles.cardFooter}>
       <Header
+        containerStyle={styles.header}
         ViewComponent={LinearGradient}
         linearGradientProps={{
           colors: ['silver', 'steelblue'],
@@ -17,10 +18,10 @@ const CardFooter = ({trip, setPicture}) => {
           end: {x: 0, y: 0.5},
         }}
         leftComponent={<LeftCardFooter trip={trip} />}
-        centerComponent={
+        rightComponent={
           <CenterCardFooter trip={trip} setPicture={setPicture} />
         }
-        rightComponent={<RightCardFooter trip={trip} />}
+        // rightComponent={<RightCardFooter trip={trip} />}
       />
     </View>
   );
@@ -32,11 +33,19 @@ CardFooter.defaultProps = {
     lastName: '',
   },
 };
+
 const styles = StyleSheet.create({
   cardFooter: {
-    // alignItems: 'center',
     backgroundColor: '#001f7f',
-    marginBottom: 0,
+    // height: 100,
+    
+  },
+  header: {
+    marginTop: 0,
+    // height: 100,
+
+    // justifyContent: 'flex',
+    // paddingTop: 0,
   },
   text: {
     color: 'gold',

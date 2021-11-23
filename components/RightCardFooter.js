@@ -4,6 +4,7 @@ import {Button, CheckBox} from 'react-native-elements';
 // import {CheckBox} from 'react-native-elements/dist/checkbox/CheckBox';
 // import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome';
 import {Form, FormItem} from 'react-native-form-component';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 const LeftCardFooter = ({trip}) => {
   const [feedback, setFeedback] = useState('');
@@ -12,6 +13,8 @@ const LeftCardFooter = ({trip}) => {
   const [toggleFeedback, setToggleFeedback] = useState(false);
   const [toggleFeedbackLive, setToggleFeedbackLive] = useState(false);
   const [toggleCheckbox, setToggleCheckbox] = useState(false);
+
+
 
   const ToggleFeedback = () => {
     setToggleFeedback(!toggleFeedback);
@@ -28,27 +31,28 @@ const LeftCardFooter = ({trip}) => {
   return (
     <View style={styles.container}>
       <Button
-        title={'Add Feedback'}
+        title="Add Feedback +"
         onPress={ToggleFeedback}
         type="secondary"
-        titleStyle={styles.button}
+        titleStyle={styles.mainButtonText}
         containerStyle={styles.buttonContainer}
         raised
       />
       {toggleFeedback && (
         <View style={styles.popUp}>
-          <View style={styles.RLbuttonsView}>
-            <CheckBox
-              title="Live"
-              checked={toggleCheckbox}
-              iconType="material"
-              checkedIcon="close"
-              uncheckedIcon="add"
-              onPress={ToggleFeedbackLive}
-              style={styles.checkbox}
-              containerStyle={styles.checkbox}
-            />
-          </View>
+          {/* <View style={styles.RLbuttonsView}> */}
+          <BouncyCheckbox
+            style={styles.checkbox}
+            size={25}
+            fillColor="black"
+            unfillColor="white"
+            iconStyle={styles.icon}
+            textStyle={styles.checkboxText}
+            text="Live"
+            textStyle={styles.checkboxText}
+            onPress={ToggleFeedbackLive}
+          />
+          {/* </View> */}
           <Form
             onButtonPress={onAddFeedback}
             buttonStyle={styles.formButton}
@@ -63,7 +67,7 @@ const LeftCardFooter = ({trip}) => {
               label={
                 !toggleFeedbackLive ? 'Regular Feedback:' : 'Live Feedback:'
               }
-              labelStyle={styles.feedback}
+              labelStyle={styles.label}
               multiline={true}
               value={!toggleFeedbackLive ? feedback : feedbackLive}
               onChangeText={fb => {
@@ -87,22 +91,25 @@ LeftCardFooter.defaultProps = {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    //   bottom: 50,
+  },
 
   popUp: {
     //   flex: 0.1,
     marginTop: 10,
     height: 'auto',
-    width: 300,
+    width: 350,
     borderRadius: 5,
     position: 'relative',
     // top: 65,
     // left: 10,
-    elevation: 2,
+    elevation: 5,
     justifyContent: 'center',
-    // backgroundColor: '#000000c0',
+    backgroundColor: 'white',
   },
-  button: {
+
+  mainButtonText: {
     // backgroundColor: 'black',
   },
 
@@ -110,50 +117,36 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   buttonContainer: {
-    width: '120%',
-    alignSelf: 'flex-end',
+    // width: '200%',
+    // alignSelf: 'flex-end',
   },
-  //   RLbuttons: {
-  //     width: 40,
-  //     height: 40,
-  //     // margin: 10,
-  //     marginLeft: 20,
-  //     marginRight: 20,
-  //     borderRadius: 35,
-  //     borderColor: 'white',
-  //     borderWidth: 0.8,
-  //   },
 
-  label: {
-    color: 'black',
-    marginLeft: 30,
-    fontWeight: 'bold',
-    fontSize: 17,
-  },
   inputView: {
     flex: 0.3,
     backgroundColor: 'lightblue',
     borderWidth: 0.5,
-    marginBottom: 10,
+    // marginBottom: 10,
     marginLeft: 20,
     marginRight: 20,
     fontSize: 17,
-    borderRadius: 30,
+    borderRadius: 5,
+    elevation: 5,
   },
-  feedback: {
+  label: {
     color: 'black',
     paddingLeft: 30,
     fontWeight: 'bold',
     fontSize: 17,
-    paddingTop: 20,
+    paddingTop: 10,
   },
   formButton: {
-    backgroundColor: 'firebrick',
+    backgroundColor: 'steelblue',
     marginLeft: 100,
     marginRight: 100,
-    marginTop: 10,
+    marginTop: 0,
     borderRadius: 20,
     color: 'black',
+    // height: 40,
   },
   RLbuttonsView: {
     flex: 2,
@@ -172,14 +165,25 @@ const styles = StyleSheet.create({
   },
 
   checkbox: {
-    flex: 0.8,
+    // flex: 1,
     alignSelf: 'center',
-    // width: 70,
+    // width: 10,
     // height: 30,
     fontSize: 5,
     textAlign: 'center',
     backgroundColor: 'transparent',
     borderColor: 'transparent',
+    padding: 10,
+    paddingTop: 15,
+  },
+  checkboxText: {
+    color: 'black',
+    textDecorationLine: 'none',
+    left: -10,
+    fontWeight: 'bold',
+  },
+  icon: {
+    borderColor: 'grey',
   },
 });
 export default LeftCardFooter;
