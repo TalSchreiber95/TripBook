@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -11,7 +11,7 @@ import {
 import Header from './Header';
 import TripFilter from './TripFilter';
 
-const HomePage = ({name, tripSearch, navigation}) => {
+const HomePage = ({ name, tripSearch, navigation }) => {
   const updateFilter = (
     isRelax,
     isDynamic,
@@ -36,7 +36,6 @@ const HomePage = ({name, tripSearch, navigation}) => {
       location: location,
       priceInNis: priceInNis,
     };
-    //Note: for unknown reason this object doesn't get inside to tripSearch state
     tripSearch(tripInfo);
   };
 

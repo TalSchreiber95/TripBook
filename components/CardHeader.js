@@ -1,23 +1,26 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import Icon from 'react-native-vector-icons/dist/FontAwesome';
+
+import { View, Text, StyleSheet } from 'react-native';
 import LeftCardHeader from './LeftCardHeader';
 import RightCardHeader from './RightCardHeader';
-import {Header} from 'react-native-elements';
+import { Header } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 
-const CardHeader = ({trip}) => {
+const CardHeader = ({ trip, updateButton, weather, info }) => {
   return (
     <Header
       containerStyle={styles.containerStyle}
       ViewComponent={LinearGradient}
       linearGradientProps={{
         colors: ['silver', 'steelblue'],
-        start: {x: 1, y: 3.5},
-        end: {x: 0, y: 0.5},
+        start: { x: 1, y: 3.5 },
+        end: { x: 0, y: 0.5 },
       }}
       leftComponent={
         <View style={styles.cardHeader}>
-          <LeftCardHeader trip={trip}/>
+          <LeftCardHeader trip={trip} updateButton={updateButton}
+            weather={weather} />
         </View>
       }
       centerComponent={
@@ -27,7 +30,11 @@ const CardHeader = ({trip}) => {
       }
       rightComponent={
         <View>
-          <RightCardHeader trip={trip}/>
+
+          <RightCardHeader trip={trip}
+            updateButton={updateButton}
+            info={info} />
+
         </View>
       }
     />
@@ -65,5 +72,8 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingTop: 10,
   },
+  icon: {
+    alignSelf: 'flex-end'
+  }
 });
 export default CardHeader;

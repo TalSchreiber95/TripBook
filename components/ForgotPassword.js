@@ -26,7 +26,7 @@ const ForgotPassword = ({ Users, navigation, ind }) => {
                     ind(index)
                     // Note: here it's supposed to send the
                     //       password to the mail of the user!
-                    Alert.alert("user password is: "+Users[index].pass);
+                    Alert.alert("user password is: " + Users[index].pass);
                     navigation.navigate('Login');
                     return;
                 } else {
@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 15,
         color: 'gold',
-        backgroundColor:'#001f3f',
-      },
+        backgroundColor: '#001f3f',
+    },
     // container: {
     //     flex: 1,
     // },
@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         fontWeight: 'bold',
         fontSize: 17,
-      },
-      inputView: {
+    },
+    inputView: {
         flex: 0.3,
         backgroundColor: 'lightblue',
         borderWidth: 0.5,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
         marginRight: 20,
         fontSize: 17,
         borderRadius: 30,
-      },
+    },
     button: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginBottom: 10,
         marginTop: 10,
-      },
+    },
 });
 
 export default ForgotPassword;

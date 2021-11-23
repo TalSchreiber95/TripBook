@@ -287,6 +287,7 @@ const styles = StyleSheet.create({
   },
   checkboxText: {
     fontFamily: 'JosefinSans-Regular',
+    textDecorationLine: 'none',
     fontSize: 20,
   },
   icon: {

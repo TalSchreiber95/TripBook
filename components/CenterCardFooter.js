@@ -1,12 +1,12 @@
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {Button, CheckBox} from 'react-native-elements';
-import {Form, FormItem} from 'react-native-form-component';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Button, CheckBox } from 'react-native-elements';
+import { Form, FormItem } from 'react-native-form-component';
 
 // import {CheckBox} from 'react-native-elements/dist/checkbox/CheckBox';
 // import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome';
 
-const CenterCardFooter = ({trip, setPicture}) => {
+const CenterCardFooter = ({ trip, setPicture, updateButton, gallery }) => {
   const [picIndex, setPicIndex] = useState(0);
   const [pic, setPic] = useState();
 
@@ -14,12 +14,14 @@ const CenterCardFooter = ({trip, setPicture}) => {
 
   //   const [feedbackLiveIndex, setFeedbackLiveIndex] = useState(0);
 
-  const [toggleFeedback, setToggleFeedback] = useState(false);
+  const [toggleFeedback, setToggleFeedback] = useState(gallery);
   const [toggleFeedbackLive, setToggleFeedbackLive] = useState(false);
   const [toggleCheckbox, setToggleCheckbox] = useState(false);
 
   const ToggleFeedback = () => {
-    setToggleFeedback(!toggleFeedback);
+    // setToggleFeedback(!toggleFeedback);
+    setToggleAddPicture(false);
+    updateButton(false, false, false, !gallery);
   };
   const ToggleFeedbackLive = () => {
     setToggleFeedbackLive(!toggleFeedbackLive);
@@ -52,7 +54,7 @@ const CenterCardFooter = ({trip, setPicture}) => {
         containerStyle={styles.buttonContainer}
         raised
       />
-      {toggleFeedback && (
+      {gallery && (
         <View style={styles.popUp}>
           <View style={styles.RLbuttonsView}>
             <Button
@@ -73,13 +75,13 @@ const CenterCardFooter = ({trip, setPicture}) => {
             />
           </View>
           <Button
-              title={!toggleAddPicture ? 'Add Picture +' : 'Close'}
-              onPress={ToggleAddPicture}
-              type="secondary"
-              titleStyle={styles.titleArrowButtons}
-              containerStyle={styles.addPictureButton}
-            //   raised
-            />
+            title={!toggleAddPicture ? 'Add Picture +' : 'Close'}
+            onPress={ToggleAddPicture}
+            type="secondary"
+            titleStyle={styles.titleArrowButtons}
+            containerStyle={styles.addPictureButton}
+          //   raised
+          />
           {toggleAddPicture && (
             <Form
               onButtonPress={onAddPicture}
@@ -114,9 +116,9 @@ CenterCardFooter.defaultProps = {
 };
 
 const styles = StyleSheet.create({
-    container: {
+  container: {
 
-    },
+  },
   formButton: {
     backgroundColor: 'steelblue',
     marginLeft: 100,
@@ -125,15 +127,15 @@ const styles = StyleSheet.create({
     marginTop: 0,
     borderRadius: 20,
   },
-//   formButton: {
-//     backgroundColor: 'steelblue',
-//     marginLeft: 100,
-//     marginRight: 100,
-//     marginTop: 0,
-//     borderRadius: 20,
-//     color: 'black',
-//     // height: 40,
-//   },
+  //   formButton: {
+  //     backgroundColor: 'steelblue',
+  //     marginLeft: 100,
+  //     marginRight: 100,
+  //     marginTop: 0,
+  //     borderRadius: 20,
+  //     color: 'black',
+  //     // height: 40,
+  //   },
   inputView: {
     flex: 0.3,
     backgroundColor: 'lightblue',

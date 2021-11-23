@@ -1,18 +1,15 @@
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {Button, CheckBox} from 'react-native-elements';
-// import {CheckBox} from 'react-native-elements/dist/checkbox/CheckBox';
-// import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome';
-import {Form, FormItem} from 'react-native-form-component';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Button, CheckBox } from 'react-native-elements';
+import { Form, FormItem } from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
-const LeftCardFooter = ({trip}) => {
+const LeftCardFooter = ({ trip }) => {
   const [feedback, setFeedback] = useState('');
   const [feedbackLive, setFeedbackLive] = useState('');
 
   const [toggleFeedback, setToggleFeedback] = useState(false);
   const [toggleFeedbackLive, setToggleFeedbackLive] = useState(false);
-  const [toggleCheckbox, setToggleCheckbox] = useState(false);
 
 
 
@@ -40,7 +37,6 @@ const LeftCardFooter = ({trip}) => {
       />
       {toggleFeedback && (
         <View style={styles.popUp}>
-          {/* <View style={styles.RLbuttonsView}> */}
           <BouncyCheckbox
             style={styles.checkbox}
             size={25}
@@ -52,7 +48,6 @@ const LeftCardFooter = ({trip}) => {
             textStyle={styles.checkboxText}
             onPress={ToggleFeedbackLive}
           />
-          {/* </View> */}
           <Form
             onButtonPress={onAddFeedback}
             buttonStyle={styles.formButton}

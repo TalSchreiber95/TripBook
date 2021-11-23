@@ -1,13 +1,12 @@
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
-import React, {useState} from 'react';
-import {Button} from 'react-native-elements';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import React, { useState } from 'react';
+import { Button } from 'react-native-elements';
 //this is other button component (way more better the the previous) - it built in from another directory
 // need to change to this button in the whole app maybe
 
-const RightCardHeader = ({trip}) => {
-  const [toggleInfo, setToggleInfo] = useState(false);
+const RightCardHeader = ({ trip, updateButton, info }) => {
   const ToggleInfo = () => {
-    setToggleInfo(!toggleInfo);
+    updateButton(false, !info, false, false);
   };
 
   return (
@@ -19,7 +18,7 @@ const RightCardHeader = ({trip}) => {
         titleStyle={styles.button}
         containerStyle={styles.buttonContainer}
       />
-      {toggleInfo && (
+      {info && (
         <View style={styles.popUp}>
           <Text style={styles.text}>{trip.description}</Text>
         </View>
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
     width: 200,
     borderRadius: 5,
     position: 'absolute',
-    top: 65,
+    top: 45,
     // left: 10,
     elevation: 20,
     backgroundColor: '#000000c0',

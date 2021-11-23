@@ -6,17 +6,17 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import HomePage from './components/HomePage';
 import AddTrip from './components/AddTrip';
 import TripsPage from './components/TripsPage';
 import ForgotPassword from './components/ForgotPassword';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import type {Node} from 'react';
+import type { Node } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -28,7 +28,7 @@ import {
   View,
 } from 'react-native';
 
-import {appendToMemberExpression, staticBlock} from '@babel/types';
+import { appendToMemberExpression, staticBlock } from '@babel/types';
 
 const Stack = createNativeStackNavigator();
 
@@ -142,10 +142,15 @@ const App: () => Node = () => {
   const addTripInfo = tripInfo => {
     setTripInfo(tripInfo);
   };
-
+  const deleteCard = (id) => {
+    setTrips(prevCards => {
+      return prevCards.filter(card => card.id != id);
+    });
+  };
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="TripsPage">
+      {/* Please Login as a admin and see  */}
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login">
           {props => (
             <LoginPage
@@ -186,6 +191,7 @@ const App: () => Node = () => {
               Trips={Trips}
               name={Users[Index]}
               tripInfo={TripInfo}
+              deleteCard={deleteCard}
             />
           )}
         </Stack.Screen>

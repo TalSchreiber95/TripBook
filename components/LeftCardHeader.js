@@ -1,11 +1,10 @@
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
-import React, {useState} from 'react';
-import {Button} from 'react-native-elements';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import React, { useState } from 'react';
+import { Button } from 'react-native-elements';
 
-const LeftCardHeader = ({trip}) => {
-  const [toggleWeather, setToggleWeather] = useState(false);
+const LeftCardHeader = ({ trip, updateButton, weather }) => {
   const ToggleWeather = () => {
-    setToggleWeather(!toggleWeather);
+    updateButton(!weather, false, false, false);
   };
 
   return (
@@ -19,7 +18,7 @@ const LeftCardHeader = ({trip}) => {
         raised
       />
 
-      {toggleWeather && (
+      {weather && (
         <View style={styles.popUp}>
           <Text style={styles.text}>20°C</Text>
           <Text style={styles.text}>Sunny</Text>
@@ -47,7 +46,7 @@ const styles = StyleSheet.create({
     width: 100,
     borderRadius: 5,
     position: 'absolute',
-    top: 65,
+    top: 45,
     // left: 10,
     elevation: 20,
     backgroundColor: '#000000c0',
@@ -57,6 +56,7 @@ const styles = StyleSheet.create({
   },
   button: {
     // backgroundColor: 'black',
+    fontSize: 15
   },
   buttonContainer: {
     backgroundColor: 'black',

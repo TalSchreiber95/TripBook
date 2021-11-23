@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   SafeAreaView,
@@ -9,11 +9,11 @@ import {
   View,
 } from 'react-native';
 
-import {Form, FormItem} from 'react-native-form-component';
+import { Form, FormItem } from 'react-native-form-component';
 import Header from './Header'
 
-const RegisterPage = ({Users, addNewUser, navigation}) => {
-  
+const RegisterPage = ({ Users, addNewUser, navigation }) => {
+
   const [newUser, setNewUser] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -48,7 +48,6 @@ const RegisterPage = ({Users, addNewUser, navigation}) => {
     <SafeAreaView>
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        {/* <Text style={styles.title}>TripBook</Text> */}
         <Header />
         <Form
           onButtonPress={onRegister}
@@ -124,7 +123,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 15,
     color: 'gold',
-    backgroundColor:'#001f3f',
+    backgroundColor: '#001f3f',
   },
   label: {
     color: 'black',

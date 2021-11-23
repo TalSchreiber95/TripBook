@@ -1,13 +1,13 @@
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {Button, CheckBox} from 'react-native-elements';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Button, CheckBox } from 'react-native-elements';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import RightCardFooter from './RightCardFooter';
 
 // import {CheckBox} from 'react-native-elements/dist/checkbox/CheckBox';
 // import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome';
 
-const LeftCardFooter = ({trip}) => {
+const LeftCardFooter = ({ trip, updateButton, feedback }) => {
   const [feedbackIndex, setFeedbackIndex] = useState(0);
   const [feedbackLiveIndex, setFeedbackLiveIndex] = useState(0);
 
@@ -16,7 +16,8 @@ const LeftCardFooter = ({trip}) => {
   const [toggleCheckbox, setToggleCheckbox] = useState(false);
 
   const ToggleFeedback = () => {
-    setToggleFeedback(!toggleFeedback);
+    // setToggleFeedback(!toggleFeedback);
+    updateButton(false, false, !feedback, false);
   };
   const ToggleFeedbackLive = () => {
     setToggleFeedbackLive(!toggleFeedbackLive);
@@ -25,27 +26,27 @@ const LeftCardFooter = ({trip}) => {
   const switchFeedbackRight = () => {
     toggleFeedbackLive
       ? setFeedbackLiveIndex(
-          (feedbackLiveIndex + 1) % trip.feedbacksLive.length,
-        )
+        (feedbackLiveIndex + 1) % trip.feedbacksLive.length,
+      )
       : setFeedbackIndex((feedbackIndex + 1) % trip.feedbacks.length);
   };
 
   const switchFeedbackLeft = () => {
     toggleFeedbackLive
       ? setFeedbackLiveIndex(
-          (feedbackLiveIndex - 1 + trip.feedbacksLive.length) %
-            trip.feedbacksLive.length,
-        )
+        (feedbackLiveIndex - 1 + trip.feedbacksLive.length) %
+        trip.feedbacksLive.length,
+      )
       : setFeedbackIndex(
-          (feedbackIndex - 1 + trip.feedbacks.length) % trip.feedbacks.length,
-        );
+        (feedbackIndex - 1 + trip.feedbacks.length) % trip.feedbacks.length,
+      );
   };
 
   return (
     <View style={styles.container}>
       <Button
         title={
-          toggleFeedback
+          feedback
             ? (!toggleFeedbackLive ? 'Regular' : 'Live') + ' Feedbacks'
             : 'Feedbacks'
         }
@@ -55,7 +56,7 @@ const LeftCardFooter = ({trip}) => {
         containerStyle={styles.buttonContainer}
         raised
       />
-      {toggleFeedback && (
+      {feedback && (
         <View style={styles.popUp}>
           <BouncyCheckbox
             style={styles.checkbox}
@@ -65,7 +66,6 @@ const LeftCardFooter = ({trip}) => {
             iconStyle={styles.icon}
             textStyle={styles.checkboxText}
             text="Live"
-            textStyle={styles.checkboxText}
             onPress={ToggleFeedbackLive}
           />
           <View style={styles.RLbuttonsView}>
@@ -91,7 +91,7 @@ const LeftCardFooter = ({trip}) => {
               buttonStyle={styles.RLbuttons}
             />
           </View>
-          <RightCardFooter trip={trip}/>
+          <RightCardFooter trip={trip} />
         </View>
       )}
     </View>

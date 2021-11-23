@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   View,
@@ -10,9 +10,9 @@ import {
   StatusBar,
 } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import {Form, FormItem} from 'react-native-form-component';
+import { Form, FormItem } from 'react-native-form-component';
 
-const TripFilter = ({updateFilter, tripSearch, navigation}) => {
+const TripFilter = ({ updateFilter, tripSearch, navigation }) => {
   const [isRelax, setIsRelax] = useState(false);
   const [isDynamic, setIsDynamic] = useState(false);
   const [isParty, setIsParty] = useState(false);
@@ -48,115 +48,115 @@ const TripFilter = ({updateFilter, tripSearch, navigation}) => {
   };
   return (
     // <SafeAreaView>
-      <View >
-        <Form
-          onButtonPress={onSearch}
-          buttonStyle={styles.formButton}
-          buttonText="Search Trip">
-          <Text style={styles.text}>Enter your trip info: </Text>
-          <FormItem
-            style={styles.inputView}
-            label="Price limit (NIS)"
-            labelStyle={styles.label}
-            value={priceInNis}
-            placeholder="Add price here"
-            onChangeText={price => {
-              setPriceInNis(price);
-            }}
-            isRequired
-            asterik
-          />
-          <FormItem
-            style={styles.inputView}
-            label="location"
-            labelStyle={styles.label}
-            value={location}
-            placeholder="Add location here"
-            onChangeText={location => {
-              setLocation(location);
-            }}
-            isRequired
-            asterik
-          />
-          <Text style={styles.text}>Filter your trip category</Text>
-          <BouncyCheckbox
-            style={styles.checkbox}
-            size={25}
-            fillColor="black"
-            unfillColor="silver"
-            iconStyle={styles.icon}
-            textStyle={styles.checkboxText}
-            text="Relax"
-            onPress={setIsRelax}
-          />
-          <BouncyCheckbox
-            style={styles.checkbox}
-            size={25}
-            fillColor="black"
-            unfillColor="silver"
-            iconStyle={styles.icon}
-            textStyle={styles.checkboxText}
-            text="Dynamic"
-            onPress={setIsDynamic}
-          />
-          <BouncyCheckbox
-            style={styles.checkbox}
-            size={25}
-            fillColor="black"
-            unfillColor="silver"
-            iconStyle={styles.icon}
-            textStyle={styles.checkboxText}
-            text="Party"
-            onPress={setIsParty}
-          />
-          <BouncyCheckbox
-            style={styles.checkbox}
-            size={25}
-            fillColor="black"
-            unfillColor="silver"
-            iconStyle={styles.icon}
-            textStyle={styles.checkboxText}
-            text="Pet"
-            onPress={setIsPetAllowed}
-          />
-          <BouncyCheckbox
-            style={styles.checkbox}
-            size={25}
-            fillColor="black"
-            unfillColor="silver"
-            iconStyle={styles.icon}
-            textStyle={styles.checkboxText}
-            text="Car travel"
-            onPress={setIsCarTravel}
-            setIsPlaneTravel
-          />
-          <BouncyCheckbox
-            style={styles.checkbox}
-            size={25}
-            fillColor="black"
-            unfillColor="silver"
-            iconStyle={styles.icon}
-            textStyle={styles.checkboxText}
-            text="Plane travel"
-            onPress={setIsPlaneTravel}
-          />
-          <BouncyCheckbox
-            style={styles.checkbox}
-            size={25}
-            fillColor="black"
-            unfillColor="silver"
-            iconStyle={styles.icon}
-            textStyle={styles.checkboxText}
-            text="Train travel"
-            onPress={setIsTrainTravel}
-          />
-        </Form>
-        <Button
-          title="Add trip +"
-          color="red"
-          onPress={() => navigation.navigate('AddTrip')}
+    <View >
+      <Form
+        onButtonPress={onSearch}
+        buttonStyle={styles.formButton}
+        buttonText="Search Trip">
+        <Text style={styles.text}>Enter your trip info: </Text>
+        <FormItem
+          style={styles.inputView}
+          label="Price limit (NIS)"
+          labelStyle={styles.label}
+          value={priceInNis}
+          placeholder="Add price here"
+          onChangeText={price => {
+            setPriceInNis(price);
+          }}
+          isRequired
+          asterik
         />
-      </View>
+        <FormItem
+          style={styles.inputView}
+          label="location"
+          labelStyle={styles.label}
+          value={location}
+          placeholder="Add location here"
+          onChangeText={location => {
+            setLocation(location);
+          }}
+          isRequired
+          asterik
+        />
+        <Text style={styles.text}>Filter your trip category</Text>
+        <BouncyCheckbox
+          style={styles.checkbox}
+          size={25}
+          fillColor="black"
+          unfillColor="silver"
+          iconStyle={styles.icon}
+          textStyle={styles.checkboxText}
+          text="Relax"
+          onPress={setIsRelax}
+        />
+        <BouncyCheckbox
+          style={styles.checkbox}
+          size={25}
+          fillColor="black"
+          unfillColor="silver"
+          iconStyle={styles.icon}
+          textStyle={styles.checkboxText}
+          text="Dynamic"
+          onPress={setIsDynamic}
+        />
+        <BouncyCheckbox
+          style={styles.checkbox}
+          size={25}
+          fillColor="black"
+          unfillColor="silver"
+          iconStyle={styles.icon}
+          textStyle={styles.checkboxText}
+          text="Party"
+          onPress={setIsParty}
+        />
+        <BouncyCheckbox
+          style={styles.checkbox}
+          size={25}
+          fillColor="black"
+          unfillColor="silver"
+          iconStyle={styles.icon}
+          textStyle={styles.checkboxText}
+          text="Pet"
+          onPress={setIsPetAllowed}
+        />
+        <BouncyCheckbox
+          style={styles.checkbox}
+          size={25}
+          fillColor="black"
+          unfillColor="silver"
+          iconStyle={styles.icon}
+          textStyle={styles.checkboxText}
+          text="Car travel"
+          onPress={setIsCarTravel}
+          setIsPlaneTravel
+        />
+        <BouncyCheckbox
+          style={styles.checkbox}
+          size={25}
+          fillColor="black"
+          unfillColor="silver"
+          iconStyle={styles.icon}
+          textStyle={styles.checkboxText}
+          text="Plane travel"
+          onPress={setIsPlaneTravel}
+        />
+        <BouncyCheckbox
+          style={styles.checkbox}
+          size={25}
+          fillColor="black"
+          unfillColor="silver"
+          iconStyle={styles.icon}
+          textStyle={styles.checkboxText}
+          text="Train travel"
+          onPress={setIsTrainTravel}
+        />
+      </Form>
+      <Button
+        title="Add trip +"
+        color="red"
+        onPress={() => navigation.navigate('AddTrip')}
+      />
+    </View>
   );
 };
 TripFilter.defaultProps = {
@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
   },
   checkboxText: {
     fontFamily: 'JosefinSans-Regular',
+    textDecorationLine: 'none',
     fontSize: 20,
   },
   searchButtonView: {
