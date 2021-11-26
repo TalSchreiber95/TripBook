@@ -1,66 +1,71 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import { View, Text, StyleSheet, Image, ImageBackground, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  Alert,
+} from 'react-native';
 import CardFooter from './CardFooter';
 import CardHeader from './CardHeader';
-import { useState } from 'react';
-import { Button } from 'react-native-elements/dist/buttons/Button';
+import {useState} from 'react';
+import {Button} from 'react-native-elements/dist/buttons/Button';
 import LinearGradient from 'react-native-linear-gradient';
 
-const TripCard = ({ trip, name, deleteCard }) => {
+const TripCard = ({trip, name, deleteCard}) => {
   const [pic, setPicture] = useState(0);
-  const [weatherButton, setWeatherButton] = useState(false);
-  const [infoButton, setInfoButton] = useState(false);
-  const [feedbackButton, setFeedbackButton] = useState(false);
-  const [galleryButton, setGalleryButton] = useState(false);
+  const [toggler, setToggler] = useState('');
+
   const onDelete = () => {
     return Alert.alert(
-      "Deleting trip card !",
-      "Are you sure you want to remove this trip card?",
+      'Deleting trip card !',
+      'Are you sure you want to remove this trip card?',
       [
         {
-          text: "Yes",
-          onPress: () => { deleteCard(trip.id) },
+          text: 'Yes',
+          onPress: () => {
+            deleteCard(trip.id);
+          },
         },
         {
-          text: "No",
+          text: 'No',
         },
-      ]
+      ],
     );
-  }
-
+  };
 
   const updatePicture = ind => {
     setPicture(ind);
   };
-  const updateButton = (weather, info, feedback, gallery) => {
-    setWeatherButton(weather);
-    setInfoButton(info);
-    setFeedbackButton(feedback);
-    setGalleryButton(gallery);
+
+  const updateButton = activeButton => {
+    setToggler(activeButton);
   };
+
   return (
     <View style={styles.card}>
-      {name.admin &&
+      {name.admin && (
         <LinearGradient
           style={styles.header}
           colors={['silver', 'steelblue']}
-          start={{ x: 1.6, y: 0 }}
-          end={{ x: 0, y: 0 }}
-        >
+          start={{x: 1.6, y: 0}}
+          end={{x: 0, y: 0}}>
           <Icon
-            name='remove' size={20}
-            color='firebrick'
+            name="remove"
+            size={20}
+            color="firebrick"
             onPress={() => onDelete()}
             style={styles.icon}
           />
         </LinearGradient>
-      }
+      )}
       <CardHeader
         trip={trip}
         updateButton={updateButton}
-        weather={weatherButton}
-        info={infoButton} />
+        toggler={toggler}
+      />
       <View style={styles.logo}>
         {/* There is problem with the image component - hiding the weather and info popups
         for now i changed the opacity so we can see it
@@ -75,8 +80,7 @@ const TripCard = ({ trip, name, deleteCard }) => {
         trip={trip}
         setPicture={updatePicture}
         updateButton={updateButton}
-        feedback={feedbackButton}
-        gallery={galleryButton}
+        toggler={toggler}
       />
     </View>
   );
@@ -106,8 +110,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: '100%',
-    height: 200,
-    opacity: 0.7,
+    height: 250,
+    opacity: 0.5,
     // flex: 1,
     // position: 'relative',
     // top: 0,
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   iconView: {
-    backgroundColor: 'steelblue'
-  }
+    backgroundColor: 'steelblue',
+  },
 });
 export default TripCard;

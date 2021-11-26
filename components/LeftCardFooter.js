@@ -2,22 +2,19 @@ import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Button, CheckBox } from 'react-native-elements';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import RightCardFooter from './RightCardFooter';
+import AddFeedbackForm from './AddFeedbackForm';
 
 // import {CheckBox} from 'react-native-elements/dist/checkbox/CheckBox';
 // import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome';
 
-const LeftCardFooter = ({ trip, updateButton, feedback }) => {
+const LeftCardFooter = ({ trip, updateButton, toggler }) => {
   const [feedbackIndex, setFeedbackIndex] = useState(0);
   const [feedbackLiveIndex, setFeedbackLiveIndex] = useState(0);
 
-  const [toggleFeedback, setToggleFeedback] = useState(false);
   const [toggleFeedbackLive, setToggleFeedbackLive] = useState(false);
-  const [toggleCheckbox, setToggleCheckbox] = useState(false);
 
   const ToggleFeedback = () => {
-    // setToggleFeedback(!toggleFeedback);
-    updateButton(false, false, !feedback, false);
+    toggler === 'feedback' ? updateButton('none') : updateButton('feedback');
   };
   const ToggleFeedbackLive = () => {
     setToggleFeedbackLive(!toggleFeedbackLive);
@@ -46,7 +43,7 @@ const LeftCardFooter = ({ trip, updateButton, feedback }) => {
     <View style={styles.container}>
       <Button
         title={
-          feedback
+          toggler === 'feedback'
             ? (!toggleFeedbackLive ? 'Regular' : 'Live') + ' Feedbacks'
             : 'Feedbacks'
         }
@@ -56,7 +53,7 @@ const LeftCardFooter = ({ trip, updateButton, feedback }) => {
         containerStyle={styles.buttonContainer}
         raised
       />
-      {feedback && (
+      {toggler === 'feedback' && (
         <View style={styles.popUp}>
           <BouncyCheckbox
             style={styles.checkbox}
@@ -91,7 +88,7 @@ const LeftCardFooter = ({ trip, updateButton, feedback }) => {
               buttonStyle={styles.RLbuttons}
             />
           </View>
-          <RightCardFooter trip={trip} />
+          <AddFeedbackForm trip={trip} />
         </View>
       )}
     </View>
@@ -106,7 +103,13 @@ LeftCardFooter.defaultProps = {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    // position: 'absolute',
+    // height: 50,
+    // bottom: 20,
+    flex: 1,
+
+  },
 
   popUp: {
     //   flex: 0.1,
@@ -126,10 +129,11 @@ const styles = StyleSheet.create({
   },
 
   titleArrowButtons: {
-    color: 'black',
+    // color: 'black',
   },
   buttonContainer: {
-    width: '200%',
+    width: 90,
+    // position: 'absolute',
   },
   RLbuttons: {
     width: 40,

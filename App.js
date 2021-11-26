@@ -150,7 +150,7 @@ const App: () => Node = () => {
   return (
     <NavigationContainer>
       {/* Please Login as a admin and see  */}
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="TripsPage">
         <Stack.Screen name="Login">
           {props => (
             <LoginPage

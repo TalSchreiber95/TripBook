@@ -4,9 +4,9 @@ import { Button } from 'react-native-elements';
 //this is other button component (way more better the the previous) - it built in from another directory
 // need to change to this button in the whole app maybe
 
-const RightCardHeader = ({ trip, updateButton, info }) => {
+const RightCardHeader = ({ trip, toggler, updateButton }) => {
   const ToggleInfo = () => {
-    updateButton(false, !info, false, false);
+    toggler === 'info' ? updateButton('none') : updateButton('info');
   };
 
   return (
@@ -18,7 +18,7 @@ const RightCardHeader = ({ trip, updateButton, info }) => {
         titleStyle={styles.button}
         containerStyle={styles.buttonContainer}
       />
-      {info && (
+      {toggler === 'info' && (
         <View style={styles.popUp}>
           <Text style={styles.text}>{trip.description}</Text>
         </View>
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   popUp: {
     //   flex: 0.1,
     // marginBottom: 20,
+    marginTop: 15,
     height: 'auto',
     width: 200,
     borderRadius: 5,

@@ -2,82 +2,100 @@ import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Button, CheckBox } from 'react-native-elements';
 import { Form, FormItem } from 'react-native-form-component';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
-const LeftCardFooter = ({ trip }) => {
-  const [feedback, setFeedback] = useState('');
-  const [feedbackLive, setFeedbackLive] = useState('');
+const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
+  const [picIndex, setPicIndex] = useState(0);
+  const [pic, setPic] = useState();
 
-  const [toggleFeedback, setToggleFeedback] = useState(false);
-  const [toggleFeedbackLive, setToggleFeedbackLive] = useState(false);
+  const [toggleAddPicture, setToggleAddPicture] = useState(false);
 
 
-
-  const ToggleFeedback = () => {
-    setToggleFeedback(!toggleFeedback);
-  };
-  const ToggleFeedbackLive = () => {
-    setToggleFeedbackLive(!toggleFeedbackLive);
-  };
-  const onAddFeedback = () => {
-    toggleFeedbackLive
-      ? trip.feedbacksLive.push(feedbackLive)
-      : trip.feedbacks.push(feedback);
+  const ToggleGallery = () => {
+    setToggleAddPicture(false);
+    toggler === 'gallery' ? updateButton('none') : updateButton('gallery');
   };
 
+
+  const switchPictureRight = () => {
+    setPicIndex((picIndex + 1) % trip.pictures.length);
+    setPicture(picIndex);
+  };
+
+  const switchPictureLeft = () => {
+    setPicIndex((picIndex - 1 + trip.pictures.length) % trip.pictures.length);
+    setPicture(picIndex);
+  };
+  const onAddPicture = () => {
+    // Note: should be improved!
+    trip.pictures.push(pic);
+  };
+
+  const ToggleAddPicture = () => {
+    setToggleAddPicture(!toggleAddPicture);
+  };
   return (
     <View style={styles.container}>
       <Button
-        title="Add Feedback +"
-        onPress={ToggleFeedback}
+        title={'Gallery'}
+        onPress={ToggleGallery}
         type="secondary"
-        titleStyle={styles.mainButtonText}
+        titleStyle={styles.button}
         containerStyle={styles.buttonContainer}
         raised
       />
-      {toggleFeedback && (
+      {toggler === 'gallery' && (
         <View style={styles.popUp}>
-          <BouncyCheckbox
-            style={styles.checkbox}
-            size={25}
-            fillColor="black"
-            unfillColor="white"
-            iconStyle={styles.icon}
-            textStyle={styles.checkboxText}
-            text="Live"
-            textStyle={styles.checkboxText}
-            onPress={ToggleFeedbackLive}
-          />
-          <Form
-            onButtonPress={onAddFeedback}
-            buttonStyle={styles.formButton}
-            buttonText="Submit">
-            <FormItem
-              placeholder={
-                !toggleFeedbackLive
-                  ? 'Add feedback here'
-                  : 'Add live feedback here'
-              }
-              style={styles.inputView}
-              label={
-                !toggleFeedbackLive ? 'Regular Feedback:' : 'Live Feedback:'
-              }
-              labelStyle={styles.label}
-              multiline={true}
-              value={!toggleFeedbackLive ? feedback : feedbackLive}
-              onChangeText={fb => {
-                {
-                  !toggleFeedbackLive ? setFeedback(fb) : setFeedbackLive(fb);
-                }
-              }}
+          <View style={styles.RLbuttonsView}>
+            <Button
+              title="<"
+              onPress={switchPictureLeft}
+              type="outline"
+              titleStyle={styles.titleArrowButtons}
+              // containerStyle={styles.buttonContainer}
+              buttonStyle={styles.RLbuttons}
             />
-          </Form>
+            <Button
+              title=">"
+              onPress={switchPictureRight}
+              type="outline"
+              titleStyle={styles.titleArrowButtons}
+              //   containerStyle={styles.buttonRight}
+              buttonStyle={styles.RLbuttons}
+            />
+          </View>
+          <Button
+            title={!toggleAddPicture ? 'Add Picture +' : 'Close'}
+            onPress={ToggleAddPicture}
+            type="secondary"
+            titleStyle={styles.titleArrowButtons}
+            containerStyle={styles.addPictureButton}
+          />
+          {toggleAddPicture && (
+            <Form
+              onButtonPress={onAddPicture}
+              buttonStyle={styles.formButton}
+              buttonText="Add picture">
+              <FormItem
+                placeholder="Add url pic here"
+                style={styles.inputView}
+                label="Url pic:"
+                labelStyle={styles.label}
+                multiline={true}
+                value={pic}
+                onChangeText={pic => {
+                  setPic(pic);
+                }}
+                isRequired
+                asterik
+              />
+            </Form>
+          )}
         </View>
       )}
     </View>
   );
 };
-LeftCardFooter.defaultProps = {
+RightCardFooter.defaultProps = {
   title: 'TripBook',
   name: {
     firstName: '',
@@ -87,35 +105,26 @@ LeftCardFooter.defaultProps = {
 
 const styles = StyleSheet.create({
   container: {
-    //   bottom: 50,
+    // bottom: 20,
+    flex: 1,
   },
-
-  popUp: {
-    //   flex: 0.1,
-    marginTop: 10,
-    height: 'auto',
-    width: 350,
-    borderRadius: 5,
-    position: 'relative',
-    // top: 65,
-    // left: 10,
-    elevation: 5,
-    justifyContent: 'center',
-    backgroundColor: 'white',
+  formButton: {
+    backgroundColor: 'steelblue',
+    marginLeft: 100,
+    marginRight: 100,
+    marginBottom: 25,
+    marginTop: 0,
+    borderRadius: 20,
   },
-
-  mainButtonText: {
-    // backgroundColor: 'black',
-  },
-
-  titleArrowButtons: {
-    color: 'white',
-  },
-  buttonContainer: {
-    // width: '200%',
-    // alignSelf: 'flex-end',
-  },
-
+  //   formButton: {
+  //     backgroundColor: 'steelblue',
+  //     marginLeft: 100,
+  //     marginRight: 100,
+  //     marginTop: 0,
+  //     borderRadius: 20,
+  //     color: 'black',
+  //     // height: 40,
+  //   },
   inputView: {
     flex: 0.3,
     backgroundColor: 'lightblue',
@@ -129,20 +138,51 @@ const styles = StyleSheet.create({
   },
   label: {
     color: 'black',
-    paddingLeft: 30,
+    marginLeft: 30,
     fontWeight: 'bold',
     fontSize: 17,
-    paddingTop: 10,
   },
-  formButton: {
-    backgroundColor: 'steelblue',
-    marginLeft: 100,
-    marginRight: 100,
-    marginTop: 0,
-    borderRadius: 20,
-    color: 'black',
-    // height: 40,
+  popUp: {
+    //   flex: 0.1,
+    marginTop: 10,
+    height: 'auto',
+    width: 350,
+    borderRadius: 5,
+    position: 'relative',
+    // top: 65,
+    // left: 10,
+    elevation: 5,
+    justifyContent: 'center',
+    backgroundColor: 'white',
   },
+  button: {
+    // backgroundColor: 'black',
+  },
+
+  addPictureButton: {
+    // backgroundColor: 'black',
+    color: 'white',
+  },
+
+  titleArrowButtons: {
+    // color: 'black',
+  },
+  buttonContainer: {
+    width: '120%',
+    alignSelf: 'flex-end',
+
+  },
+  RLbuttons: {
+    width: 40,
+    height: 40,
+    // margin: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    borderRadius: 35,
+    borderColor: 'black',
+    borderWidth: 0.8,
+  },
+
   RLbuttonsView: {
     flex: 2,
     flexDirection: 'row',
@@ -158,27 +198,5 @@ const styles = StyleSheet.create({
     marginTop: -3,
     textAlign: 'center',
   },
-
-  checkbox: {
-    // flex: 1,
-    alignSelf: 'center',
-    // width: 10,
-    // height: 30,
-    fontSize: 5,
-    textAlign: 'center',
-    backgroundColor: 'transparent',
-    borderColor: 'transparent',
-    padding: 10,
-    paddingTop: 15,
-  },
-  checkboxText: {
-    color: 'black',
-    textDecorationLine: 'none',
-    left: -10,
-    fontWeight: 'bold',
-  },
-  icon: {
-    borderColor: 'grey',
-  },
 });
-export default LeftCardFooter;
+export default RightCardFooter;

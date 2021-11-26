@@ -1,37 +1,40 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Header } from 'react-native-elements';
-import RightCardFooter from './RightCardFooter';
+import {View, Text, StyleSheet} from 'react-native';
+import {Header} from 'react-native-elements';
 import LeftCardFooter from './LeftCardFooter';
-import CenterCardFooter from './CenterCardFooter';
+import RightCardFooter from './RightCardFooter';
 import LinearGradient from 'react-native-linear-gradient';
+import { Button } from 'react-native-vector-icons/dist/FontAwesome';
 
-const CardFooter = ({ trip, setPicture, updateButton, feedback, gallery }) => {
+const CardFooter = ({trip, setPicture, toggler, updateButton}) => {
   return (
-    <View style={styles.cardFooter}>
       <Header
-        containerStyle={styles.header}
+        containerStyle={styles.cardFooter}
         ViewComponent={LinearGradient}
         linearGradientProps={{
           colors: ['silver', 'steelblue'],
-          start: { x: 1, y: 3.5 },
-          end: { x: 0, y: 0.5 },
+          start: {x: 1, y: 3.5},
+          end: {x: 0, y: 0.5},
         }}
-        leftComponent={<LeftCardFooter
-          trip={trip}
-          updateButton={updateButton}
-          feedback={feedback}
-        />}
-        rightComponent={
-          <CenterCardFooter trip={trip}
-            setPicture={setPicture}
+        leftComponent={
+          <LeftCardFooter
+            trip={trip}
+            toggler={toggler}
             updateButton={updateButton}
-            gallery={gallery}
           />
         }
-      // rightComponent={<RightCardFooter trip={trip} />}
+        rightComponent={
+          <RightCardFooter
+            trip={trip}
+            setPicture={setPicture}
+            toggler={toggler}
+            updateButton={updateButton}
+          />
+        }
       />
-    </View>
+
+    //   {/* <Header />
+    //   <Button /> */}
   );
 };
 CardFooter.defaultProps = {
@@ -44,16 +47,12 @@ CardFooter.defaultProps = {
 
 const styles = StyleSheet.create({
   cardFooter: {
-    backgroundColor: '#001f7f',
-    // height: 100,
-
-  },
-  header: {
-    marginTop: 0,
-    // height: 100,
-
-    // justifyContent: 'flex',
-    // paddingTop: 0,
+    // marginTop: 0,
+    // height: 85,
+    flex: 1,
+    // alignSelf: 'stretch',
+    alignItems: 'flex-end',
+    // padding: -30,
   },
   text: {
     color: 'gold',
