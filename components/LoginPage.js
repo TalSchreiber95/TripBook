@@ -41,7 +41,7 @@ const LoginPage = ({ Users, navigation, ind, name }) => {
     <SafeAreaView>
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Header title='TripBook' />
+        <Header title='TripBook' connected={false} navigation={navigation} />
         <Form
           onButtonPress={onLogin}
           buttonStyle={styles.formButton}

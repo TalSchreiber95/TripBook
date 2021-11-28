@@ -47,7 +47,6 @@ const TripFilter = ({ updateFilter, tripSearch, navigation }) => {
     navigation.navigate('TripsPage');
   };
   return (
-    // <SafeAreaView>
     <View >
       <Form
         onButtonPress={onSearch}

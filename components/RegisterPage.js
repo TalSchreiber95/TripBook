@@ -48,7 +48,7 @@ const RegisterPage = ({ Users, addNewUser, navigation }) => {
     <SafeAreaView>
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Header />
+        <Header connected={false}/>
         <Form
           onButtonPress={onRegister}
           buttonText="Register"

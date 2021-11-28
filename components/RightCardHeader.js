@@ -35,7 +35,10 @@ RightCardHeader.defaultProps = {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 0.5,
+    // backgroundColor: 'black'
+  },
 
   popUp: {
     //   flex: 0.1,
@@ -55,12 +58,16 @@ const styles = StyleSheet.create({
     // position: 'absolute',
   },
   button: {
-    width: 80,
+    // width: 80,
     color: 'white',
     // backgroundColor: 'black'
   },
   buttonContainer: {
     // borderRadius: 10,
+    flex: 1,
+    // width: 50,
+    alignSelf: 'flex-end',
+
   },
   text: {
     // flex: 0.1,

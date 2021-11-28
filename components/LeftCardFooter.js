@@ -49,7 +49,7 @@ const LeftCardFooter = ({ trip, updateButton, toggler }) => {
         }
         onPress={ToggleFeedback}
         type="secondary"
-        titleStyle={styles.button}
+        titleStyle={styles.buttonTitle}
         containerStyle={styles.buttonContainer}
         raised
       />
@@ -108,24 +108,25 @@ const styles = StyleSheet.create({
     // height: 50,
     // bottom: 20,
     flex: 1,
-
+    // alignItems: 'flex-start'
   },
 
   popUp: {
-    //   flex: 0.1,
+      // flex: 0.1,
     marginTop: 10,
     height: 'auto',
     width: 350,
     borderRadius: 5,
-    position: 'relative',
+    // position: 'relative',
     // top: 65,
     // left: 10,
     elevation: 5,
     justifyContent: 'center',
     backgroundColor: 'white',
   },
-  button: {
+  buttonTitle: {
     // backgroundColor: 'black',
+    // color:'black',
   },
 
   titleArrowButtons: {
@@ -133,6 +134,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: 90,
+    // alignSelf: 'flex-start',
+    // alignItems: 'flex-start',
+    // justifyContent: 'center',
     // position: 'absolute',
   },
   RLbuttons: {
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
   },
 
   RLbuttonsView: {
-    flex: 4,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     padding: 10,

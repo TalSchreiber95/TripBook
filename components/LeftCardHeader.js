@@ -41,15 +41,16 @@ LeftCardHeader.defaultProps = {
 
 const styles = StyleSheet.create({
   container: {
-    height: 90,
-    position: 'relative',
+    // height: 90,
+    // position: 'relative',
+    flex: 0.5,
   },
 
   popUp: {
     //   flex: 0.1,
     marginTop: 15,
     height: 'auto',
-    width: 100,
+    // width: 350,
     borderRadius: 5,
     position: 'absolute',
     top: 45,
@@ -64,7 +65,10 @@ const styles = StyleSheet.create({
     fontSize: 15
   },
   buttonContainer: {
-    backgroundColor: 'black',
+    // backgroundColor: 'black',
+    width: 70,
+    
+
   },
   text: {
     // flex: 0.1,

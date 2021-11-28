@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Alert,
   SafeAreaView,
@@ -10,11 +10,11 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import { Form, FormItem } from 'react-native-form-component';
+import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Header from './Header';
 
-const AddTrip = ({ addTrip, navigation, name, getId }) => {
+const AddTrip = ({addTrip, navigation, user, getId}) => {
   const [tripName, setTripName] = useState('');
   const [location, setLocation] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -24,7 +24,7 @@ const AddTrip = ({ addTrip, navigation, name, getId }) => {
   const [description, setDescription] = useState('');
   const [picture, setPicture] = useState('');
 
-  //categorys
+  //categories
   const [isRelax, setIsRelax] = useState(false);
   const [isDynamic, setIsDynamic] = useState(false);
   const [isParty, setIsParty] = useState(false);
@@ -42,6 +42,8 @@ const AddTrip = ({ addTrip, navigation, name, getId }) => {
     ) {
       const newTrip = {
         id: getId,
+        owner: user.email,
+        adminMessage: 'No new admin messages',
         tripName: tripName,
         category: {
           isRelax: isRelax,
@@ -52,9 +54,7 @@ const AddTrip = ({ addTrip, navigation, name, getId }) => {
           isPlaneTravel: isPlaneTravel,
           isTrainTravel: isTrainTravel,
         },
-        pictures: [
-          picture
-        ],
+        pictures: [picture],
         location: location,
         description: description,
         feedbacks: [feedback],
@@ -75,7 +75,7 @@ const AddTrip = ({ addTrip, navigation, name, getId }) => {
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
           {/* <Text style={styles.title}>Add a Trip</Text> */}
-          <Header title="Add Trip" name={name} />
+          <Header title="Add Trip" name={user} />
           <Text style={styles.text}>Fill the details below:</Text>
           <Form
             onButtonPress={onAddTrip}

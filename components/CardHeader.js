@@ -9,34 +9,34 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const CardHeader = ({trip, updateButton, toggler}) => {
   return (
-    <Header
-      containerStyle={styles.cardHeader}
-      ViewComponent={LinearGradient}
-      linearGradientProps={{
-        colors: ['silver', 'steelblue'],
-        start: {x: 1, y: 3.5},
-        end: {x: 0, y: 0.5},
-      }}
-      leftComponent={
+    <LinearGradient
+      colors={['silver', 'steelblue']}
+      start={{x: 1, y: 3.5}}
+      end={{x: 0, y: 0.5}}>
+      <View
+        style={styles.cardHeader}
+        // linearGradientProps={{
+        //   colors: ['silver', 'steelblue'],
+        //   start: {x: 1, y: 3.5},
+        //   end: {x: 0, y: 0.5},
+        // }}
+      >
         <LeftCardHeader
           trip={trip}
           toggler={toggler}
           updateButton={updateButton}
         />
-      }
-      centerComponent={
-        <View>
+        <View style={styles.textView}>
           <Text style={styles.text}>{trip.tripName}</Text>
         </View>
-      }
-      rightComponent={
+
         <RightCardHeader
           trip={trip}
           toggler={toggler}
           updateButton={updateButton}
         />
-      }
-    />
+      </View>
+    </LinearGradient>
   );
 };
 CardHeader.defaultProps = {
@@ -47,16 +47,22 @@ CardHeader.defaultProps = {
   },
 };
 const styles = StyleSheet.create({
-  // cardHeader: {
-  //   // backgroundColor: '#001f7f',
-  //   // marginBottom: 10,
-  //   // height: 150,
-  // },
   cardHeader: {
-    height: 85,
+    // height: 85,
     // alignItems: 'center',
     // justifyContent: 'center',
     // textAlign: 'center',
+    // backgroundColor: '#001f7f',
+    flex: 1,
+    flexDirection: 'row',
+    margin: 10,
+    marginTop: 15,
+    marginBottom: 15,
+  },
+  textView: {
+    flex: 0.5,
+    textAlign: 'center'
+
   },
   text: {
     color: 'silver',

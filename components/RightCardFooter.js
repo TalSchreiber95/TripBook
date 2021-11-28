@@ -27,7 +27,9 @@ const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
   };
   const onAddPicture = () => {
     // Note: should be improved!
+    if (pic !== '') {
     trip.pictures.push(pic);
+    }
   };
 
   const ToggleAddPicture = () => {
@@ -39,7 +41,7 @@ const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
         title={'Gallery'}
         onPress={ToggleGallery}
         type="secondary"
-        titleStyle={styles.button}
+        titleStyle={styles.buttonTitle}
         containerStyle={styles.buttonContainer}
         raised
       />
@@ -107,6 +109,8 @@ const styles = StyleSheet.create({
   container: {
     // bottom: 20,
     flex: 1,
+    alignItems: 'flex-end',
+    
   },
   formButton: {
     backgroundColor: 'steelblue',
@@ -143,7 +147,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   popUp: {
-    //   flex: 0.1,
+      // flex: 0.1,
     marginTop: 10,
     height: 'auto',
     width: 350,
@@ -155,8 +159,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
   },
-  button: {
+  buttonTitle: {
     // backgroundColor: 'black',
+    // color:'black',
   },
 
   addPictureButton: {
@@ -168,7 +173,7 @@ const styles = StyleSheet.create({
     // color: 'black',
   },
   buttonContainer: {
-    width: '120%',
+    // width: '120%',
     alignSelf: 'flex-end',
 
   },

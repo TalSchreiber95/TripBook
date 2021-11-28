@@ -48,7 +48,7 @@ const TripCard = ({trip, name, deleteCard}) => {
     <View style={styles.card}>
       {name.admin && (
         <LinearGradient
-          style={styles.header}
+          // style={styles.header}
           colors={['silver', 'steelblue']}
           start={{x: 1.6, y: 0}}
           end={{x: 0, y: 0}}>
@@ -61,20 +61,17 @@ const TripCard = ({trip, name, deleteCard}) => {
           />
         </LinearGradient>
       )}
-      <CardHeader
-        trip={trip}
-        updateButton={updateButton}
-        toggler={toggler}
-      />
-      <View style={styles.logo}>
-        {/* There is problem with the image component - hiding the weather and info popups
-        for now i changed the opacity so we can see it
-        need to find solution - i tried a lot of css modifications without succeed */}
+      <CardHeader trip={trip} updateButton={updateButton} toggler={toggler} />
+      <View style={styles.picView}>
         <ImageBackground
           style={styles.logo}
           source={{
             uri: trip.pictures[pic],
           }}></ImageBackground>
+
+        {/* There is problem with the image component - hiding the weather and info popups
+        for now i changed the opacity so we can see it
+        need to find solution - i tried a lot of css modifications without succeed */}
       </View>
       <CardFooter
         trip={trip}
@@ -89,12 +86,13 @@ const TripCard = ({trip, name, deleteCard}) => {
 const styles = StyleSheet.create({
   card: {
     borderRadius: 5,
-    borderWidth: 1,
+    // borderWidth: 1,
     borderColor: 'grey',
     margin: 10,
     flex: 1,
     elevation: 2,
   },
+
   title: {
     color: 'black',
     fontSize: 20,
@@ -109,14 +107,26 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   logo: {
-    width: '100%',
-    height: 250,
-    opacity: 0.5,
+    // width: '100%',
+    // height: 300,
+    // opacity: 0.5,
+    flex: 1,
+    // resizeMode: 'center',
+    justifyContent: 'center',
+    // alignSelf: 'center',
+
+    // borderWidth: 1,
+    // borderColor: 'transparent'
     // flex: 1,
     // position: 'relative',
     // top: 0,
     // left: 0,
     // backgroundColor: 'indigo',
+  },
+
+  picView: {
+    height: 200,
+    // opacity: 0.5,
   },
   icon: {
     alignSelf: 'flex-end',
