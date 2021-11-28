@@ -27,7 +27,7 @@ import {
   Text,
   TextInput,
   useColorScheme,
-  View,
+  View,Alert,
 } from 'react-native';
 
 import {appendToMemberExpression, staticBlock} from '@babel/types';
@@ -126,6 +126,7 @@ const App: () => Node = () => {
     {
       id: 1,
       owner: 'userEmail',
+      adminMessage: 'No new admin messages',
       tripName: 'waiting',
       category: {
         isRelax: false,
@@ -179,7 +180,6 @@ const App: () => Node = () => {
 
   const addTrip = trip => {
     setTrips([...Trips, trip]);
-    console.log(Trips);
   };
   const addTripInfo = tripInfo => {
     setTripInfo(tripInfo);
@@ -195,7 +195,9 @@ const App: () => Node = () => {
     setTrips([...Trips, trip]);
   };
   const editCard = () => { };
-  const cardOwnerMessage = () => {};
+  const cardOwnerMessage = (id) => {
+    Alert.alert(Trips.filter(card => card.id===id).adminMessage);
+  };
   return (
     <NavigationContainer>
       {/* Please Login as a admin and see  */}
@@ -249,6 +251,8 @@ const App: () => Node = () => {
               name={Users[Index]}
               tripInfo={TripInfo}
               deleteCard={deleteCard}
+              editCard={editCard}
+              cardOwnerMessage={cardOwnerMessage}
             />
           )}
         </Stack.Screen>

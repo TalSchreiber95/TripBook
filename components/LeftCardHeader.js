@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     // backgroundColor: 'black',
-    width: 70,
+    width: 73,
     
 
   },

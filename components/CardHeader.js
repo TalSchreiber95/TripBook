@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'silver',
+    textAlign: 'center',
     fontSize: 30,
     fontWeight: 'bold',
     // letterSpacing: 2,

@@ -15,7 +15,7 @@ import TripCard from './TripCard';
 
 import { useState } from 'react';
 
-const TripsPage = ({ Trips, name, tripInfo, deleteCard }) => {
+const TripsPage = ({ Trips, name, tripInfo, deleteCard,editCard,cardOwnerMessage }) => {
   return (
     <ScrollView>
       <Header name={name} />
@@ -28,7 +28,7 @@ const TripsPage = ({ Trips, name, tripInfo, deleteCard }) => {
       {/* Should implement The filter algorithm include the sort */}
       {Trips.map(trip => (
         <TripCard key={trip.id} trip={trip} name={name}
-          deleteCard={deleteCard} />
+          deleteCard={deleteCard} editCard={editCard} cardOwnerMessage={cardOwnerMessage} />
       ))}
     </ScrollView>
   );
