@@ -28,7 +28,7 @@ const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
   const onAddPicture = () => {
     // Note: should be improved!
     if (pic !== '') {
-    trip.pictures.push(pic);
+      trip.pictures.push(pic);
     }
   };
 
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     // bottom: 20,
     flex: 1,
     alignItems: 'flex-end',
-    
+
   },
   formButton: {
     backgroundColor: 'steelblue',
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   popUp: {
-      // flex: 0.1,
+    // flex: 0.1,
     marginTop: 10,
     height: 'auto',
     width: 350,

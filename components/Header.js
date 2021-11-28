@@ -1,18 +1,18 @@
 import React from 'react';
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
-import {Header as H} from 'react-native-elements';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { Header as H } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
-import {Button} from 'react-native-elements';
-import {NavigationContainer} from '@react-navigation/native';
+import { Button } from 'react-native-elements';
+import { NavigationContainer } from '@react-navigation/native';
 
-const Header = ({title, name, connected, navigation}) => {
+const Header = ({ title, name, connected, navigation }) => {
   return (
     // Added LinearGradient
     <LinearGradient
       style={styles.header}
       colors={['black', '#001f3f']}
-      start={{x: 1, y: 2.5}}
-      end={{x: 0, y: 1.5}}>
+      start={{ x: 1, y: 2.5 }}
+      end={{ x: 0, y: 1.5 }}>
       {connected ? (
         <View style={styles.buttonsView}>
           <Button

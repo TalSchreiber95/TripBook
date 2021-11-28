@@ -25,7 +25,7 @@ const RegisterPage = ({ Users, addNewUser, navigation }) => {
       return user.id === newUser;
     });
     if (userExist) {
-      Alert.alert('UserName is already exists - choose other');
+      Alert.alert('Email is already exists - choose other');
     } else {
       if (newUser != '' && newPassword != '') {
         const newuser = {
@@ -48,7 +48,7 @@ const RegisterPage = ({ Users, addNewUser, navigation }) => {
     <SafeAreaView>
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Header connected={false}/>
+        <Header connected={false} />
         <Form
           onButtonPress={onRegister}
           buttonText="Register"
@@ -78,7 +78,7 @@ const RegisterPage = ({ Users, addNewUser, navigation }) => {
 
           <FormItem
             style={styles.inputView}
-            label="UserName/Email"
+            label="Email"
             labelStyle={styles.label}
             isRequired
             value={newUser}

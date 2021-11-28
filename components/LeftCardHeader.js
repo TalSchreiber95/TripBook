@@ -8,7 +8,7 @@ const LeftCardHeader = ({ trip, toggler, updateButton }) => {
     toggler === 'weather' ? updateButton('none') : updateButton('weather');
   };
 
-  
+
 
   return (
     <View style={styles.container}>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     // backgroundColor: 'black',
     width: 73,
-    
+
 
   },
   text: {

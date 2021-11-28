@@ -13,12 +13,17 @@ import {
 import Header from './Header';
 import TripCard from './TripCard';
 
-import {useState} from 'react';
+import { useState } from 'react';
 
-const TripsApprove = ({Trips, user, deleteCard, editCard, navigation}) => {
+const MyTrips = ({ Trips, user, deleteCard, editCard, cardOwnerMessage, navigation }) => {
   return (
     <ScrollView>
-      <Header name={user} />
+      <Header name={user} navigation={navigation} />
+      <Text style={styles.text}>My Trips List:</Text>
+      {Trips.filter(trip => trip.owner === user.email).map(trip => (
+        <TripCard key={trip.id} trip={trip} name={user}
+          deleteCard={deleteCard} editCard={editCard} cardOwnerMessage={cardOwnerMessage} />
+      ))}
     </ScrollView>
   );
 };
@@ -38,7 +43,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TripsApprove;
+export default MyTrips;
 
 /*
 .filter(

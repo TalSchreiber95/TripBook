@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import HomePage from './components/HomePage';
@@ -15,10 +15,10 @@ import TripsPage from './components/TripsPage';
 import MyTrips from './components/MyTrips';
 import TripsApprove from './components/TripsApprove';
 import ForgotPassword from './components/ForgotPassword';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import type {Node} from 'react';
+import type { Node } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -27,10 +27,10 @@ import {
   Text,
   TextInput,
   useColorScheme,
-  View,Alert,
+  View, Alert,
 } from 'react-native';
 
-import {appendToMemberExpression, staticBlock} from '@babel/types';
+import { appendToMemberExpression, staticBlock } from '@babel/types';
 
 const Stack = createNativeStackNavigator();
 
@@ -66,7 +66,7 @@ const App: () => Node = () => {
   const trips = [
     {
       id: 1,
-      owner: 'userEmail',
+      owner: 'user',
       adminMessage: 'No new admin messages',
       tripName: 'sky',
       category: {
@@ -95,8 +95,8 @@ const App: () => Node = () => {
     },
     {
       id: 2,
-      owner: 'userEmail',
-      adminMessage: 'No new admin messages',
+      owner: 'a',
+      adminMessage: 'No new admin messages 2',
       tripName: 'movie',
       category: {
         isRelax: false,
@@ -177,7 +177,7 @@ const App: () => Node = () => {
     setUsers([...Users, user]);
     setIndex(Users.length - 1);
   };
-
+  // Note: this is supposed to add to setWaitingTrips instead to directly Trips
   const addTrip = trip => {
     setTrips([...Trips, trip]);
   };
@@ -196,20 +196,11 @@ const App: () => Node = () => {
   };
   const editCard = () => { };
   const cardOwnerMessage = (id) => {
-    Alert.alert(Trips.filter(card => card.id===id).adminMessage);
+    Alert.alert("message trip id is : " + id);
   };
   return (
     <NavigationContainer>
-      {/* Please Login as a admin and see  */}
       <Stack.Navigator initialRouteName="Login">
-        {/* <Stack.Screen name="Header">
-          {props => (
-            <Header
-              {...props}
-              // title, name, connected, navigation
-            />
-          )}
-        </Stack.Screen> */}
         <Stack.Screen name="Login">
           {props => (
             <LoginPage
@@ -268,7 +259,7 @@ const App: () => Node = () => {
                 approveCard={approveCard}
                 editCard={editCard}
                 cardOwnerMessage={cardOwnerMessage}
-                // navigation={navigation}
+              // navigation={navigation}
               />
             )}
           </Stack.Screen>
@@ -282,7 +273,7 @@ const App: () => Node = () => {
               deleteCard={deleteCard}
               editCard={editCard}
               cardOwnerMessage={cardOwnerMessage}
-              // navigation={navigation}
+            // navigation={navigation}
             />
           )}
         </Stack.Screen>

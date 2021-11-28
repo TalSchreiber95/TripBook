@@ -1,6 +1,7 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import Icon1 from 'react-native-vector-icons/dist/AntDesign';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon1 from 'react-native-vector-icons/AntDesign';
+
 import {
   View,
   Text,
@@ -15,10 +16,28 @@ import { useState } from 'react';
 import { Button } from 'react-native-elements/dist/buttons/Button';
 import LinearGradient from 'react-native-linear-gradient';
 
-const TripCard = ({ trip, name, deleteCard,editCard,cardOwnerMessage }) => {
+const TripCard = ({ trip, name, deleteCard, editCard, cardOwnerMessage, toggleApproveCard }) => {
   const [pic, setPicture] = useState(0);
   const [toggler, setToggler] = useState('');
 
+  const onAddTrip = () => {
+    return Alert.alert(
+      'Add trip card !',
+      'Are you sure you want to add this trip card?',
+      [
+        {
+          text: 'Yes',
+          onPress: () => {
+            Alert.alert("Approve trip supposed to be only in approve trip page");
+            // addTrip(trip.id);
+          },
+        },
+        {
+          text: 'No',
+        },
+      ],
+    );
+  };
   const onDelete = () => {
     return Alert.alert(
       'Deleting trip card !',
@@ -44,7 +63,7 @@ const TripCard = ({ trip, name, deleteCard,editCard,cardOwnerMessage }) => {
         {
           text: 'Yes',
           onPress: () => {
-            Alert.alert("card edit true");
+            Alert.alert("card edit supposed to be here im not sure in which way yet");
             // Alert.alert(editCard(id));
             // editCard(trip.id);
           },
@@ -55,17 +74,17 @@ const TripCard = ({ trip, name, deleteCard,editCard,cardOwnerMessage }) => {
       ],
     );
   };
-  const onMessage = () => {
+  const onSendMessage = () => {
     return Alert.alert(
-      'message trip card !',
-      'Are you sure you want to see this trip card message?',
+      'add message trip card !',
+      'Are you sure you want to add trip card message?',
       [
         {
           text: 'Yes',
           onPress: () => {
-            // Alert.alert("card message true");
-            cardOwnerMessage(trip.id);
-            // editCard(trip.id);
+            Alert.alert("Alert input text supposed to be here and after it should be updated!");
+            //cardOwenerMessage is a function that update the tripMesage
+            //  cardOwnerMessage(trip.id);
           },
         },
         {
@@ -90,33 +109,46 @@ const TripCard = ({ trip, name, deleteCard,editCard,cardOwnerMessage }) => {
         start={{ x: 1.6, y: 0 }}
         end={{ x: 0, y: 0 }}>
         <View style={styles.iconHeader}>
-          <Icon1
-            name="message1"
-            size={20}
-            color="green"
-            onPress={() => onMessage()}
-            style={styles.icon}
-          /><Text>  </Text>
-          <Icon
+          {(name.admin || name.email == trip.owner) && (<Icon
             name="edit"
             size={20}
             color="blue"
             onPress={() => onEdit()}
             style={styles.icon}
-          /><Text>  </Text>
-          {name.admin && (
+          />)}<Text>  </Text>
+          {(name.admin || name.email == trip.owner) && (
+            <Icon1
+              name="message1"
+              size={20}
+              color="green"
+              onPress={() => Alert.alert(trip.adminMessage)}
+              style={styles.icon}
+            />)}<Text>  </Text>
+          {name.admin && (<Icon
+            name="send"
+            size={20}
+            color="black"
+            onPress={() => onSendMessage()}
+            style={styles.icon}
+          />)}<Text>  </Text>
+          {(name.admin || name.email == trip.owner) && (
             <Icon
-              name="remove"
+              name="trash-o"
               size={20}
               color="firebrick"
               onPress={() => onDelete()}
               style={styles.icon}
             />
-            
           )}<Text>  </Text>
+          {name.admin && toggleApproveCard && (<Icon
+            name="check"
+            size={20}
+            color="green"
+            onPress={() => onAddTrip()}
+            style={styles.icon}
+          />)}<Text>  </Text>
         </View>
       </LinearGradient>
-
       <CardHeader trip={trip} updateButton={updateButton} toggler={toggler} />
       <View style={styles.picView}>
         <ImageBackground
@@ -138,7 +170,9 @@ const TripCard = ({ trip, name, deleteCard,editCard,cardOwnerMessage }) => {
     </View>
   );
 };
-
+TripCard.defaultProps = {
+  toggleApproveCard: false,
+}
 const styles = StyleSheet.create({
   card: {
     borderRadius: 5,
@@ -171,7 +205,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     // width: '100%',
-    // height: 300,
+    // height:'auto',
     // opacity: 0.5,
     flex: 1,
     // resizeMode: 'center',
@@ -188,7 +222,7 @@ const styles = StyleSheet.create({
   },
 
   picView: {
-    height: 200,
+    height: 400,
     // opacity: 0.5,
   },
   icon: {

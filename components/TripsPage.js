@@ -15,10 +15,10 @@ import TripCard from './TripCard';
 
 import { useState } from 'react';
 
-const TripsPage = ({ Trips, name, tripInfo, deleteCard,editCard,cardOwnerMessage }) => {
+const TripsPage = ({ Trips, name, tripInfo, deleteCard, editCard, cardOwnerMessage, navigation }) => {
   return (
     <ScrollView>
-      <Header name={name} />
+      <Header name={name} navigation={navigation} />
       <Text style={styles.text}>Search Results:</Text>
       <Text style={styles.locationText}>
         {' '}

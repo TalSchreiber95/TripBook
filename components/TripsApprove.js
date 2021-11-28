@@ -15,11 +15,16 @@ import TripCard from './TripCard';
 
 import { useState } from 'react';
 
-const TripsApprove = ({ WaitingTrips, user, deleteCard, approveCard, editCard, navigation}) => {
+const TripsApprove = ({ WaitingTrips, user, deleteCard, approveCard, editCard, cardOwnerMessage, navigation }) => {
   return (
     <ScrollView>
-      <Header name={user} />
-
+      <Header name={user} navigation={navigation} />
+      <Text style={styles.text}>Approve trips List:</Text>
+      {WaitingTrips.map(trip => (
+        <TripCard key={trip.id} trip={trip} name={user}
+          deleteCard={deleteCard} editCard={editCard} cardOwnerMessage={cardOwnerMessage}
+          toggleApproveCard={true} />
+      ))}
     </ScrollView>
   );
 };

@@ -75,7 +75,7 @@ const AddTrip = ({addTrip, navigation, user, getId}) => {
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
           {/* <Text style={styles.title}>Add a Trip</Text> */}
-          <Header title="Add Trip" name={user} />
+          <Header title="Add Trip" name={user} navigation={navigation}/>
           <Text style={styles.text}>Fill the details below:</Text>
           <Form
             onButtonPress={onAddTrip}

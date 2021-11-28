@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
 
   popUp: {
-      // flex: 0.1,
+    // flex: 0.1,
     marginTop: 10,
     height: 'auto',
     width: 350,

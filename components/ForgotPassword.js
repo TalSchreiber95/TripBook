@@ -43,7 +43,7 @@ const ForgotPassword = ({ Users, navigation, ind }) => {
         <ScrollView >
             {/* <Header title="TripBook" name={""} /> */}
             {/* <Text style={styles.title}>TripBook</Text> */}
-            <Header connected={false}/>
+            <Header connected={false} />
             <Form
                 onButtonPress={onRestorePass}
                 buttonStyle={styles.formButton}
