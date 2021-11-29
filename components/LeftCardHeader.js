@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     //   flex: 0.1,
     marginTop: 15,
     height: 'auto',
-    // width: 350,
+    width: '110%',
     borderRadius: 5,
     position: 'absolute',
     top: 45,

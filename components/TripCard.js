@@ -12,13 +12,33 @@ import {
 } from 'react-native';
 import CardFooter from './CardFooter';
 import CardHeader from './CardHeader';
-import { useState } from 'react';
-import { Button } from 'react-native-elements/dist/buttons/Button';
+import {useState} from 'react';
+import {Button} from 'react-native-elements/dist/buttons/Button';
 import LinearGradient from 'react-native-linear-gradient';
 
-const TripCard = ({ trip, name, deleteCard, editCard, cardOwnerMessage, toggleApproveCard }) => {
+const TripCard = ({
+  trip,
+  name,
+  deleteCard,
+  editCard,
+  cardOwnerMessage,
+  toggleApproveCard,
+  addTrip
+}) => {
   const [pic, setPicture] = useState(0);
   const [toggler, setToggler] = useState('');
+  const [picIndex, setPicIndex] = useState(0);
+  // const [pic, setPic] = useState();
+
+  const switchPictureRight = () => {
+    setPicIndex((picIndex + 1) % trip.pictures.length);
+    setPicture(picIndex);
+  };
+
+  const switchPictureLeft = () => {
+    setPicIndex((picIndex - 1 + trip.pictures.length) % trip.pictures.length);
+    setPicture(picIndex);
+  };
 
   const onAddTrip = () => {
     return Alert.alert(
@@ -28,8 +48,12 @@ const TripCard = ({ trip, name, deleteCard, editCard, cardOwnerMessage, toggleAp
         {
           text: 'Yes',
           onPress: () => {
-            Alert.alert("Approve trip supposed to be only in approve trip page");
-            // addTrip(trip.id);
+            // Alert.alert(
+            //   'Approve trip supposed to be only in approve trip page',
+            // );
+            addTrip(trip.id);
+            // remove waiting trip after add
+
           },
         },
         {
@@ -63,7 +87,9 @@ const TripCard = ({ trip, name, deleteCard, editCard, cardOwnerMessage, toggleAp
         {
           text: 'Yes',
           onPress: () => {
-            Alert.alert("card edit supposed to be here im not sure in which way yet");
+            Alert.alert(
+              'card edit supposed to be here im not sure in which way yet',
+            );
             // Alert.alert(editCard(id));
             // editCard(trip.id);
           },
@@ -82,7 +108,9 @@ const TripCard = ({ trip, name, deleteCard, editCard, cardOwnerMessage, toggleAp
         {
           text: 'Yes',
           onPress: () => {
-            Alert.alert("Alert input text supposed to be here and after it should be updated!");
+            Alert.alert(
+              'Alert input text supposed to be here and after it should be updated!',
+            );
             //cardOwenerMessage is a function that update the tripMesage
             //  cardOwnerMessage(trip.id);
           },
@@ -106,16 +134,18 @@ const TripCard = ({ trip, name, deleteCard, editCard, cardOwnerMessage, toggleAp
       <LinearGradient
         // style={styles.header}
         colors={['silver', 'steelblue']}
-        start={{ x: 1.6, y: 0 }}
-        end={{ x: 0, y: 0 }}>
+        start={{x: 1.6, y: 0}}
+        end={{x: 0, y: 0}}>
         <View style={styles.iconHeader}>
-          {(name.admin || name.email == trip.owner) && (<Icon
-            name="edit"
-            size={20}
-            color="blue"
-            onPress={() => onEdit()}
-            style={styles.icon}
-          />)}<Text>  </Text>
+          {(name.admin || name.email == trip.owner) && (
+            <Icon
+              name="edit"
+              size={20}
+              color="blue"
+              onPress={() => onEdit()}
+              style={styles.icon}
+            />
+          )}
           {(name.admin || name.email == trip.owner) && (
             <Icon1
               name="message1"
@@ -123,14 +153,17 @@ const TripCard = ({ trip, name, deleteCard, editCard, cardOwnerMessage, toggleAp
               color="green"
               onPress={() => Alert.alert(trip.adminMessage)}
               style={styles.icon}
-            />)}<Text>  </Text>
-          {name.admin && (<Icon
-            name="send"
-            size={20}
-            color="black"
-            onPress={() => onSendMessage()}
-            style={styles.icon}
-          />)}<Text>  </Text>
+            />
+          )}
+          {name.admin && (
+            <Icon
+              name="send"
+              size={20}
+              color="black"
+              onPress={() => onSendMessage()}
+              style={styles.icon}
+            />
+          )}
           {(name.admin || name.email == trip.owner) && (
             <Icon
               name="trash-o"
@@ -139,14 +172,16 @@ const TripCard = ({ trip, name, deleteCard, editCard, cardOwnerMessage, toggleAp
               onPress={() => onDelete()}
               style={styles.icon}
             />
-          )}<Text>  </Text>
-          {name.admin && toggleApproveCard && (<Icon
-            name="check"
-            size={20}
-            color="green"
-            onPress={() => onAddTrip()}
-            style={styles.icon}
-          />)}<Text>  </Text>
+          )}
+          {name.admin && toggleApproveCard && (
+            <Icon
+              name="check"
+              size={20}
+              color="green"
+              onPress={() => onAddTrip()}
+              style={styles.icon}
+            />
+          )}
         </View>
       </LinearGradient>
       <CardHeader trip={trip} updateButton={updateButton} toggler={toggler} />
@@ -155,7 +190,26 @@ const TripCard = ({ trip, name, deleteCard, editCard, cardOwnerMessage, toggleAp
           style={styles.logo}
           source={{
             uri: trip.pictures[pic],
-          }}></ImageBackground>
+          }}>
+          <View style={styles.RLbuttonsView}>
+            <Button
+              title="<"
+              onPress={switchPictureLeft}
+              type="outline"
+              titleStyle={styles.titleArrowButtons}
+              // containerStyle={styles.buttonContainer}
+              buttonStyle={styles.RLbuttons}
+            />
+            <Button
+              title=">"
+              onPress={switchPictureRight}
+              type="outline"
+              titleStyle={styles.titleArrowButtons}
+              //   containerStyle={styles.buttonRight}
+              buttonStyle={styles.RLbuttons}
+            />
+          </View>
+        </ImageBackground>
 
         {/* There is problem with the image component - hiding the weather and info popups
         for now i changed the opacity so we can see it
@@ -172,7 +226,7 @@ const TripCard = ({ trip, name, deleteCard, editCard, cardOwnerMessage, toggleAp
 };
 TripCard.defaultProps = {
   toggleApproveCard: false,
-}
+};
 const styles = StyleSheet.create({
   card: {
     borderRadius: 5,
@@ -204,7 +258,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   logo: {
-    // width: '100%',
+    width: '100%',
     // height:'auto',
     // opacity: 0.5,
     flex: 1,
@@ -227,9 +281,39 @@ const styles = StyleSheet.create({
   },
   icon: {
     alignSelf: 'flex-end',
+    marginLeft: 5,
+    marginRight: 5,
   },
   iconView: {
     backgroundColor: 'steelblue',
+  },
+  RLbuttons: {
+    width: 40,
+    height: 40,
+    // margin: 100,
+    marginLeft: 130,
+    marginRight: 130,
+    borderRadius: 35,
+    borderColor: '#24a0ed',
+    borderWidth: 0.8,
+    elevation: 0.5,
+    backgroundColor: 'white',
+    color: '#24a0ed',
+    // alignItems: 'center',
+    // alignSelf: 'center',
+  },
+
+  RLbuttonsView: {
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    // padding: 10,
+    alignItems: 'center',
+    // alignSelf: 'center',
+  },
+  titleArrowButtons: {
+    // backgroundColor: 'black',
+    color:'#24a0ed',
   },
 });
 export default TripCard;

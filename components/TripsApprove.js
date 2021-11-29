@@ -13,17 +13,34 @@ import {
 import Header from './Header';
 import TripCard from './TripCard';
 
-import { useState } from 'react';
+import {useState} from 'react';
 
-const TripsApprove = ({ WaitingTrips, user, deleteCard, approveCard, editCard, cardOwnerMessage, navigation }) => {
+const TripsApprove = ({
+  WaitingTrips,
+  user,
+  deleteCard,
+  approveCard,
+  editCard,
+  cardOwnerMessage,
+  navigation,
+  addTrip,
+}) => {
   return (
     <ScrollView>
       <Header name={user} navigation={navigation} />
       <Text style={styles.text}>Approve trips List:</Text>
       {WaitingTrips.map(trip => (
-        <TripCard key={trip.id} trip={trip} name={user}
-          deleteCard={deleteCard} editCard={editCard} cardOwnerMessage={cardOwnerMessage}
-          toggleApproveCard={true} />
+        <TripCard
+          key={trip.id}
+          trip={trip}
+          name={user}
+          deleteCard={deleteCard}
+          editCard={editCard}
+          cardOwnerMessage={cardOwnerMessage}
+          toggleApproveCard={true}
+          addTrip={addTrip}
+
+        />
       ))}
     </ScrollView>
   );

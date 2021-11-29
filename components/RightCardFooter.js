@@ -4,27 +4,14 @@ import { Button, CheckBox } from 'react-native-elements';
 import { Form, FormItem } from 'react-native-form-component';
 
 const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
-  const [picIndex, setPicIndex] = useState(0);
+  // const [picIndex, setPicIndex] = useState(0);
   const [pic, setPic] = useState();
-
-  const [toggleAddPicture, setToggleAddPicture] = useState(false);
 
 
   const ToggleGallery = () => {
-    setToggleAddPicture(false);
     toggler === 'gallery' ? updateButton('none') : updateButton('gallery');
   };
 
-
-  const switchPictureRight = () => {
-    setPicIndex((picIndex + 1) % trip.pictures.length);
-    setPicture(picIndex);
-  };
-
-  const switchPictureLeft = () => {
-    setPicIndex((picIndex - 1 + trip.pictures.length) % trip.pictures.length);
-    setPicture(picIndex);
-  };
   const onAddPicture = () => {
     // Note: should be improved!
     if (pic !== '') {
@@ -32,13 +19,10 @@ const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
     }
   };
 
-  const ToggleAddPicture = () => {
-    setToggleAddPicture(!toggleAddPicture);
-  };
   return (
     <View style={styles.container}>
       <Button
-        title={'Gallery'}
+        title='Add Picture +'
         onPress={ToggleGallery}
         type="secondary"
         titleStyle={styles.buttonTitle}
@@ -47,36 +31,11 @@ const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
       />
       {toggler === 'gallery' && (
         <View style={styles.popUp}>
-          <View style={styles.RLbuttonsView}>
-            <Button
-              title="<"
-              onPress={switchPictureLeft}
-              type="outline"
-              titleStyle={styles.titleArrowButtons}
-              // containerStyle={styles.buttonContainer}
-              buttonStyle={styles.RLbuttons}
-            />
-            <Button
-              title=">"
-              onPress={switchPictureRight}
-              type="outline"
-              titleStyle={styles.titleArrowButtons}
-              //   containerStyle={styles.buttonRight}
-              buttonStyle={styles.RLbuttons}
-            />
-          </View>
-          <Button
-            title={!toggleAddPicture ? 'Add Picture +' : 'Close'}
-            onPress={ToggleAddPicture}
-            type="secondary"
-            titleStyle={styles.titleArrowButtons}
-            containerStyle={styles.addPictureButton}
-          />
-          {toggleAddPicture && (
             <Form
               onButtonPress={onAddPicture}
               buttonStyle={styles.formButton}
-              buttonText="Add picture">
+              buttonText="Add"
+              >
               <FormItem
                 placeholder="Add url pic here"
                 style={styles.inputView}
@@ -88,10 +47,8 @@ const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
                   setPic(pic);
                 }}
                 isRequired
-                asterik
               />
             </Form>
-          )}
         </View>
       )}
     </View>
@@ -114,8 +71,8 @@ const styles = StyleSheet.create({
   },
   formButton: {
     backgroundColor: 'steelblue',
-    marginLeft: 100,
-    marginRight: 100,
+    marginLeft: 110,
+    marginRight: 110,
     marginBottom: 25,
     marginTop: 0,
     borderRadius: 20,
@@ -145,6 +102,8 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     fontWeight: 'bold',
     fontSize: 17,
+    marginTop: 20,
+
   },
   popUp: {
     // flex: 0.1,

@@ -181,6 +181,9 @@ const App: () => Node = () => {
   const addTrip = trip => {
     setTrips([...Trips, trip]);
   };
+  const addWaitingTrip = waitingTrip => {
+    setWaitingTrips([...WaitingTrips, waitingTrip]);
+  };
   const addTripInfo = tripInfo => {
     setTripInfo(tripInfo);
   };
@@ -228,9 +231,9 @@ const App: () => Node = () => {
           {props => (
             <AddTrip
               {...props}
-              addTrip={addTrip}
+              addWaitingTrip={addWaitingTrip}
               name={Users[Index]}
-              getId={Trips.length}
+              getWaitingId={Trips.length + WaitingTrips.length}
             />
           )}
         </Stack.Screen>
@@ -259,6 +262,7 @@ const App: () => Node = () => {
                 approveCard={approveCard}
                 editCard={editCard}
                 cardOwnerMessage={cardOwnerMessage}
+                addTrip={addTrip}
               // navigation={navigation}
               />
             )}

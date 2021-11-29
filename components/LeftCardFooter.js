@@ -146,8 +146,8 @@ const styles = StyleSheet.create({
     // marginLeft: 20,
     // marginRight: 20,
     borderRadius: 35,
-    borderColor: 'black',
-    borderWidth: 0.8,
+    borderColor: '#24a0ed',
+    borderWidth: 1,
     alignSelf: 'center',
     alignItems: 'center',
     // backgroundColor: 'black'

@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     //   flex: 0.1,
     // marginBottom: 20,
     marginTop: 15,
+    // marginLeft: 70,
     height: 'auto',
     width: 200,
     borderRadius: 5,
@@ -52,8 +53,7 @@ const styles = StyleSheet.create({
     // left: 10,
     elevation: 20,
     backgroundColor: '#000000c0',
-    justifyContent: 'center',
-    marginLeft: -120,
+    alignSelf: 'flex-end',
 
     // position: 'absolute',
   },

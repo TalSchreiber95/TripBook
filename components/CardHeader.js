@@ -1,26 +1,21 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
-import { View, Text, StyleSheet } from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import LeftCardHeader from './LeftCardHeader';
 import RightCardHeader from './RightCardHeader';
-import { Header } from 'react-native-elements';
+import {Header} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 
-const CardHeader = ({ trip, updateButton, toggler }) => {
+const CardHeader = ({trip, updateButton, toggler}) => {
   return (
     <LinearGradient
       colors={['silver', 'steelblue']}
-      start={{ x: 1, y: 3.5 }}
-      end={{ x: 0, y: 0.5 }}>
-      <View
-        style={styles.cardHeader}
-      // linearGradientProps={{
-      //   colors: ['silver', 'steelblue'],
-      //   start: {x: 1, y: 3.5},
-      //   end: {x: 0, y: 0.5},
-      // }}
-      >
+      start={{x: 1, y: 3.5}}
+      end={{x: 0, y: 0.5}}>
+        
+
+      <View style={styles.cardHeader}>
         <LeftCardHeader
           trip={trip}
           toggler={toggler}
@@ -56,13 +51,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     margin: 10,
-    marginTop: 15,
+    // marginTop: 10,
     marginBottom: 15,
   },
   textView: {
     flex: 0.5,
-    textAlign: 'center'
-
+    textAlign: 'center',
   },
   text: {
     color: 'silver',

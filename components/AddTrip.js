@@ -14,7 +14,7 @@ import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Header from './Header';
 
-const AddTrip = ({addTrip, navigation, user, getId}) => {
+const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId}) => {
   const [tripName, setTripName] = useState('');
   const [location, setLocation] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -41,7 +41,7 @@ const AddTrip = ({addTrip, navigation, user, getId}) => {
       priceInNis != null
     ) {
       const newTrip = {
-        id: getId,
+        id: getWaitingId,
         owner: user.email,
         adminMessage: 'No new admin messages',
         tripName: tripName,
@@ -61,7 +61,7 @@ const AddTrip = ({addTrip, navigation, user, getId}) => {
         feedbacksLive: [],
         priceInNis: priceInNis,
       };
-      addTrip(newTrip);
+      addWaitingTrip(newTrip);
       Alert.alert('trip posted succesfully');
       navigation.navigate('Home');
     } else {
