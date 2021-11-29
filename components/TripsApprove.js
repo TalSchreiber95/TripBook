@@ -39,7 +39,6 @@ const TripsApprove = ({
           cardOwnerMessage={cardOwnerMessage}
           toggleApproveCard={true}
           addTrip={addTrip}
-
         />
       ))}
     </ScrollView>

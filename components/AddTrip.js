@@ -22,7 +22,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId}) => {
   const [priceInNis, setPriceInNis] = useState();
 
   const [description, setDescription] = useState('');
-  const [picture, setPicture] = useState('');
+  const [picture, setPicture] = useState('https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg');
 
   //categories
   const [isRelax, setIsRelax] = useState(false);

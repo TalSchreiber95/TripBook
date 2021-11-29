@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Button, CheckBox } from 'react-native-elements';
 import { Form, FormItem } from 'react-native-form-component';
@@ -15,7 +15,14 @@ const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
   const onAddPicture = () => {
     // Note: should be improved!
     if (pic !== '') {
-      trip.pictures.push(pic);
+      if (trip.pictures[0] === 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg') {
+        trip.pictures[0] = pic;
+        Alert.alert('new picture');
+      }
+      else {
+        trip.pictures.push(pic);
+        Alert.alert("push picture");
+      }
     }
   };
 
@@ -31,24 +38,24 @@ const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
       />
       {toggler === 'gallery' && (
         <View style={styles.popUp}>
-            <Form
-              onButtonPress={onAddPicture}
-              buttonStyle={styles.formButton}
-              buttonText="Add"
-              >
-              <FormItem
-                placeholder="Add url pic here"
-                style={styles.inputView}
-                label="Url pic:"
-                labelStyle={styles.label}
-                multiline={true}
-                value={pic}
-                onChangeText={pic => {
-                  setPic(pic);
-                }}
-                isRequired
-              />
-            </Form>
+          <Form
+            onButtonPress={onAddPicture}
+            buttonStyle={styles.formButton}
+            buttonText="Add"
+          >
+            <FormItem
+              placeholder="Add url pic here"
+              style={styles.inputView}
+              label="Url pic:"
+              labelStyle={styles.label}
+              multiline={true}
+              value={pic}
+              onChangeText={pic => {
+                setPic(pic);
+              }}
+              isRequired
+            />
+          </Form>
         </View>
       )}
     </View>

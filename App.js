@@ -38,9 +38,9 @@ const App: () => Node = () => {
   const users = [
     //email = Unique-Key
     {
-      email: 'user',
-      pass: 'user',
-      firstName: 'user',
+      email: 'u',
+      pass: 'u',
+      firstName: 'regular',
       lastName: 'user',
       passRecoverAnswer: '',
       admin: false,
@@ -66,7 +66,7 @@ const App: () => Node = () => {
   const trips = [
     {
       id: 1,
-      owner: 'user',
+      owner: 'u',
       adminMessage: 'No new admin messages',
       tripName: 'sky',
       category: {
@@ -79,8 +79,8 @@ const App: () => Node = () => {
         isTrainTravel: false,
       },
       pictures: [
+        'https://thumbs.dreamstime.com/b/colorful-vibrant-sunrise-sky-background-colorful-sunrise-sky-background-125577925.jpg',
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSjzoRJBCcaW-Tj1pn9kaj3J1-FJjRN26Gsw&usqp=CAU',
-        'https://i.ibb.co/McYBzxw/medium-Value.jpg',
       ],
       location: 'location',
       description: 'The sky is blue and infinite ',
@@ -97,7 +97,7 @@ const App: () => Node = () => {
       id: 2,
       owner: 'a',
       adminMessage: 'No new admin messages 2',
-      tripName: 'movie',
+      tripName: 'SpiderMan movie',
       category: {
         isRelax: false,
         isDynamic: false,
@@ -108,8 +108,8 @@ const App: () => Node = () => {
         isTrainTravel: false,
       },
       pictures: [
-        'https://i.ibb.co/McYBzxw/medium-Value.jpg',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSjzoRJBCcaW-Tj1pn9kaj3J1-FJjRN26Gsw&usqp=CAU',
+        'https://amc-theatres-res.cloudinary.com/image/upload/f_auto,fl_lossy,h_465,q_auto,w_310/v1636383824/amc-cdn/production/2/movies/66500/66520/PosterDynamic/131442.jpg',
+        'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/spider-man-movies-in-order-index-1631199371.jpeg',
       ],
       location: 'location',
       description: 'Watch now the new movie of Pokemon! ',
@@ -124,10 +124,10 @@ const App: () => Node = () => {
 
   const waitingTrips = [
     {
-      id: 1,
+      id: 3,
       owner: 'userEmail',
       adminMessage: 'No new admin messages',
-      tripName: 'waiting',
+      tripName: 'Eiffel tower',
       category: {
         isRelax: false,
         isDynamic: false,
@@ -138,8 +138,8 @@ const App: () => Node = () => {
         isTrainTravel: false,
       },
       pictures: [
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSjzoRJBCcaW-Tj1pn9kaj3J1-FJjRN26Gsw&usqp=CAU',
-        'https://i.ibb.co/McYBzxw/medium-Value.jpg',
+        'https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg',
+        'https://fadeceilings.com/wp-content/uploads/2019/08/AdobeStock_65117955-720x460.jpeg',
       ],
       location: 'waiting',
       description: 'The sky is blue and infinite waitingwaiting ',
@@ -180,6 +180,9 @@ const App: () => Node = () => {
   // Note: this is supposed to add to setWaitingTrips instead to directly Trips
   const addTrip = trip => {
     setTrips([...Trips, trip]);
+    setWaitingTrips(prevCards => {
+      return prevCards.filter(card => card.id != trip.id);
+    });
   };
   const addWaitingTrip = waitingTrip => {
     setWaitingTrips([...WaitingTrips, waitingTrip]);
@@ -232,8 +235,8 @@ const App: () => Node = () => {
             <AddTrip
               {...props}
               addWaitingTrip={addWaitingTrip}
-              name={Users[Index]}
-              getWaitingId={Trips.length + WaitingTrips.length}
+              user={Users[Index]}
+              getWaitingId={Trips.length + WaitingTrips.length + 1}
             />
           )}
         </Stack.Screen>

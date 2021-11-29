@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/AntDesign';
 
@@ -12,8 +12,8 @@ import {
 } from 'react-native';
 import CardFooter from './CardFooter';
 import CardHeader from './CardHeader';
-import {useState} from 'react';
-import {Button} from 'react-native-elements/dist/buttons/Button';
+import { useState } from 'react';
+import { Button } from 'react-native-elements/dist/buttons/Button';
 import LinearGradient from 'react-native-linear-gradient';
 
 const TripCard = ({
@@ -51,7 +51,7 @@ const TripCard = ({
             // Alert.alert(
             //   'Approve trip supposed to be only in approve trip page',
             // );
-            addTrip(trip.id);
+            addTrip(trip);
             // remove waiting trip after add
 
           },
@@ -134,9 +134,16 @@ const TripCard = ({
       <LinearGradient
         // style={styles.header}
         colors={['silver', 'steelblue']}
-        start={{x: 1.6, y: 0}}
-        end={{x: 0, y: 0}}>
+        start={{ x: 1.6, y: 0 }}
+        end={{ x: 0, y: 0 }}>
         <View style={styles.iconHeader}>
+          <Icon1
+            name="infocirlceo"
+            size={20}
+            color='gold'
+            onPress={() => Alert.alert("Trip's Owner: " + trip.owner)}
+            style={styles.iconLeft}
+          />
           {(name.admin || name.email == trip.owner) && (
             <Icon
               name="edit"
@@ -240,7 +247,7 @@ const styles = StyleSheet.create({
     // flex: 2,
     // borderRadius: 15,
 
-    justifyContent: 'flex-end',
+    // justifyContent: 'flex-end',
     flexDirection: 'row',
     // alignItems:"center",
   },
@@ -284,6 +291,11 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
   },
+  iconLeft: {
+    alignSelf: 'flex-start',
+    marginLeft: 5,
+    marginRight: 5,
+  },
   iconView: {
     backgroundColor: 'steelblue',
   },
@@ -313,7 +325,7 @@ const styles = StyleSheet.create({
   },
   titleArrowButtons: {
     // backgroundColor: 'black',
-    color:'#24a0ed',
+    color: '#24a0ed',
   },
 });
 export default TripCard;
