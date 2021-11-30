@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, {useReducer} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/AntDesign';
 
@@ -12,18 +12,18 @@ import {
 } from 'react-native';
 import CardFooter from './CardFooter';
 import CardHeader from './CardHeader';
-import { useState } from 'react';
-import { Button } from 'react-native-elements/dist/buttons/Button';
+import {useState} from 'react';
+import {Button} from 'react-native-elements/dist/buttons/Button';
 import LinearGradient from 'react-native-linear-gradient';
 
 const TripCard = ({
   trip,
-  name,
+  user,
   deleteCard,
   editCard,
   cardOwnerMessage,
   toggleApproveCard,
-  addTrip
+  addTrip,
 }) => {
   const [pic, setPicture] = useState(0);
   const [toggler, setToggler] = useState('');
@@ -40,6 +40,14 @@ const TripCard = ({
     setPicture(picIndex);
   };
 
+  const updatePicture = ind => {
+    setPicture(ind);
+  };
+
+  const updateButton = activeButton => {
+    setToggler(activeButton);
+  };
+
   const onAddTrip = () => {
     return Alert.alert(
       'Add trip card !',
@@ -53,7 +61,6 @@ const TripCard = ({
             // );
             addTrip(trip);
             // remove waiting trip after add
-
           },
         },
         {
@@ -121,77 +128,25 @@ const TripCard = ({
       ],
     );
   };
-  const updatePicture = ind => {
-    setPicture(ind);
-  };
-
-  const updateButton = activeButton => {
-    setToggler(activeButton);
-  };
 
   return (
     <View style={styles.card}>
       <LinearGradient
         // style={styles.header}
         colors={['silver', 'steelblue']}
-        start={{ x: 1.6, y: 0 }}
-        end={{ x: 0, y: 0 }}>
-        <View style={styles.iconHeader}>
-          <Icon1
-            name="infocirlceo"
-            size={20}
-            color='gold'
-            onPress={() => Alert.alert("Trip's Owner: " + trip.owner)}
-            style={styles.iconLeft}
-          />
-          {(name.admin || name.email == trip.owner) && (
-            <Icon
-              name="edit"
-              size={20}
-              color="blue"
-              onPress={() => onEdit()}
-              style={styles.icon}
-            />
-          )}
-          {(name.admin || name.email == trip.owner) && (
-            <Icon1
-              name="message1"
-              size={20}
-              color="green"
-              onPress={() => Alert.alert(trip.adminMessage)}
-              style={styles.icon}
-            />
-          )}
-          {name.admin && (
-            <Icon
-              name="send"
-              size={20}
-              color="black"
-              onPress={() => onSendMessage()}
-              style={styles.icon}
-            />
-          )}
-          {(name.admin || name.email == trip.owner) && (
-            <Icon
-              name="trash-o"
-              size={20}
-              color="firebrick"
-              onPress={() => onDelete()}
-              style={styles.icon}
-            />
-          )}
-          {name.admin && toggleApproveCard && (
-            <Icon
-              name="check"
-              size={20}
-              color="green"
-              onPress={() => onAddTrip()}
-              style={styles.icon}
-            />
-          )}
-        </View>
-      </LinearGradient>
-      <CardHeader trip={trip} updateButton={updateButton} toggler={toggler} />
+        start={{x: 1.6, y: 0}}
+        end={{x: 0, y: 0}}></LinearGradient>
+      <CardHeader
+        trip={trip}
+        updateButton={updateButton}
+        toggler={toggler}
+        user={user}
+        onAddTrip={onAddTrip}
+        onEdit={onEdit}
+        onSendMessage={onSendMessage}
+        onDelete={onDelete}
+        toggleApproveCard={toggleApproveCard}
+      />
       <View style={styles.picView}>
         <ImageBackground
           style={styles.logo}
@@ -204,7 +159,6 @@ const TripCard = ({
               onPress={switchPictureLeft}
               type="outline"
               titleStyle={styles.titleArrowButtons}
-              // containerStyle={styles.buttonContainer}
               buttonStyle={styles.RLbuttons}
             />
             <Button
@@ -212,7 +166,6 @@ const TripCard = ({
               onPress={switchPictureRight}
               type="outline"
               titleStyle={styles.titleArrowButtons}
-              //   containerStyle={styles.buttonRight}
               buttonStyle={styles.RLbuttons}
             />
           </View>
@@ -232,8 +185,9 @@ const TripCard = ({
   );
 };
 TripCard.defaultProps = {
-  toggleApproveCard: false,
+  // toggleApproveCard: false,
 };
+
 const styles = StyleSheet.create({
   card: {
     borderRadius: 5,
@@ -286,16 +240,7 @@ const styles = StyleSheet.create({
     height: 400,
     // opacity: 0.5,
   },
-  icon: {
-    alignSelf: 'flex-end',
-    marginLeft: 5,
-    marginRight: 5,
-  },
-  iconLeft: {
-    alignSelf: 'flex-start',
-    marginLeft: 5,
-    marginRight: 5,
-  },
+
   iconView: {
     backgroundColor: 'steelblue',
   },

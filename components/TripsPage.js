@@ -13,12 +13,20 @@ import {
 import Header from './Header';
 import TripCard from './TripCard';
 
-import { useState } from 'react';
+import {useState} from 'react';
 
-const TripsPage = ({ Trips, name, tripInfo, deleteCard, editCard, cardOwnerMessage, navigation }) => {
+const TripsPage = ({
+  Trips,
+  user,
+  tripInfo,
+  deleteCard,
+  editCard,
+  cardOwnerMessage,
+  navigation,
+}) => {
   return (
     <ScrollView>
-      <Header name={name} navigation={navigation} />
+      <Header name={user} navigation={navigation} />
       <Text style={styles.text}>Search Results:</Text>
       <Text style={styles.locationText}>
         {' '}
@@ -27,8 +35,15 @@ const TripsPage = ({ Trips, name, tripInfo, deleteCard, editCard, cardOwnerMessa
       </Text>
       {/* Should implement The filter algorithm include the sort */}
       {Trips.map(trip => (
-        <TripCard key={trip.id} trip={trip} name={name}
-          deleteCard={deleteCard} editCard={editCard} cardOwnerMessage={cardOwnerMessage} />
+        <TripCard
+          key={trip.id}
+          trip={trip}
+          user={user}
+          deleteCard={deleteCard}
+          editCard={editCard}
+          cardOwnerMessage={cardOwnerMessage}
+          toggleApproveCard={false}
+        />
       ))}
     </ScrollView>
   );

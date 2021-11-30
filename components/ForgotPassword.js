@@ -99,14 +99,14 @@ const styles = StyleSheet.create({
     },
     inputView: {
         flex: 0.3,
-        backgroundColor: 'lightblue',
-        borderWidth: 0.5,
+        backgroundColor: '#F5F5F5',
+        borderBottomWidth: 0.5,
         marginBottom: 10,
         marginLeft: 20,
         marginRight: 20,
-        fontSize: 17,
-        borderRadius: 30,
-    },
+        fontSize: 20,
+        borderRadius: 5,
+      },
     button: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -127,8 +127,8 @@ const styles = StyleSheet.create({
     },
     formButton: {
         backgroundColor: '#007AFF',
-        marginLeft: 100,
-        marginRight: 100,
+        marginLeft: 80,
+        marginRight: 80,
         borderRadius: 20,
     },
     text: {

@@ -39,6 +39,14 @@ const HomePage = ({ name, tripSearch, navigation }) => {
     tripSearch(tripInfo);
   };
 
+
+
+
+
+
+
+  
+
   return (
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">

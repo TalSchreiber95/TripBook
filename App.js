@@ -97,7 +97,7 @@ const App: () => Node = () => {
       id: 2,
       owner: 'a',
       adminMessage: 'No new admin messages 2',
-      tripName: 'SpiderMan movie',
+      tripName: 'SpiderMan vs Batman movie',
       category: {
         isRelax: false,
         isDynamic: false,
@@ -170,7 +170,7 @@ const App: () => Node = () => {
   const [Users, setUsers] = useState(users);
   const [Trips, setTrips] = useState(trips);
   const [WaitingTrips, setWaitingTrips] = useState(waitingTrips);
-  const [Index, setIndex] = useState(0);
+  const [Index, setIndex] = useState(1);
   const [TripInfo, setTripInfo] = useState(tripInfo);
 
   const addNewUser = user => {
@@ -194,8 +194,14 @@ const App: () => Node = () => {
     setTrips(prevCards => {
       return prevCards.filter(card => card.id != id);
     });
-
   };
+  
+  const deleteWaitingCard = id => {
+    setWaitingTrips(prevCards => {
+      return prevCards.filter(card => card.id != id);
+    });
+  };
+
 
   const approveCard = trip => {
     setTrips([...Trips, trip]);
@@ -245,7 +251,7 @@ const App: () => Node = () => {
             <TripsPage
               {...props}
               Trips={Trips}
-              name={Users[Index]}
+              user={Users[Index]}
               tripInfo={TripInfo}
               deleteCard={deleteCard}
               editCard={editCard}
@@ -261,7 +267,7 @@ const App: () => Node = () => {
                 // Trips={Trips}
                 WaitingTrips={WaitingTrips}
                 user={Users[Index]}
-                deleteCard={deleteCard}
+                deleteWaitingCard={deleteWaitingCard}
                 approveCard={approveCard}
                 editCard={editCard}
                 cardOwnerMessage={cardOwnerMessage}

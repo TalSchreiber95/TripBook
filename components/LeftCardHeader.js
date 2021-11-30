@@ -24,7 +24,7 @@ const LeftCardHeader = ({ trip, toggler, updateButton }) => {
       {toggler === 'weather' && (
         <View style={styles.popUp}>
           <Text style={styles.text}>20°C</Text>
-          <Text style={styles.text}>Sunny</Text>
+          <Text style={styles.text}>Sunny of the day hell</Text>
           <Text style={styles.text}>{trip.location}</Text>
         </View>
       )}
@@ -48,17 +48,14 @@ const styles = StyleSheet.create({
 
   popUp: {
     //   flex: 0.1,
-    marginTop: 15,
-    height: 'auto',
-    width: '110%',
+    marginTop: 10,
+    width: '100%',
     borderRadius: 5,
     position: 'absolute',
     top: 45,
-    // left: 10,
-    elevation: 20,
     backgroundColor: '#000000c0',
-    justifyContent: 'center',
-    // position: 'absolute',
+    elevation: 1,
+    padding: 3,    
   },
   button: {
     // backgroundColor: 'black',
@@ -66,9 +63,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     // backgroundColor: 'black',
-    width: 73,
-
-
+    width: 80,
   },
   text: {
     // flex: 0.1,

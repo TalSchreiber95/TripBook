@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -12,10 +12,10 @@ import {
   Pressable,
 } from 'react-native';
 
-import { Form, FormItem } from 'react-native-form-component';
-import Header from './Header'
+import {Form, FormItem} from 'react-native-form-component';
+import Header from './Header';
 
-const LoginPage = ({ Users, navigation, ind, name }) => {
+const LoginPage = ({Users, navigation, ind, name}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -40,8 +40,10 @@ const LoginPage = ({ Users, navigation, ind, name }) => {
   return (
     <SafeAreaView>
       <StatusBar />
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Header title='TripBook' connected={false} navigation={navigation} />
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={styles.scrollView}>
+        <Header title="TripBook" connected={false} navigation={navigation} />
         <Form
           onButtonPress={onLogin}
           buttonStyle={styles.formButton}
@@ -96,6 +98,7 @@ const styles = StyleSheet.create({
     color: 'gold',
     backgroundColor: '#001f3f',
   },
+  scrollView: {},
   label: {
     color: 'black',
     marginLeft: 30,
@@ -104,13 +107,13 @@ const styles = StyleSheet.create({
   },
   inputView: {
     flex: 0.3,
-    backgroundColor: 'lightblue',
-    borderWidth: 0.5,
+    backgroundColor: '#F5F5F5',
+    borderBottomWidth: 0.5,
     marginBottom: 10,
     marginLeft: 20,
     marginRight: 20,
-    fontSize: 17,
-    borderRadius: 30,
+    fontSize: 20,
+    borderRadius: 5,
   },
   button: {
     alignItems: 'center',
@@ -120,8 +123,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     elevation: 3,
     backgroundColor: 'black',
-    marginLeft: 50,
-    marginRight: 50,
+    marginLeft: 45,
+    marginRight: 45,
   },
   buttonText: {
     fontSize: 16,
@@ -138,8 +141,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     elevation: 3,
     backgroundColor: 'firebrick',
-    marginLeft: 42.5,
-    marginRight: 42.5,
+    marginLeft: 30,
+    marginRight: 30,
     marginBottom: 20,
   },
   buttonTextf: {

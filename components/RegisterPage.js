@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Alert,
   SafeAreaView,
@@ -9,11 +9,10 @@ import {
   View,
 } from 'react-native';
 
-import { Form, FormItem } from 'react-native-form-component';
-import Header from './Header'
+import {Form, FormItem} from 'react-native-form-component';
+import Header from './Header';
 
-const RegisterPage = ({ Users, addNewUser, navigation }) => {
-
+const RegisterPage = ({Users, addNewUser, navigation}) => {
   const [newUser, setNewUser] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -47,13 +46,16 @@ const RegisterPage = ({ Users, addNewUser, navigation }) => {
   return (
     <SafeAreaView>
       <StatusBar />
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={styles.scrollView}>
         <Header connected={false} />
         <Form
           onButtonPress={onRegister}
           buttonText="Register"
           buttonStyle={styles.formButton}>
           <FormItem
+            placeholder="Enter your First Name"
             style={styles.inputView}
             label="First Name"
             labelStyle={styles.label}
@@ -65,6 +67,7 @@ const RegisterPage = ({ Users, addNewUser, navigation }) => {
             asterik
           />
           <FormItem
+            placeholder="Enter your Last Name"
             style={styles.inputView}
             label="Last Name"
             labelStyle={styles.label}
@@ -77,6 +80,7 @@ const RegisterPage = ({ Users, addNewUser, navigation }) => {
           />
 
           <FormItem
+            placeholder="Enter your Email "
             style={styles.inputView}
             label="Email"
             labelStyle={styles.label}
@@ -88,6 +92,7 @@ const RegisterPage = ({ Users, addNewUser, navigation }) => {
             asterik
           />
           <FormItem
+            placeholder="Choose a Password"
             style={styles.inputView}
             label="Password"
             labelStyle={styles.label}
@@ -99,6 +104,7 @@ const RegisterPage = ({ Users, addNewUser, navigation }) => {
             asterik
           />
           <FormItem
+            placeholder="Answer the Question"
             style={styles.inputView}
             label="if u forget your password you can recover it by anwering that question.
             what the name of your mother ?"
@@ -117,13 +123,16 @@ const RegisterPage = ({ Users, addNewUser, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 90,
-    fontWeight: '300',
-    textAlign: 'center',
-    marginBottom: 15,
-    color: 'gold',
-    backgroundColor: '#001f3f',
+  // title: {
+  //   fontSize: 90,
+  //   fontWeight: '300',
+  //   textAlign: 'center',
+  //   marginBottom: 15,
+  //   color: 'gold',
+  //   backgroundColor: '#001f3f',
+  // },
+  scrollView: {
+    // backgroundColor: 'white',
   },
   label: {
     color: 'black',
@@ -133,14 +142,25 @@ const styles = StyleSheet.create({
   },
   inputView: {
     flex: 0.3,
-    backgroundColor: 'lightblue',
-    borderWidth: 0.5,
+    backgroundColor: '#F5F5F5',
+    borderBottomWidth: 0.5,
     marginBottom: 10,
     marginLeft: 20,
     marginRight: 20,
-    fontSize: 17,
-    borderRadius: 30,
+    fontSize: 20,
+    borderRadius: 5,
   },
+  // inputView: {
+  //   flex: 0.3,
+  //   // backgroundColor: 'lightblue',
+  //   borderBottomWidth: 0.5,
+  //   // marginBottom: 10,
+  //   marginLeft: 20,
+  //   marginRight: 20,
+  //   fontSize: 20,
+  //   // borderRadius: 5,
+  //   // elevation: 5,
+  // },
 
   formButton: {
     backgroundColor: 'firebrick',

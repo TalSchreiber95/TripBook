@@ -18,7 +18,7 @@ import {useState} from 'react';
 const TripsApprove = ({
   WaitingTrips,
   user,
-  deleteCard,
+  deleteWaitingCard,
   approveCard,
   editCard,
   cardOwnerMessage,
@@ -33,12 +33,12 @@ const TripsApprove = ({
         <TripCard
           key={trip.id}
           trip={trip}
-          name={user}
-          deleteCard={deleteCard}
+          user={user}
+          deleteCard={deleteWaitingCard}
           editCard={editCard}
           cardOwnerMessage={cardOwnerMessage}
-          toggleApproveCard={true}
           addTrip={addTrip}
+          toggleApproveCard={true}
         />
       ))}
     </ScrollView>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Button,
   View,
   Text,
   StyleSheet,
@@ -10,6 +9,7 @@ import {
   StatusBar,
 } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import {Button} from 'react-native-elements';
 import { Form, FormItem } from 'react-native-form-component';
 
 const TripFilter = ({ updateFilter, tripSearch, navigation }) => {
@@ -151,7 +151,7 @@ const TripFilter = ({ updateFilter, tripSearch, navigation }) => {
         />
       </Form>
       <Button
-        title="Add trip +"
+        title="Add new trip +"
         color="red"
         onPress={() => navigation.navigate('AddTrip')}
       />
@@ -167,19 +167,16 @@ const styles = StyleSheet.create({
     // backgroundColor: 'black',
   },
   form: {},
-  icon: {
-    borderColor: 'black',
-  },
+
   inputView: {
     flex: 0.3,
-    backgroundColor: 'lightblue',
-    borderWidth: 0.5,
+    backgroundColor: '#F5F5F5',
+    borderBottomWidth: 0.5,
     marginBottom: 20,
     marginLeft: 20,
     marginRight: 20,
-
-    fontSize: 15,
-    borderRadius: 10,
+    fontSize: 20,
+    borderRadius: 5,
   },
   checkbox: {
     color: 'white',

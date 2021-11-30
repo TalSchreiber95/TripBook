@@ -22,7 +22,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId}) => {
   const [priceInNis, setPriceInNis] = useState();
 
   const [description, setDescription] = useState('');
-  const [picture, setPicture] = useState('https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg');
+  const [picture, setPicture] = useState('');
 
   //categories
   const [isRelax, setIsRelax] = useState(false);
@@ -119,7 +119,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId}) => {
             />
             <FormItem
               placeholder="Add description here"
-              style={styles.description}
+              style={styles.inputView}
               label="Describe the trip:"
               labelStyle={styles.label}
               multiline={true}
@@ -132,7 +132,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId}) => {
             />
             <FormItem
               placeholder="Add url pic here"
-              style={styles.description}
+              style={styles.inputView}
               label="url pic:"
               labelStyle={styles.label}
               multiline={true}
@@ -231,7 +231,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId}) => {
               placeholder="Add live feedback here"
               style={styles.inputView}
               label="Feedback Live:"
-              labelStyle={styles.feedback}
+              labelStyle={styles.label}
               multiline={true}
               value={feedbackLive}
               onChangeText={feedbackLive => {
@@ -262,13 +262,13 @@ const styles = StyleSheet.create({
   },
   inputView: {
     flex: 0.3,
-    backgroundColor: 'lightblue',
-    borderWidth: 0.5,
+    backgroundColor: '#F5F5F5',
+    borderBottomWidth: 0.5,
     marginBottom: 20,
-    marginLeft: 15,
-    marginRight: 15,
-    fontSize: 15,
-    borderRadius: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    fontSize: 20,
+    borderRadius: 5,
   },
 
   formButton: {

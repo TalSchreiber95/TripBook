@@ -42,25 +42,18 @@ const styles = StyleSheet.create({
 
   popUp: {
     //   flex: 0.1,
-    // marginBottom: 20,
-    marginTop: 15,
-    // marginLeft: 70,
-    height: 'auto',
-    width: 200,
+    marginTop: 10,
+    width: '100%',
     borderRadius: 5,
     position: 'absolute',
     top: 45,
-    // left: 10,
-    elevation: 20,
     backgroundColor: '#000000c0',
     alignSelf: 'flex-end',
-
-    // position: 'absolute',
+    elevation: 1,
+    padding: 3,
   },
   button: {
-    // width: 80,
     color: 'white',
-    // backgroundColor: 'black'
   },
   buttonContainer: {
     // borderRadius: 10,

@@ -21,7 +21,7 @@ const MyTrips = ({ Trips, user, deleteCard, editCard, cardOwnerMessage, navigati
       <Header name={user} navigation={navigation} />
       <Text style={styles.text}>My Trips List:</Text>
       {Trips.filter(trip => trip.owner === user.email).map(trip => (
-        <TripCard key={trip.id} trip={trip} name={user}
+        <TripCard key={trip.id} trip={trip} user={user}
           deleteCard={deleteCard} editCard={editCard} cardOwnerMessage={cardOwnerMessage} />
       ))}
     </ScrollView>
