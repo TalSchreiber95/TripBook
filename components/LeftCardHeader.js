@@ -24,7 +24,7 @@ const LeftCardHeader = ({ trip, toggler, updateButton }) => {
       {toggler === 'weather' && (
         <View style={styles.popUp}>
           <Text style={styles.text}>20°C</Text>
-          <Text style={styles.text}>Sunny of the day hell</Text>
+          <Text style={styles.text}>Sunny</Text>
           <Text style={styles.text}>{trip.location}</Text>
         </View>
       )}

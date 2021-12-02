@@ -7,6 +7,8 @@ import LeftCardHeader from './LeftCardHeader';
 import RightCardHeader from './RightCardHeader';
 import {Header} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
+import {Button, Snackbar} from 'react-native-paper';
+import {useState} from 'react';
 
 const CardHeader = ({
   trip,
@@ -19,18 +21,33 @@ const CardHeader = ({
   onSendMessage,
   toggleApproveCard,
 }) => {
+  const [toggleDescription, setToggleDescription] = useState(false);
+  const [description, setDescription] = useState('');
+
+  const toggleInfo = iconPressed => {
+    setToggleDescription(true);
+    setDescription(iconPressed);
+  };
+
   return (
     <LinearGradient
-      colors={['silver', 'steelblue']}
-      start={{x: 1, y: 3.5}}
-      end={{x: 0, y: 0.5}}>
+      colors={['white', 'steelblue']}
+      start={{x: 1, y: 4}}
+      end={{x: 0, y: 2}}>
       <View style={styles.iconHeader}>
+        <Snackbar
+          style={styles.snackbar}
+          visible={toggleDescription}
+          onDismiss={() => setToggleDescription(false)}
+          duration={1000}>
+          {description}
+        </Snackbar>
         <Icon1
           name="infocirlceo"
           size={20}
           color="white"
           onPress={() => Alert.alert("Trip's Owner: " + trip.owner)}
-          onLongPress={() => Alert.alert('info', {cancelable: false})}
+          onLongPress={() => toggleInfo('info')}
           style={styles.icon}
         />
         {(user.admin || user.email == trip.owner) && (
@@ -39,6 +56,7 @@ const CardHeader = ({
             size={20}
             color="white"
             onPress={() => onEdit()}
+            onLongPress={() => toggleInfo('Edit card')}
             style={styles.icon}
           />
         )}
@@ -48,6 +66,7 @@ const CardHeader = ({
             size={20}
             color="white"
             onPress={() => Alert.alert(trip.adminMessage)}
+            onLongPress={() => toggleInfo('Check for admin messages')}
             style={styles.icon}
           />
         )}
@@ -57,6 +76,7 @@ const CardHeader = ({
             size={20}
             color="white"
             onPress={() => onSendMessage()}
+            onLongPress={() => toggleInfo('Send admin messages')}
             style={styles.icon}
           />
         )}
@@ -66,6 +86,7 @@ const CardHeader = ({
             size={20}
             color="white"
             onPress={() => onDelete()}
+            onLongPress={() => toggleInfo('Remove trip')}
             style={styles.icon}
           />
         )}
@@ -148,5 +169,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
   },
+  snackbar: {},
 });
 export default CardHeader;

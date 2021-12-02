@@ -1,17 +1,15 @@
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { Button, CheckBox } from 'react-native-elements';
-import { Form, FormItem } from 'react-native-form-component';
+import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Button, CheckBox} from 'react-native-elements';
+import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
-const AddFeedbackForm = ({ trip }) => {
+const AddFeedbackForm = ({trip}) => {
   const [feedback, setFeedback] = useState('');
   const [feedbackLive, setFeedbackLive] = useState('');
 
   const [toggleFeedback, setToggleFeedback] = useState(false);
   const [toggleFeedbackLive, setToggleFeedbackLive] = useState(false);
-
-
 
   const ToggleFeedback = () => {
     setToggleFeedback(!toggleFeedback);
@@ -45,7 +43,6 @@ const AddFeedbackForm = ({ trip }) => {
             iconStyle={styles.icon}
             textStyle={styles.checkboxText}
             text="Live"
-            textStyle={styles.checkboxText}
             onPress={ToggleFeedbackLive}
           />
           <Form
@@ -91,14 +88,12 @@ const styles = StyleSheet.create({
   },
 
   popUp: {
-    //   flex: 0.1,
-    marginTop: 10,
+    // flex: 0.1,
+    // marginTop: 10,
     height: 'auto',
     width: 350,
     borderRadius: 5,
     position: 'relative',
-    // top: 65,
-    // left: 10,
     elevation: 5,
     justifyContent: 'center',
     backgroundColor: 'white',
@@ -108,9 +103,6 @@ const styles = StyleSheet.create({
     // backgroundColor: 'black',
   },
 
-  titleArrowButtons: {
-    color: 'white',
-  },
   buttonContainer: {
     // width: '200%',
     // alignSelf: 'flex-end',
@@ -118,14 +110,13 @@ const styles = StyleSheet.create({
 
   inputView: {
     flex: 0.3,
-    // backgroundColor: 'lightblue',
+    // backgroundColor: '#F5F5F5',
     borderBottomWidth: 0.5,
-    // marginBottom: 10,
+    // marginBottom: 20,
     marginLeft: 20,
     marginRight: 20,
     fontSize: 20,
-    // borderRadius: 5,
-    // elevation: 5,
+    borderRadius: 5,
   },
   label: {
     color: 'black',
@@ -142,21 +133,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     color: 'black',
     // height: 40,
-  },
-  RLbuttonsView: {
-    flex: 2,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    padding: 10,
-  },
-
-  text: {
-    color: 'white',
-    fontSize: 18,
-    letterSpacing: 2,
-    margin: 15,
-    marginTop: -3,
-    textAlign: 'center',
   },
 
   checkbox: {

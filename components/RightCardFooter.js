@@ -95,14 +95,13 @@ const styles = StyleSheet.create({
   //   },
   inputView: {
     flex: 0.3,
-    // backgroundColor: 'lightblue',
+    // backgroundColor: '#F5F5F5',
     borderBottomWidth: 0.5,
-    // marginBottom: 10,
+    // marginBottom: 20,
     marginLeft: 20,
     marginRight: 20,
     fontSize: 20,
-    // borderRadius: 5,
-    // elevation: 5,
+    borderRadius: 5,
   },
   label: {
     color: 'black',

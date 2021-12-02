@@ -14,24 +14,28 @@ import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Header from './Header';
 
-const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId}) => {
-  const [tripName, setTripName] = useState('');
-  const [location, setLocation] = useState('');
-  const [feedback, setFeedback] = useState('');
-  const [feedbackLive, setFeedbackLive] = useState('');
-  const [priceInNis, setPriceInNis] = useState();
+const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip}) => {
+  const [tripName, setTripName] = useState(trip.tripName);
+  const [location, setLocation] = useState(trip.location);
+  const [feedback, setFeedback] = useState(trip.feedbacks);
+  const [feedbackLive, setFeedbackLive] = useState(trip.feedbacksLive);
+  const [priceInNis, setPriceInNis] = useState(trip.priceInNis);
 
-  const [description, setDescription] = useState('');
-  const [picture, setPicture] = useState('');
+  const [description, setDescription] = useState(trip.description);
+  const [picture, setPicture] = useState(trip.pictures);
 
   //categories
-  const [isRelax, setIsRelax] = useState(false);
-  const [isDynamic, setIsDynamic] = useState(false);
-  const [isParty, setIsParty] = useState(false);
-  const [isPetAllowed, setIsPetAllowed] = useState(false);
-  const [isCarTravel, setIsCarTravel] = useState(false);
-  const [isPlaneTravel, setIsPlaneTravel] = useState(false);
-  const [isTrainTravel, setIsTrainTravel] = useState(false);
+  const [isRelax, setIsRelax] = useState(trip.category.isRelax);
+  const [isDynamic, setIsDynamic] = useState(trip.category.isDynamic);
+  const [isParty, setIsParty] = useState(trip.category.isParty);
+  const [isPetAllowed, setIsPetAllowed] = useState(trip.category.isPetAllowed);
+  const [isCarTravel, setIsCarTravel] = useState(trip.category.isCarTravel);
+  const [isPlaneTravel, setIsPlaneTravel] = useState(
+    trip.category.isPlaneTravel,
+  );
+  const [isTrainTravel, setIsTrainTravel] = useState(
+    trip.category.isTrainTravel,
+  );
 
   const onAddTrip = () => {
     if (
@@ -40,6 +44,12 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId}) => {
       description != '' &&
       priceInNis != null
     ) {
+      if (picture === '') {
+        setPicture(
+          'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg',
+        );
+      }
+
       const newTrip = {
         id: getWaitingId,
         owner: user.email,
@@ -75,7 +85,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId}) => {
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
           {/* <Text style={styles.title}>Add a Trip</Text> */}
-          <Header title="Add Trip" name={user} navigation={navigation}/>
+          <Header title="Add Trip" name={user} navigation={navigation} />
           <Text style={styles.text}>Fill the details below:</Text>
           <Form
             onButtonPress={onAddTrip}
@@ -114,6 +124,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId}) => {
               onChangeText={price => {
                 setPriceInNis(price);
               }}
+              // demand int instead of string
               isRequired
               asterik
             />
@@ -140,8 +151,6 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId}) => {
               onChangeText={pic => {
                 setPicture(pic);
               }}
-              isRequired
-              asterik
             />
             <View style={styles.checkboxesView}>
               <BouncyCheckbox
@@ -243,6 +252,30 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId}) => {
       </ScrollView>
     </SafeAreaView>
   );
+};
+
+AddTrip.defaultProps = {
+  trip: {
+    id: 0,
+    owner: '',
+    adminMessage: 'No new admin messages',
+    tripName: '',
+    category: {
+      isRelax: false,
+      isDynamic: false,
+      isParty: false,
+      isPetAllowed: false,
+      isCarTravel: false,
+      isPlaneTravel: false,
+      isTrainTravel: false,
+    },
+    pictures: '',
+    location: '',
+    description: '',
+    feedbacks: '',
+    feedbacksLive: '',
+    priceInNis: '',
+  },
 };
 
 const styles = StyleSheet.create({

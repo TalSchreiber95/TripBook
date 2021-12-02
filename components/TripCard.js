@@ -131,11 +131,6 @@ const TripCard = ({
 
   return (
     <View style={styles.card}>
-      <LinearGradient
-        // style={styles.header}
-        colors={['silver', 'steelblue']}
-        start={{x: 1.6, y: 0}}
-        end={{x: 0, y: 0}}></LinearGradient>
       <CardHeader
         trip={trip}
         updateButton={updateButton}
