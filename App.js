@@ -172,7 +172,28 @@ const App: () => Node = () => {
   const [WaitingTrips, setWaitingTrips] = useState(waitingTrips);
   const [Index, setIndex] = useState(1);
   const [TripInfo, setTripInfo] = useState(tripInfo);
-
+  const [onEdit, setOnEdit] = useState(false);
+  const [TripEdit, setTripEdit] = useState({
+    id: 0,
+    owner: '',
+    adminMessage: 'No new admin messages',
+    tripName: '',
+    category: {
+      isRelax: false,
+      isDynamic: false,
+      isParty: false,
+      isPetAllowed: false,
+      isCarTravel: false,
+      isPlaneTravel: false,
+      isTrainTravel: false,
+    },
+    pictures: '',
+    location: '',
+    description: '',
+    feedbacks: '',
+    feedbacksLive: '',
+    priceInNis: '',
+  });
   const addNewUser = user => {
     setUsers([...Users, user]);
     setIndex(Users.length - 1);
@@ -196,15 +217,19 @@ const App: () => Node = () => {
     });
   };
   //Should be implement later
-  const deletePicture = (picId,pic) => {
-    // Alert.alert("picture card id is: "+picId+"and pic url: "+pic);
-    const cardDeletePic=Trips.filter(trip=>trip.id===picId);  
-    // Alert.alert("cardDeletePic.picture "+cardDeletePic[0].id);
-    // cardDeletePic[0].pictures.splice(pic,1);
-    Alert.alert(cardDeletePic[0].pictures[pic]);
-    
+  const deletePicture = (tripId, pic, onApprove) => {
+    if (!onApprove) {
+      // Alert.alert("picture card id is: "+picId+"and pic url: "+pic);
+      const cardDeletePic = Trips.filter(trip => trip.id === tripId)[0];
+      cardDeletePic.pictures.splice(pic, 1);
+    }
+    else {
+      const cardDeletePic = WaitingTrips.filter(trip => trip.id === tripId)[0];
+      cardDeletePic.pictures.splice(pic, 1);
+    }
+
   };
-  
+
   const deleteWaitingCard = id => {
     setWaitingTrips(prevCards => {
       return prevCards.filter(card => card.id != id);
@@ -242,7 +267,8 @@ const App: () => Node = () => {
         </Stack.Screen>
         <Stack.Screen name="Home">
           {props => (
-            <HomePage {...props} name={Users[Index]} tripSearch={addTripInfo} />
+            <HomePage {...props} name={Users[Index]} tripSearch={addTripInfo}
+             setOnEdit={setOnEdit}/>
           )}
         </Stack.Screen>
         <Stack.Screen name="AddTrip">
@@ -252,6 +278,8 @@ const App: () => Node = () => {
               addWaitingTrip={addWaitingTrip}
               user={Users[Index]}
               getWaitingId={Trips.length + WaitingTrips.length + 1}
+              trip={TripEdit}
+              onEdit={onEdit}
             />
           )}
         </Stack.Screen>
@@ -266,6 +294,8 @@ const App: () => Node = () => {
               editCard={editCard}
               cardOwnerMessage={cardOwnerMessage}
               deletePicture={deletePicture}
+              setTripEdit={setTripEdit}
+              setOnEdit={setOnEdit}
             />
           )}
         </Stack.Screen>
@@ -282,6 +312,7 @@ const App: () => Node = () => {
                 editCard={editCard}
                 cardOwnerMessage={cardOwnerMessage}
                 addTrip={addTrip}
+                deletePicture={deletePicture}
               // navigation={navigation}
               />
             )}
@@ -296,6 +327,7 @@ const App: () => Node = () => {
               deleteCard={deleteCard}
               editCard={editCard}
               cardOwnerMessage={cardOwnerMessage}
+              deletePicture={deletePicture}
             // navigation={navigation}
             />
           )}

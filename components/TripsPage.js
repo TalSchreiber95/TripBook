@@ -23,6 +23,8 @@ const TripsPage = ({
   editCard,
   cardOwnerMessage,
   deletePicture,
+  setTripEdit,
+  setOnEdit,
   navigation,
 }) => {
   return (
@@ -45,6 +47,9 @@ const TripsPage = ({
           cardOwnerMessage={cardOwnerMessage}
           toggleApproveCard={false}
           deletePicture={deletePicture}
+          setTripEdit={setTripEdit}
+          setOnEdit={setOnEdit}
+          navigation={navigation}
         />
       ))}
     </ScrollView>

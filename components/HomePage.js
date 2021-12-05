@@ -11,7 +11,7 @@ import {
 import Header from './Header';
 import TripFilter from './TripFilter';
 
-const HomePage = ({ name, tripSearch, navigation }) => {
+const HomePage = ({ name, tripSearch,setOnEdit, navigation }) => {
   const updateFilter = (
     isRelax,
     isDynamic,
@@ -38,21 +38,12 @@ const HomePage = ({ name, tripSearch, navigation }) => {
     };
     tripSearch(tripInfo);
   };
-
-
-
-
-
-
-
-  
-
   return (
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={styles.container}>
           <Header name={name} navigation={navigation} />
-          <TripFilter updateFilter={updateFilter} navigation={navigation} />
+          <TripFilter updateFilter={updateFilter} setOnEdit={setOnEdit} navigation={navigation} />
         </View>
       </ScrollView>
     </SafeAreaView>

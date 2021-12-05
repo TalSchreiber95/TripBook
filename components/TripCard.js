@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, { useReducer } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/AntDesign';
 
@@ -12,9 +12,10 @@ import {
 } from 'react-native';
 import CardFooter from './CardFooter';
 import CardHeader from './CardHeader';
-import {useState} from 'react';
-import {Button} from 'react-native-elements/dist/buttons/Button';
+import { useState } from 'react';
+import { Button } from 'react-native-elements/dist/buttons/Button';
 import LinearGradient from 'react-native-linear-gradient';
+import { NavigationContainer } from '@react-navigation/native';
 
 const TripCard = ({
   trip,
@@ -24,7 +25,11 @@ const TripCard = ({
   cardOwnerMessage,
   toggleApproveCard,
   addTrip,
-  deletePicture
+  deletePicture,
+  onApprove,
+  setTripEdit,
+  setOnEdit,
+  navigation
 }) => {
   const [pic, setPicture] = useState(0);
   const [toggler, setToggler] = useState('');
@@ -95,9 +100,12 @@ const TripCard = ({
         {
           text: 'Yes',
           onPress: () => {
-            Alert.alert(
-              'card edit supposed to be here im not sure in which way yet',
-            );
+            // Alert.alert(
+            //   'card edit supposed to be here im not sure in which way yet',
+            // );
+            setTripEdit(trip);
+            setOnEdit(true);
+            navigation.navigate('AddTrip');
             // Alert.alert(editCard(id));
             // editCard(trip.id);
           },
@@ -142,22 +150,22 @@ const TripCard = ({
         onSendMessage={onSendMessage}
         onDelete={onDelete}
         toggleApproveCard={toggleApproveCard}
+        setTripEdit={setTripEdit}
       />
       <View style={styles.picView}>
-        <ImageBackground
+        {trip.pictures.length > 0 ? <ImageBackground
           style={styles.logo}
           source={{
             uri: trip.pictures[pic],
           }}>
-          <Icon
+          {(user.admin || user.email == trip.owner) && (<Icon
             name="trash-o"
             size={20}
             color="white"
-            onPress={() =>{deletePicture(trip.id,pic)}}
+            onPress={() => { deletePicture(trip.id, pic,onApprove) }}
             // onLongPress={() => toggleInfo('Remove trip')}
             style={styles.icon}
-          />
-          {/* deletePicture */}
+          />)}
           <View style={styles.RLbuttonsView}>
             <Button
               title="<"
@@ -175,6 +183,12 @@ const TripCard = ({
             />
           </View>
         </ImageBackground>
+        :<ImageBackground
+          style={styles.logo}
+          source={{
+            uri: 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg',
+          }}>
+        </ImageBackground>}
 
         {/* There is problem with the image component - hiding the weather and info popups
         for now i changed the opacity so we can see it
@@ -191,6 +205,7 @@ const TripCard = ({
 };
 TripCard.defaultProps = {
   // toggleApproveCard: false,
+  onApprove:false,
 };
 
 const styles = StyleSheet.create({

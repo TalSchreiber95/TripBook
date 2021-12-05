@@ -24,6 +24,7 @@ const TripsApprove = ({
   cardOwnerMessage,
   navigation,
   addTrip,
+  deletePicture
 }) => {
   return (
     <ScrollView>
@@ -39,6 +40,8 @@ const TripsApprove = ({
           cardOwnerMessage={cardOwnerMessage}
           addTrip={addTrip}
           toggleApproveCard={true}
+          deletePicture={deletePicture}
+          onApprove={true}
         />
       ))}
     </ScrollView>

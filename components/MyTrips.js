@@ -15,14 +15,15 @@ import TripCard from './TripCard';
 
 import { useState } from 'react';
 
-const MyTrips = ({ Trips, user, deleteCard, editCard, cardOwnerMessage, navigation }) => {
+const MyTrips = ({ Trips, user, deleteCard, editCard, cardOwnerMessage,deletePicture, navigation }) => {
   return (
     <ScrollView>
       <Header name={user} navigation={navigation} />
       <Text style={styles.text}>My Trips List:</Text>
       {Trips.filter(trip => trip.owner === user.email).map(trip => (
         <TripCard key={trip.id} trip={trip} user={user}
-          deleteCard={deleteCard} editCard={editCard} cardOwnerMessage={cardOwnerMessage} />
+          deleteCard={deleteCard} editCard={editCard} cardOwnerMessage={cardOwnerMessage}
+          deletePicture={deletePicture} />
       ))}
     </ScrollView>
   );

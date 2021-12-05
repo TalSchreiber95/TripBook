@@ -12,7 +12,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import {Button} from 'react-native-elements';
 import { Form, FormItem } from 'react-native-form-component';
 
-const TripFilter = ({ updateFilter, tripSearch, navigation }) => {
+const TripFilter = ({ updateFilter, tripSearch, setOnEdit,navigation }) => {
   const [isRelax, setIsRelax] = useState(false);
   const [isDynamic, setIsDynamic] = useState(false);
   const [isParty, setIsParty] = useState(false);
@@ -23,6 +23,10 @@ const TripFilter = ({ updateFilter, tripSearch, navigation }) => {
   const [priceInNis, setPriceInNis] = useState();
   const [location, setLocation] = useState('');
 
+  const onAddTrip=()=>{
+    setOnEdit(false);
+    navigation.navigate('AddTrip');
+  }
   const onSearch = () => {
     updateFilter(
       isRelax,
@@ -153,7 +157,7 @@ const TripFilter = ({ updateFilter, tripSearch, navigation }) => {
       <Button
         title="Add new trip +"
         color="red"
-        onPress={() => navigation.navigate('AddTrip')}
+        onPress={onAddTrip}
       />
     </View>
   );
