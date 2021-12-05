@@ -24,6 +24,7 @@ const TripCard = ({
   cardOwnerMessage,
   toggleApproveCard,
   addTrip,
+  deletePicture
 }) => {
   const [pic, setPicture] = useState(0);
   const [toggler, setToggler] = useState('');
@@ -148,6 +149,15 @@ const TripCard = ({
           source={{
             uri: trip.pictures[pic],
           }}>
+          <Icon
+            name="trash-o"
+            size={20}
+            color="white"
+            onPress={() =>{deletePicture(trip.id,pic)}}
+            // onLongPress={() => toggleInfo('Remove trip')}
+            style={styles.icon}
+          />
+          {/* deletePicture */}
           <View style={styles.RLbuttonsView}>
             <Button
               title="<"
@@ -254,7 +264,11 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // alignSelf: 'center',
   },
-
+  icon: {
+    margin: 10,
+    marginLeft: 340,
+    marginRight: 20,
+  },
   RLbuttonsView: {
     flex: 2,
     flexDirection: 'row',

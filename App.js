@@ -195,6 +195,15 @@ const App: () => Node = () => {
       return prevCards.filter(card => card.id != id);
     });
   };
+  //Should be implement later
+  const deletePicture = (picId,pic) => {
+    // Alert.alert("picture card id is: "+picId+"and pic url: "+pic);
+    const cardDeletePic=Trips.filter(trip=>trip.id===picId);  
+    // Alert.alert("cardDeletePic.picture "+cardDeletePic[0].id);
+    // cardDeletePic[0].pictures.splice(pic,1);
+    Alert.alert(cardDeletePic[0].pictures[pic]);
+    
+  };
   
   const deleteWaitingCard = id => {
     setWaitingTrips(prevCards => {
@@ -256,6 +265,7 @@ const App: () => Node = () => {
               deleteCard={deleteCard}
               editCard={editCard}
               cardOwnerMessage={cardOwnerMessage}
+              deletePicture={deletePicture}
             />
           )}
         </Stack.Screen>
