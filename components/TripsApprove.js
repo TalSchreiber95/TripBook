@@ -13,7 +13,7 @@ import {
 import Header from './Header';
 import TripCard from './TripCard';
 
-import {useState} from 'react';
+import { useState } from 'react';
 
 const TripsApprove = ({
   WaitingTrips,
@@ -22,9 +22,11 @@ const TripsApprove = ({
   approveCard,
   editCard,
   cardOwnerMessage,
-  navigation,
   addTrip,
-  deletePicture
+  deletePicture,
+  setTripEdit,
+  setOnEdit,
+  navigation
 }) => {
   return (
     <ScrollView>
@@ -42,6 +44,9 @@ const TripsApprove = ({
           toggleApproveCard={true}
           deletePicture={deletePicture}
           onApprove={true}
+          setTripEdit={setTripEdit}
+          setOnEdit={setOnEdit}
+          navigation={navigation}
         />
       ))}
     </ScrollView>

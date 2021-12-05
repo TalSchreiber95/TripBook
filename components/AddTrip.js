@@ -147,6 +147,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip,onEdit}) 
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
+                isChecked={isRelax}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
@@ -157,6 +158,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip,onEdit}) 
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
+                isChecked={isDynamic}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
@@ -167,6 +169,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip,onEdit}) 
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
+                isChecked={isParty}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
@@ -177,6 +180,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip,onEdit}) 
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
+                isChecked={isPetAllowed}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
@@ -187,6 +191,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip,onEdit}) 
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
+                isChecked={isCarTravel}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
@@ -198,6 +203,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip,onEdit}) 
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
+                isChecked={isPlaneTravel}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
@@ -208,6 +214,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip,onEdit}) 
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
+                isChecked={isTrainTravel}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}

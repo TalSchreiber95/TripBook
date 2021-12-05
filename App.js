@@ -70,7 +70,7 @@ const App: () => Node = () => {
       adminMessage: 'No new admin messages',
       tripName: 'sky',
       category: {
-        isRelax: false,
+        isRelax: true,
         isDynamic: false,
         isParty: false,
         isPetAllowed: false,
@@ -99,7 +99,7 @@ const App: () => Node = () => {
       adminMessage: 'No new admin messages 2',
       tripName: 'SpiderMan vs Batman movie',
       category: {
-        isRelax: false,
+        isRelax: true,
         isDynamic: false,
         isParty: false,
         isPetAllowed: false,
@@ -130,11 +130,11 @@ const App: () => Node = () => {
       tripName: 'Eiffel tower',
       category: {
         isRelax: false,
-        isDynamic: false,
+        isDynamic: true,
         isParty: false,
         isPetAllowed: false,
         isCarTravel: false,
-        isPlaneTravel: false,
+        isPlaneTravel: true,
         isTrainTravel: false,
       },
       pictures: [
@@ -268,7 +268,7 @@ const App: () => Node = () => {
         <Stack.Screen name="Home">
           {props => (
             <HomePage {...props} name={Users[Index]} tripSearch={addTripInfo}
-             setOnEdit={setOnEdit}/>
+              setOnEdit={setOnEdit} />
           )}
         </Stack.Screen>
         <Stack.Screen name="AddTrip">
@@ -313,7 +313,8 @@ const App: () => Node = () => {
                 cardOwnerMessage={cardOwnerMessage}
                 addTrip={addTrip}
                 deletePicture={deletePicture}
-              // navigation={navigation}
+                setTripEdit={setTripEdit}
+                setOnEdit={setOnEdit}
               />
             )}
           </Stack.Screen>
@@ -328,7 +329,8 @@ const App: () => Node = () => {
               editCard={editCard}
               cardOwnerMessage={cardOwnerMessage}
               deletePicture={deletePicture}
-            // navigation={navigation}
+              setTripEdit={setTripEdit}
+              setOnEdit={setOnEdit}
             />
           )}
         </Stack.Screen>
