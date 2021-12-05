@@ -22,13 +22,14 @@ const TripCard = ({
   user,
   deleteCard,
   editCard,
-  cardOwnerMessage,
+  onSendMessage,
   toggleApproveCard,
   addTrip,
   deletePicture,
   onApprove,
   setTripEdit,
   setOnEdit,
+  isOnApprove,
   navigation
 }) => {
   const [pic, setPicture] = useState(0);
@@ -53,7 +54,10 @@ const TripCard = ({
   const updateButton = activeButton => {
     setToggler(activeButton);
   };
-
+const delPic=()=>{
+  switchPictureLeft();
+  deletePicture(trip.id, pic,onApprove);
+}
   const onAddTrip = () => {
     return Alert.alert(
       'Add trip card !',
@@ -62,11 +66,7 @@ const TripCard = ({
         {
           text: 'Yes',
           onPress: () => {
-            // Alert.alert(
-            //   'Approve trip supposed to be only in approve trip page',
-            // );
             addTrip(trip);
-            // remove waiting trip after add
           },
         },
         {
@@ -116,27 +116,6 @@ const TripCard = ({
       ],
     );
   };
-  const onSendMessage = () => {
-    return Alert.alert(
-      'add message trip card !',
-      'Are you sure you want to add trip card message?',
-      [
-        {
-          text: 'Yes',
-          onPress: () => {
-            Alert.alert(
-              'Alert input text supposed to be here and after it should be updated!',
-            );
-            //cardOwenerMessage is a function that update the tripMesage
-            //  cardOwnerMessage(trip.id);
-          },
-        },
-        {
-          text: 'No',
-        },
-      ],
-    );
-  };
 
   return (
     <View style={styles.card}>
@@ -151,6 +130,7 @@ const TripCard = ({
         onDelete={onDelete}
         toggleApproveCard={toggleApproveCard}
         setTripEdit={setTripEdit}
+        isOnApprove={isOnApprove}
       />
       <View style={styles.picView}>
         {trip.pictures.length > 0 ? <ImageBackground
@@ -162,8 +142,8 @@ const TripCard = ({
             name="trash-o"
             size={20}
             color="white"
-            onPress={() => { deletePicture(trip.id, pic,onApprove) }}
-            // onLongPress={() => toggleInfo('Remove trip')}
+            onPress={() => delPic() }
+            // onLongPress={() => toggleInfo('Remove trip picture')}
             style={styles.icon}
           />)}
           <View style={styles.RLbuttonsView}>

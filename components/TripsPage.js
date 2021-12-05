@@ -21,7 +21,7 @@ const TripsPage = ({
   tripInfo,
   deleteCard,
   editCard,
-  cardOwnerMessage,
+  onSendMessage,
   deletePicture,
   setTripEdit,
   setOnEdit,
@@ -44,7 +44,7 @@ const TripsPage = ({
           user={user}
           deleteCard={deleteCard}
           editCard={editCard}
-          cardOwnerMessage={cardOwnerMessage}
+          onSendMessage={onSendMessage}
           toggleApproveCard={false}
           deletePicture={deletePicture}
           setTripEdit={setTripEdit}

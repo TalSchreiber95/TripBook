@@ -2,13 +2,14 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/AntDesign';
 
-import {View, Text, StyleSheet, Alert} from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import LeftCardHeader from './LeftCardHeader';
 import RightCardHeader from './RightCardHeader';
-import {Header} from 'react-native-elements';
+import { Header } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
-import {Button, Snackbar} from 'react-native-paper';
-import {useState} from 'react';
+import { Button, Snackbar } from 'react-native-paper';
+import { useState } from 'react';
+import {Form, FormItem} from 'react-native-form-component';
 
 const CardHeader = ({
   trip,
@@ -20,20 +21,31 @@ const CardHeader = ({
   onEdit,
   onSendMessage,
   toggleApproveCard,
+  isOnApprove
 }) => {
   const [toggleDescription, setToggleDescription] = useState(false);
   const [description, setDescription] = useState('');
+  const [message, setMessage] = useState('');
+  const [toggleAddMessage, setToggleAddMessage] = useState(false);
+
+
 
   const toggleInfo = iconPressed => {
     setToggleDescription(true);
     setDescription(iconPressed);
   };
+  const sendMessage=()=>{
+    onSendMessage(trip,message,isOnApprove)
+    Alert.alert("Message sent successfully!")
+    setMessage("");
+    setToggleAddMessage(!toggleAddMessage);
+  }
 
   return (
     <LinearGradient
       colors={['white', 'steelblue']}
-      start={{x: 1, y: 4}}
-      end={{x: 0, y: 2}}>
+      start={{ x: 1, y: 4 }}
+      end={{ x: 0, y: 2 }}>
       <View style={styles.iconHeader}>
         <Snackbar
           style={styles.snackbar}
@@ -75,11 +87,29 @@ const CardHeader = ({
             name="send"
             size={20}
             color="white"
-            onPress={() => onSendMessage()}
+            onPress={() => setToggleAddMessage(!toggleAddMessage)}
             onLongPress={() => toggleInfo('Send admin messages')}
             style={styles.icon}
           />
         )}
+        {toggleAddMessage &&
+          <Form
+            onButtonPress={()=>sendMessage()}
+            buttonStyle={styles.formButton}
+            buttonText="Add">
+            <FormItem
+              placeholder="Add message here"
+              style={styles.inputView}
+              // label="Message"
+              labelStyle={styles.label}
+              value={message}
+              onChangeText={msg => {
+                setMessage(msg);
+              }}
+              multiline={true}
+            />
+          </Form>
+        }
         {(user.admin || user.email == trip.owner) && (
           <Icon
             name="trash-o"
@@ -122,6 +152,7 @@ const CardHeader = ({
 };
 CardHeader.defaultProps = {
   toggleApproveCard: false,
+  isOnApprove:false
 };
 const styles = StyleSheet.create({
   cardHeader: {
@@ -143,7 +174,36 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // alignItems:"center",
   },
-
+  formButton: {
+    backgroundColor: 'firebrick',
+    // marginLeft: 100,
+    // marginRight: 100,
+    marginTop: -10,
+    marginBottom: -10,
+    // borderRadius: 20,
+    color: 'black',
+  },
+  inputView: {
+    flex: 0.3,
+    backgroundColor: '#F5F5F5',
+    borderBottomWidth: 0.5,
+    marginBottom: 20,
+    marginTop: 40,
+    // marginLeft: 20,
+    marginRight: -45,
+    fontSize: 20,
+    borderRadius: 15,
+    // alignItems:'flex-start',
+    // alignSelf:'flex-start'
+  },
+  label: {
+    color: 'black',
+    paddingLeft: 30,
+    fontWeight: 'bold',
+    fontSize: 15,
+    paddingTop: 30,
+    paddingBottom: 0,
+  },
   textView: {
     flex: 0.5,
     textAlign: 'center',

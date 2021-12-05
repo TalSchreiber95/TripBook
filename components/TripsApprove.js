@@ -21,7 +21,7 @@ const TripsApprove = ({
   deleteWaitingCard,
   approveCard,
   editCard,
-  cardOwnerMessage,
+  onSendMessage,
   addTrip,
   deletePicture,
   setTripEdit,
@@ -39,13 +39,14 @@ const TripsApprove = ({
           user={user}
           deleteCard={deleteWaitingCard}
           editCard={editCard}
-          cardOwnerMessage={cardOwnerMessage}
+          onSendMessage={onSendMessage}
           addTrip={addTrip}
           toggleApproveCard={true}
           deletePicture={deletePicture}
           onApprove={true}
           setTripEdit={setTripEdit}
           setOnEdit={setOnEdit}
+          isOnApprove={true}
           navigation={navigation}
         />
       ))}

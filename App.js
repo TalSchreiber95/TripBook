@@ -27,7 +27,7 @@ import {
   Text,
   TextInput,
   useColorScheme,
-  View, Alert,
+  View, Alert,Form,Formitem
 } from 'react-native';
 
 import { appendToMemberExpression, staticBlock } from '@babel/types';
@@ -241,8 +241,15 @@ const App: () => Node = () => {
     setTrips([...Trips, trip]);
   };
   const editCard = () => { };
-  const cardOwnerMessage = (id) => {
-    Alert.alert("message trip id is : " + id);
+  const onSendMessage = (trip,message,onApprove) => {
+    if (!onApprove) {
+      const cardMessage = Trips.filter(t => t.id === trip.id)[0];
+      cardMessage.adminMessage=message;
+    }
+    else {
+      const cardMessage = WaitingTrips.filter(t => t.id === trip.id)[0];
+      cardMessage.adminMessage=message;
+    }
   };
   return (
     <NavigationContainer>
@@ -292,7 +299,7 @@ const App: () => Node = () => {
               tripInfo={TripInfo}
               deleteCard={deleteCard}
               editCard={editCard}
-              cardOwnerMessage={cardOwnerMessage}
+              onSendMessage={onSendMessage}
               deletePicture={deletePicture}
               setTripEdit={setTripEdit}
               setOnEdit={setOnEdit}
@@ -310,7 +317,7 @@ const App: () => Node = () => {
                 deleteWaitingCard={deleteWaitingCard}
                 approveCard={approveCard}
                 editCard={editCard}
-                cardOwnerMessage={cardOwnerMessage}
+                onSendMessage={onSendMessage}
                 addTrip={addTrip}
                 deletePicture={deletePicture}
                 setTripEdit={setTripEdit}
@@ -327,7 +334,7 @@ const App: () => Node = () => {
               user={Users[Index]}
               deleteCard={deleteCard}
               editCard={editCard}
-              cardOwnerMessage={cardOwnerMessage}
+              onSendMessage={onSendMessage}
               deletePicture={deletePicture}
               setTripEdit={setTripEdit}
               setOnEdit={setOnEdit}

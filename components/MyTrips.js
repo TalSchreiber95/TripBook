@@ -20,7 +20,7 @@ const MyTrips = ({
   user,
   deleteCard,
   editCard,
-  cardOwnerMessage,
+  onSendMessage,
   deletePicture,
   setTripEdit,
   setOnEdit,
@@ -32,7 +32,8 @@ const MyTrips = ({
       <Text style={styles.text}>My Trips List:</Text>
       {Trips.filter(trip => trip.owner === user.email).map(trip => (
         <TripCard key={trip.id} trip={trip} user={user}
-          deleteCard={deleteCard} editCard={editCard} cardOwnerMessage={cardOwnerMessage}
+          deleteCard={deleteCard} editCard={editCard}
+          onSendMessage={onSendMessage}
           deletePicture={deletePicture}
           setTripEdit={setTripEdit}
           setOnEdit={setOnEdit}

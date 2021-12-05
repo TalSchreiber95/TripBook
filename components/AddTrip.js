@@ -63,10 +63,10 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip,onEdit}) 
         priceInNis: priceInNis,
       };
       addWaitingTrip(newTrip);
-      // Alert.alert('trip posted succesfully');
+      Alert.alert('trip posted succesfully');
       navigation.navigate('Home');
     } else {
-      // Alert.alert('Fill all the required fields !');
+      Alert.alert('Fill all the required fields !');
     }
   };
 
