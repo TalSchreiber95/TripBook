@@ -92,24 +92,6 @@ const CardHeader = ({
             style={styles.icon}
           />
         )}
-        {toggleAddMessage &&
-          <Form
-            onButtonPress={()=>sendMessage()}
-            buttonStyle={styles.formButton}
-            buttonText="Add">
-            <FormItem
-              placeholder="Add message here"
-              style={styles.inputView}
-              // label="Message"
-              labelStyle={styles.label}
-              value={message}
-              onChangeText={msg => {
-                setMessage(msg);
-              }}
-              multiline={true}
-            />
-          </Form>
-        }
         {(user.admin || user.email == trip.owner) && (
           <Icon
             name="trash-o"
@@ -130,6 +112,24 @@ const CardHeader = ({
           />
         )}
       </View>
+      {toggleAddMessage &&
+          <Form
+            onButtonPress={()=>sendMessage()}
+            buttonStyle={styles.formButton}
+            buttonText="Add">
+            <FormItem
+              placeholder="Add message here"
+              style={styles.inputView}
+              // label="Message"
+              labelStyle={styles.label}
+              value={message}
+              onChangeText={msg => {
+                setMessage(msg);
+              }}
+              multiline={true}
+            />
+          </Form>
+        }
       <View style={styles.textView}>
         <Text style={styles.text}>{trip.tripName}</Text>
       </View>
@@ -176,8 +176,8 @@ const styles = StyleSheet.create({
   },
   formButton: {
     backgroundColor: 'firebrick',
-    // marginLeft: 100,
-    // marginRight: 100,
+    marginLeft: 160,
+    marginRight: 160,
     marginTop: -10,
     marginBottom: -10,
     // borderRadius: 20,
@@ -185,14 +185,18 @@ const styles = StyleSheet.create({
   },
   inputView: {
     flex: 0.3,
-    backgroundColor: '#F5F5F5',
+    backgroundColor:'steelblue',
+    //  '#F5F5F5',
+    borderRightWidth:1,
+    borderLeftWidth:1,
+    borderTopWidth:0.7,
     borderBottomWidth: 0.5,
-    marginBottom: 20,
+    marginBottom: 15,
     marginTop: 40,
-    // marginLeft: 20,
-    marginRight: -45,
+    marginLeft: 10,
+    marginRight: 10,
     fontSize: 20,
-    borderRadius: 15,
+    borderRadius: 10,
     // alignItems:'flex-start',
     // alignSelf:'flex-start'
   },
