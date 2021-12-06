@@ -27,7 +27,7 @@ import {
   Text,
   TextInput,
   useColorScheme,
-  View, Alert,Form,Formitem
+  View, Alert, Form, Formitem
 } from 'react-native';
 
 import { appendToMemberExpression, staticBlock } from '@babel/types';
@@ -173,6 +173,7 @@ const App: () => Node = () => {
   const [Index, setIndex] = useState(1);
   const [TripInfo, setTripInfo] = useState(tripInfo);
   const [onEdit, setOnEdit] = useState(false);
+  const [onApprove, setOnApprove] = useState(false);
   const [TripEdit, setTripEdit] = useState({
     id: 0,
     owner: '',
@@ -187,18 +188,17 @@ const App: () => Node = () => {
       isPlaneTravel: false,
       isTrainTravel: false,
     },
-    pictures: '',
+    pictures: [''],
     location: '',
     description: '',
-    feedbacks: '',
-    feedbacksLive: '',
+    feedbacks: [''],
+    feedbacksLive: [''],
     priceInNis: '',
   });
   const addNewUser = user => {
     setUsers([...Users, user]);
     setIndex(Users.length - 1);
   };
-  // Note: this is supposed to add to setWaitingTrips instead to directly Trips
   const addTrip = trip => {
     setTrips([...Trips, trip]);
     setWaitingTrips(prevCards => {
@@ -237,18 +237,46 @@ const App: () => Node = () => {
   };
 
 
-  const approveCard = trip => {
-    setTrips([...Trips, trip]);
+  const editCard = (updatedTrip, onApprove) => {
+    if (!onApprove) {
+      const trip = Trips.filter(t => t.id !== updatedTrip.id)[0];
+      trip.tripName=updatedTrip.tripName;
+      trip.category.isRelax=updatedTrip.category.isRelax;
+      trip.category.isDynamic=updatedTrip.category.isDynamic;
+      trip.category.isParty=updatedTrip.category.isParty;
+      trip.category.isPetAllowed=updatedTrip.category.isPetAllowed;
+      trip.category.isCarTravel=updatedTrip.category.isCarTravel;
+      trip.category.isPlaneTravel=updatedTrip.category.isPlaneTravel;
+      trip.category.isTrainTravel=updatedTrip.category.isTrainTravel;
+      trip.location=updatedTrip.location;
+      trip.description=updatedTrip.description;
+      trip.priceInNis=updatedTrip.priceInNis;
+      // setTrips([trips, updatedTrip]);
+    }
+    else {
+      const waitingTrip = WaitingTrips.filter(t => t.id !== updatedTrip.id)[0];
+      waitingTrip.tripName=updatedTrip.tripName;
+      waitingTrip.category.isRelax=updatedTrip.category.isRelax;
+      waitingTrip.category.isDynamic=updatedTrip.category.isDynamic;
+      waitingTrip.category.isParty=updatedTrip.category.isParty;
+      waitingTrip.category.isPetAllowed=updatedTrip.category.isPetAllowed;
+      waitingTrip.category.isCarTravel=updatedTrip.category.isCarTravel;
+      waitingTrip.category.isPlaneTravel=updatedTrip.category.isPlaneTravel;
+      waitingTrip.category.isTrainTravel=updatedTrip.category.isTrainTravel;
+      waitingTrip.location=updatedTrip.location;
+      waitingTrip.description=updatedTrip.description;
+      waitingTrip.priceInNis=updatedTrip.priceInNis;
+      // setWaitingTrips([waitingTrips, updatedTrip]);
+    }
   };
-  const editCard = () => { };
-  const onSendMessage = (trip,message,onApprove) => {
+  const onSendMessage = (trip, message, onApprove) => {
     if (!onApprove) {
       const cardMessage = Trips.filter(t => t.id === trip.id)[0];
-      cardMessage.adminMessage=message;
+      cardMessage.adminMessage = message;
     }
     else {
       const cardMessage = WaitingTrips.filter(t => t.id === trip.id)[0];
-      cardMessage.adminMessage=message;
+      cardMessage.adminMessage = message;
     }
   };
   return (
@@ -286,7 +314,11 @@ const App: () => Node = () => {
               user={Users[Index]}
               getWaitingId={Trips.length + WaitingTrips.length + 1}
               trip={TripEdit}
+              setTripEdit={setTripEdit}
               onEdit={onEdit}
+              editCard={editCard}
+              setOnApprove={setOnApprove}
+              onApprove={onApprove}
             />
           )}
         </Stack.Screen>
@@ -303,6 +335,7 @@ const App: () => Node = () => {
               deletePicture={deletePicture}
               setTripEdit={setTripEdit}
               setOnEdit={setOnEdit}
+              setOnApprove={setOnApprove}
             />
           )}
         </Stack.Screen>
@@ -315,13 +348,13 @@ const App: () => Node = () => {
                 WaitingTrips={WaitingTrips}
                 user={Users[Index]}
                 deleteWaitingCard={deleteWaitingCard}
-                approveCard={approveCard}
-                editCard={editCard}
+                // editCard={editCard}
                 onSendMessage={onSendMessage}
                 addTrip={addTrip}
                 deletePicture={deletePicture}
                 setTripEdit={setTripEdit}
                 setOnEdit={setOnEdit}
+                setOnApprove={setOnApprove}
               />
             )}
           </Stack.Screen>
@@ -330,6 +363,7 @@ const App: () => Node = () => {
           {props => (
             <MyTrips
               {...props}
+              // WaitingTrips={WaitingTrips}
               Trips={Trips}
               user={Users[Index]}
               deleteCard={deleteCard}
@@ -338,6 +372,7 @@ const App: () => Node = () => {
               deletePicture={deletePicture}
               setTripEdit={setTripEdit}
               setOnEdit={setOnEdit}
+              setOnApprove={setOnApprove}
             />
           )}
         </Stack.Screen>

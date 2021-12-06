@@ -25,6 +25,7 @@ const TripsPage = ({
   deletePicture,
   setTripEdit,
   setOnEdit,
+  setOnApprove,
   navigation,
 }) => {
   return (
@@ -49,6 +50,7 @@ const TripsPage = ({
           deletePicture={deletePicture}
           setTripEdit={setTripEdit}
           setOnEdit={setOnEdit}
+          setOnApprove={setOnApprove}
           navigation={navigation}
         />
       ))}

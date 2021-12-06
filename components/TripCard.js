@@ -21,7 +21,6 @@ const TripCard = ({
   trip,
   user,
   deleteCard,
-  editCard,
   onSendMessage,
   toggleApproveCard,
   addTrip,
@@ -29,7 +28,7 @@ const TripCard = ({
   onApprove,
   setTripEdit,
   setOnEdit,
-  isOnApprove,
+  setOnApprove,
   navigation
 }) => {
   const [pic, setPicture] = useState(0);
@@ -105,6 +104,7 @@ const delPic=()=>{
             // );
             setTripEdit(trip);
             setOnEdit(true);
+            setOnApprove(onApprove);
             navigation.navigate('AddTrip');
             // Alert.alert(editCard(id));
             // editCard(trip.id);
@@ -128,9 +128,8 @@ const delPic=()=>{
         onEdit={onEdit}
         onSendMessage={onSendMessage}
         onDelete={onDelete}
-        toggleApproveCard={toggleApproveCard}
         setTripEdit={setTripEdit}
-        isOnApprove={isOnApprove}
+        onApprove={onApprove}
       />
       <View style={styles.picView}>
         {trip.pictures.length > 0 ? <ImageBackground

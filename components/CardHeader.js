@@ -20,8 +20,7 @@ const CardHeader = ({
   onDelete,
   onEdit,
   onSendMessage,
-  toggleApproveCard,
-  isOnApprove
+  onApprove
 }) => {
   const [toggleDescription, setToggleDescription] = useState(false);
   const [description, setDescription] = useState('');
@@ -35,7 +34,7 @@ const CardHeader = ({
     setDescription(iconPressed);
   };
   const sendMessage=()=>{
-    onSendMessage(trip,message,isOnApprove)
+    onSendMessage(trip,message,onApprove)
     Alert.alert("Message sent successfully!")
     setMessage("");
     setToggleAddMessage(!toggleAddMessage);
@@ -102,7 +101,7 @@ const CardHeader = ({
             style={styles.icon}
           />
         )}
-        {user.admin && toggleApproveCard && (
+        {user.admin && onApprove && (
           <Icon
             name="check"
             size={20}
@@ -152,7 +151,7 @@ const CardHeader = ({
 };
 CardHeader.defaultProps = {
   toggleApproveCard: false,
-  isOnApprove:false
+  onApprove:false
 };
 const styles = StyleSheet.create({
   cardHeader: {

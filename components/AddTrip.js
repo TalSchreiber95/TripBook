@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   SafeAreaView,
@@ -10,11 +10,23 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import {Form, FormItem} from 'react-native-form-component';
+import { Form, FormItem } from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Header from './Header';
 
-const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip,onEdit}) => {
+const AddTrip = ({
+  addWaitingTrip,
+  navigation,
+  user,
+  getWaitingId,
+  trip,
+  setTripEdit,
+  onEdit,
+  editCard,
+  onApprove,
+}) => {
+
+
   const [tripName, setTripName] = useState(trip.tripName);
   const [location, setLocation] = useState(trip.location);
   const [feedback, setFeedback] = useState(trip.feedbacks);
@@ -34,13 +46,17 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip,onEdit}) 
   const [isTrainTravel, setIsTrainTravel] = useState(trip.category.isTrainTravel);
 
   const onAddTrip = () => {
-    //should fix the issue of update a exist trip
     if (
       tripName != '' &&
       location != '' &&
       description != '' &&
       priceInNis != null
     ) {
+      if(!onEdit){
+        setPicture([picture]);
+        setFeedback([feedback]);
+        setFeedbackLive([feedbackLive]);
+      }
       const newTrip = {
         id: getWaitingId,
         owner: user.email,
@@ -55,15 +71,44 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip,onEdit}) 
           isPlaneTravel: isPlaneTravel,
           isTrainTravel: isTrainTravel,
         },
-        pictures: [picture],
+        pictures: picture,
         location: location,
         description: description,
-        feedbacks: [feedback],
-        feedbacksLive: [],
+        feedbacks: feedback,
+        feedbacksLive: feedbackLive,
         priceInNis: priceInNis,
       };
-      addWaitingTrip(newTrip);
-      Alert.alert('trip posted succesfully');
+      // { onEdit ? editCard(newTrip) : addWaitingTrip(newTrip); }
+      if (onEdit) {
+        editCard(newTrip, onApprove);
+        Alert.alert('trip updated succesfully');
+        setTripEdit({
+          id: 0,
+          owner: '',
+          adminMessage: 'No new admin messages',
+          tripName: '',
+          category: {
+            isRelax: false,
+            isDynamic: false,
+            isParty: false,
+            isPetAllowed: false,
+            isCarTravel: false,
+            isPlaneTravel: false,
+            isTrainTravel: false,
+          },
+          pictures: [''],
+          location: '',
+          description: '',
+          feedbacks: [''],
+          feedbacksLive: [''],
+          priceInNis: '',
+        })
+      }
+      else {
+        addWaitingTrip(newTrip);
+        Alert.alert('trip posted succesfully');
+      }
+    
       navigation.navigate('Home');
     } else {
       Alert.alert('Fill all the required fields !');
@@ -76,7 +121,7 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip,onEdit}) 
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
           {/* <Text style={styles.title}>Add a Trip</Text> */}
-          <Header title={onEdit?'Update Trip':'Add Trip'}  name={user} navigation={navigation} />
+          <Header title={onEdit ? 'Update Trip' : 'Add Trip'} name={user} navigation={navigation} />
           <Text style={styles.text}>Fill the details below:</Text>
           <Form
             onButtonPress={onAddTrip}
@@ -234,19 +279,19 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip,onEdit}) 
                 setFeedback(feedback);
               }}
             />}
-            {!onEdit&&
-            <FormItem
-              placeholder="Add live feedback here"
-              style={styles.inputView}
-              label="Feedback Live:"
-              labelStyle={styles.label}
-              multiline={true}
-              value={feedbackLive}
-              onChangeText={feedbackLive => {
-                setFeedbackLive(feedbackLive);
-              }}
-            />}
-            
+            {!onEdit &&
+              <FormItem
+                placeholder="Add live feedback here"
+                style={styles.inputView}
+                label="Feedback Live:"
+                labelStyle={styles.label}
+                multiline={true}
+                value={feedbackLive}
+                onChangeText={feedbackLive => {
+                  setFeedbackLive(feedbackLive);
+                }}
+              />}
+
           </Form>
         </View>
       </ScrollView>
@@ -255,28 +300,8 @@ const AddTrip = ({addWaitingTrip, navigation, user, getWaitingId, trip,onEdit}) 
 };
 
 AddTrip.defaultProps = {
-  trip: {
-    id: 0,
-    owner: '',
-    adminMessage: 'No new admin messages',
-    tripName: '',
-    category: {
-      isRelax: false,
-      isDynamic: false,
-      isParty: false,
-      isPetAllowed: false,
-      isCarTravel: false,
-      isPlaneTravel: false,
-      isTrainTravel: false,
-    },
-    pictures: 'a',
-    location: '',
-    description: '',
-    feedbacks: '',
-    feedbacksLive: '',
-    priceInNis: '',
-  },
-  onEdit:false,
+  onEdit: false,
+  onApprove: false,
 };
 
 const styles = StyleSheet.create({
