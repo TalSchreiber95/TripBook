@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   inputView: {
     flex: 0.3,
     backgroundColor:'steelblue',
-    //  '#F5F5F5',
+    //  '#F5F5F5',a
     borderRightWidth:1,
     borderLeftWidth:1,
     borderTopWidth:0.7,
