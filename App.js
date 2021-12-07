@@ -19,16 +19,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import type { Node } from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TextInput,
-  useColorScheme,
-  View, Alert, Form, Formitem
-} from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 
 import { appendToMemberExpression, staticBlock } from '@babel/types';
 
@@ -91,7 +82,7 @@ const App: () => Node = () => {
         'eofkldnslkvf sdklfndslkfdslk fsdklfdslkmkldsf',
       ],
       feedbacksLive: ['Live', 'Im Liveee'],
-      priceInNis: 60,
+      priceInNis: 10,
     },
     {
       id: 2,
@@ -118,7 +109,7 @@ const App: () => Node = () => {
         'not a regular feedback',
         'you can call me live feedback',
       ],
-      priceInNis: 60,
+      priceInNis: 45,
     },
   ];
 
@@ -150,7 +141,7 @@ const App: () => Node = () => {
         'eofkldnslkvf waiting sdklfndslkfdslk fsdklfdslkmkldsf',
       ],
       feedbacksLive: ['Live waiting', 'Im Liveee waiting'],
-      priceInNis: 60,
+      priceInNis: 400,
     },
   ];
 
@@ -193,7 +184,7 @@ const App: () => Node = () => {
     description: '',
     feedbacks: [''],
     feedbacksLive: [''],
-    priceInNis: '',
+    priceInNis: 0,
   });
   const addNewUser = user => {
     setUsers([...Users, user]);
@@ -216,10 +207,9 @@ const App: () => Node = () => {
       return prevCards.filter(card => card.id != id);
     });
   };
-  //Should be implement later
+
   const deletePicture = (tripId, pic, onApprove) => {
     if (!onApprove) {
-      // Alert.alert("picture card id is: "+picId+"and pic url: "+pic);
       const cardDeletePic = Trips.filter(trip => trip.id === tripId)[0];
       cardDeletePic.pictures.splice(pic, 1);
     }
@@ -229,7 +219,28 @@ const App: () => Node = () => {
     }
 
   };
-
+  const deleteFeedback = (tripId, feedback, onApprove) => {
+    if (!onApprove) {
+      const cardDeleteFeed = Trips.filter(trip => trip.id === tripId)[0];
+      cardDeleteFeed.feedbacks.splice(feedback, 1);
+    }
+    else {
+      const cardDeleteFeed = WaitingTrips.filter(trip => trip.id === tripId)[0];
+      cardDeleteFeed.feedbacks.splice(feedback, 1);
+    }
+    Alert.alert("Feedback deleted!");
+  };
+  const deleteFeedbackLive = (tripId, feedbackLive, onApprove) => {
+    if (!onApprove) {
+      const cardDeleteFeedLive = Trips.filter(trip => trip.id === tripId)[0];
+      cardDeleteFeedLive.feedbacksLive.splice(feedbackLive, 1);
+    }
+    else {
+      const cardDeleteFeed = WaitingTrips.filter(trip => trip.id === tripId)[0];
+      cardDeleteFeedLive.feedbacksLive.splice(feedbackLive, 1);
+    }
+    Alert.alert("Feedback deleted!");
+  };
   const deleteWaitingCard = id => {
     setWaitingTrips(prevCards => {
       return prevCards.filter(card => card.id != id);
@@ -239,34 +250,32 @@ const App: () => Node = () => {
 
   const editCard = (updatedTrip, onApprove) => {
     if (!onApprove) {
-      const trip = Trips.filter(t => t.id !== updatedTrip.id)[0];
-      trip.tripName=updatedTrip.tripName;
-      trip.category.isRelax=updatedTrip.category.isRelax;
-      trip.category.isDynamic=updatedTrip.category.isDynamic;
-      trip.category.isParty=updatedTrip.category.isParty;
-      trip.category.isPetAllowed=updatedTrip.category.isPetAllowed;
-      trip.category.isCarTravel=updatedTrip.category.isCarTravel;
-      trip.category.isPlaneTravel=updatedTrip.category.isPlaneTravel;
-      trip.category.isTrainTravel=updatedTrip.category.isTrainTravel;
-      trip.location=updatedTrip.location;
-      trip.description=updatedTrip.description;
-      trip.priceInNis=updatedTrip.priceInNis;
-      // setTrips([trips, updatedTrip]);
+      const trip = Trips.filter(t => t.id === updatedTrip.id)[0];
+      trip.tripName = updatedTrip.tripName;
+      trip.category.isRelax = updatedTrip.category.isRelax;
+      trip.category.isDynamic = updatedTrip.category.isDynamic;
+      trip.category.isParty = updatedTrip.category.isParty;
+      trip.category.isPetAllowed = updatedTrip.category.isPetAllowed;
+      trip.category.isCarTravel = updatedTrip.category.isCarTravel;
+      trip.category.isPlaneTravel = updatedTrip.category.isPlaneTravel;
+      trip.category.isTrainTravel = updatedTrip.category.isTrainTravel;
+      trip.location = updatedTrip.location;
+      trip.description = updatedTrip.description;
+      trip.priceInNis = updatedTrip.priceInNis;
     }
     else {
-      const waitingTrip = WaitingTrips.filter(t => t.id !== updatedTrip.id)[0];
-      waitingTrip.tripName=updatedTrip.tripName;
-      waitingTrip.category.isRelax=updatedTrip.category.isRelax;
-      waitingTrip.category.isDynamic=updatedTrip.category.isDynamic;
-      waitingTrip.category.isParty=updatedTrip.category.isParty;
-      waitingTrip.category.isPetAllowed=updatedTrip.category.isPetAllowed;
-      waitingTrip.category.isCarTravel=updatedTrip.category.isCarTravel;
-      waitingTrip.category.isPlaneTravel=updatedTrip.category.isPlaneTravel;
-      waitingTrip.category.isTrainTravel=updatedTrip.category.isTrainTravel;
-      waitingTrip.location=updatedTrip.location;
-      waitingTrip.description=updatedTrip.description;
-      waitingTrip.priceInNis=updatedTrip.priceInNis;
-      // setWaitingTrips([waitingTrips, updatedTrip]);
+      const waitingTrip = WaitingTrips.filter(t => t.id === updatedTrip.id)[0];
+      waitingTrip.tripName = updatedTrip.tripName;
+      waitingTrip.category.isRelax = updatedTrip.category.isRelax;
+      waitingTrip.category.isDynamic = updatedTrip.category.isDynamic;
+      waitingTrip.category.isParty = updatedTrip.category.isParty;
+      waitingTrip.category.isPetAllowed = updatedTrip.category.isPetAllowed;
+      waitingTrip.category.isCarTravel = updatedTrip.category.isCarTravel;
+      waitingTrip.category.isPlaneTravel = updatedTrip.category.isPlaneTravel;
+      waitingTrip.category.isTrainTravel = updatedTrip.category.isTrainTravel;
+      waitingTrip.location = updatedTrip.location;
+      waitingTrip.description = updatedTrip.description;
+      waitingTrip.priceInNis = updatedTrip.priceInNis;
     }
   };
   const onSendMessage = (trip, message, onApprove) => {
@@ -281,13 +290,12 @@ const App: () => Node = () => {
   };
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="TripsPage">
         <Stack.Screen name="Login">
           {props => (
             <LoginPage
               {...props}
               Users={Users}
-              user={Users[Index]}
               ind={setIndex}
             />
           )}
@@ -317,7 +325,6 @@ const App: () => Node = () => {
               setTripEdit={setTripEdit}
               onEdit={onEdit}
               editCard={editCard}
-              setOnApprove={setOnApprove}
               onApprove={onApprove}
             />
           )}
@@ -333,6 +340,8 @@ const App: () => Node = () => {
               editCard={editCard}
               onSendMessage={onSendMessage}
               deletePicture={deletePicture}
+              deleteFeedback={deleteFeedback}
+              deleteFeedbackLive={deleteFeedbackLive}
               setTripEdit={setTripEdit}
               setOnEdit={setOnEdit}
               setOnApprove={setOnApprove}
@@ -344,14 +353,14 @@ const App: () => Node = () => {
             {props => (
               <TripsApprove
                 {...props}
-                // Trips={Trips}
                 WaitingTrips={WaitingTrips}
                 user={Users[Index]}
                 deleteWaitingCard={deleteWaitingCard}
-                // editCard={editCard}
                 onSendMessage={onSendMessage}
                 addTrip={addTrip}
                 deletePicture={deletePicture}
+                deleteFeedback={deleteFeedback}
+                deleteFeedbackLive={deleteFeedbackLive}
                 setTripEdit={setTripEdit}
                 setOnEdit={setOnEdit}
                 setOnApprove={setOnApprove}
@@ -363,13 +372,15 @@ const App: () => Node = () => {
           {props => (
             <MyTrips
               {...props}
-              // WaitingTrips={WaitingTrips}
               Trips={Trips}
+              WaitingTrips={WaitingTrips}
               user={Users[Index]}
               deleteCard={deleteCard}
               editCard={editCard}
               onSendMessage={onSendMessage}
               deletePicture={deletePicture}
+              deleteFeedback={deleteFeedback}
+              deleteFeedbackLive={deleteFeedbackLive}
               setTripEdit={setTripEdit}
               setOnEdit={setOnEdit}
               setOnApprove={setOnApprove}

@@ -17,11 +17,14 @@ import { useState } from 'react';
 
 const MyTrips = ({
   Trips,
+  WaitingTrips,
   user,
   deleteCard,
   editCard,
   onSendMessage,
   deletePicture,
+  deleteFeedback,
+  deleteFeedbackLive,
   setTripEdit,
   setOnEdit,
   setOnApprove,
@@ -30,8 +33,26 @@ const MyTrips = ({
   return (
     <ScrollView>
       <Header name={user} navigation={navigation} />
-      <Text style={styles.text}>My Trips List:</Text>
+      <Text style={styles.text}>My approve trip list:</Text>
       {Trips.filter(trip => trip.owner === user.email).map(trip => (
+        <TripCard
+          key={trip.id}
+          trip={trip}
+          user={user}
+          deleteCard={deleteCard}
+          editCard={editCard}
+          onSendMessage={onSendMessage}
+          deletePicture={deletePicture}
+          deleteFeedback={deleteFeedback}
+          deleteFeedbackLive={deleteFeedbackLive}
+          setTripEdit={setTripEdit}
+          setOnEdit={setOnEdit}
+          setOnApprove={setOnApprove}
+          navigation={navigation}
+        />
+      ))}
+      <Text style={styles.text}>My unapprove trip list:</Text>
+      {WaitingTrips.filter(trip => trip.owner === user.email).map(trip => (
         <TripCard
           key={trip.id}
           trip={trip}
@@ -43,6 +64,7 @@ const MyTrips = ({
           setTripEdit={setTripEdit}
           setOnEdit={setOnEdit}
           setOnApprove={setOnApprove}
+          onApprove={true}
           navigation={navigation}
         />
       ))}

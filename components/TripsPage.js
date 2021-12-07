@@ -13,7 +13,7 @@ import {
 import Header from './Header';
 import TripCard from './TripCard';
 
-import {useState} from 'react';
+import { useState } from 'react';
 
 const TripsPage = ({
   Trips,
@@ -23,6 +23,8 @@ const TripsPage = ({
   editCard,
   onSendMessage,
   deletePicture,
+  deleteFeedback,
+  deleteFeedbackLive,
   setTripEdit,
   setOnEdit,
   setOnApprove,
@@ -48,6 +50,8 @@ const TripsPage = ({
           onSendMessage={onSendMessage}
           toggleApproveCard={false}
           deletePicture={deletePicture}
+          deleteFeedback={deleteFeedback}
+          deleteFeedbackLive={deleteFeedbackLive}
           setTripEdit={setTripEdit}
           setOnEdit={setOnEdit}
           setOnApprove={setOnApprove}

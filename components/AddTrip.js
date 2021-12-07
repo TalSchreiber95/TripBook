@@ -8,15 +8,15 @@ import {
   Text,
   TextInput,
   useColorScheme,
-  View,
+  View
 } from 'react-native';
+import Slider from '@react-native-community/slider';
 import { Form, FormItem } from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Header from './Header';
 
 const AddTrip = ({
   addWaitingTrip,
-  navigation,
   user,
   getWaitingId,
   trip,
@@ -24,6 +24,7 @@ const AddTrip = ({
   onEdit,
   editCard,
   onApprove,
+  navigation,
 }) => {
 
 
@@ -52,10 +53,13 @@ const AddTrip = ({
       description != '' &&
       priceInNis != null
     ) {
-      if(!onEdit){
+      if (!onEdit) {
         setPicture([picture]);
         setFeedback([feedback]);
         setFeedbackLive([feedbackLive]);
+      }
+      else {
+        getWaitingId = trip.id;
       }
       const newTrip = {
         id: getWaitingId,
@@ -108,7 +112,7 @@ const AddTrip = ({
         addWaitingTrip(newTrip);
         Alert.alert('trip posted succesfully');
       }
-    
+
       navigation.navigate('Home');
     } else {
       Alert.alert('Fill all the required fields !');
@@ -120,8 +124,8 @@ const AddTrip = ({
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
-          {/* <Text style={styles.title}>Add a Trip</Text> */}
-          <Header title={onEdit ? 'Update Trip' : 'Add Trip'} name={user} navigation={navigation} />
+          <Header title={onEdit ? 'Update Trip' : 'Add Trip'}
+            name={user} navigation={navigation} />
           <Text style={styles.text}>Fill the details below:</Text>
           <Form
             onButtonPress={onAddTrip}
@@ -151,7 +155,7 @@ const AddTrip = ({
               isRequired
               asterik
             />
-            <FormItem
+            {/* <FormItem
               placeholder="Add price here"
               style={styles.inputView}
               label="Price(NIS)"
@@ -163,7 +167,24 @@ const AddTrip = ({
               // demand int instead of string
               isRequired
               asterik
+            /> */}
+            <Text style={styles.showTextMoney}>
+              What is the minimum price that this trip cost?
+            </Text>
+            <Slider
+              step={1}
+              minimumValue={0}
+              maximumValue={10000}
+              value={priceInNis}
+              onValueChange={slideValue => setPriceInNis(slideValue)}
+              minimumTrackTintColor="#1fb28a"
+              maximumTrackTintColor="#d3d3d3"
+              thumbTintColor="#b9e4c9"
             />
+            <Text style={styles.showMoney}>
+              {priceInNis} ILS
+            </Text>
+
             <FormItem
               placeholder="Add description here"
               style={styles.inputView}
@@ -329,7 +350,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderRadius: 5,
   },
-
+  showTextMoney: {
+    textAlign: 'center'
+  },
+  showMoney: {
+    textAlign: 'center'
+  },
   formButton: {
     backgroundColor: 'firebrick',
     marginLeft: 100,

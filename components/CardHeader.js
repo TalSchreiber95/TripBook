@@ -139,7 +139,7 @@ const CardHeader = ({
           toggler={toggler}
           updateButton={updateButton}
         />
-
+        <Text style={styles.showMoney}>{trip.priceInNis} ILS</Text>
         <RightCardHeader
           trip={trip}
           toggler={toggler}
@@ -164,6 +164,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     margin: 10,
     marginTop: 0,
+  },
+  showMoney:{
+    // borderLeftWidth:1,
+    // borderColor:"green"
+    fontSize:30
   },
   iconHeader: {
     // flex: 2,

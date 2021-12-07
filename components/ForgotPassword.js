@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
 import {
-    SafeAreaView,
     ScrollView,
-    StatusBar,
     StyleSheet,
     Text,
-    Button,
     Alert,
-    TouchableHighlight,
-    View,
-    Pressable,
 } from 'react-native';
 
 import { Form, FormItem } from 'react-native-form-component';
 import Header from './Header';
 
-const ForgotPassword = ({ Users, navigation, ind }) => {
+const ForgotPassword = ({ Users, ind, navigation }) => {
     const [email, setEmail] = useState('');
     const [answer, setAnswer] = useState('');
 
@@ -41,8 +35,6 @@ const ForgotPassword = ({ Users, navigation, ind }) => {
 
     return (
         <ScrollView >
-            {/* <Header title="TripBook" name={""} /> */}
-            {/* <Text style={styles.title}>TripBook</Text> */}
             <Header connected={false} />
             <Form
                 onButtonPress={onRestorePass}
@@ -88,9 +80,6 @@ const styles = StyleSheet.create({
         color: 'gold',
         backgroundColor: '#001f3f',
     },
-    // container: {
-    //     flex: 1,
-    // },
     label: {
         color: 'black',
         marginLeft: 30,
@@ -106,7 +95,7 @@ const styles = StyleSheet.create({
         marginRight: 20,
         fontSize: 20,
         borderRadius: 5,
-      },
+    },
     button: {
         alignItems: 'center',
         justifyContent: 'center',

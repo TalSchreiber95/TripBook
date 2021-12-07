@@ -1,13 +1,22 @@
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Button, CheckBox } from 'react-native-elements';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import AddFeedbackForm from './AddFeedbackForm';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 // import {CheckBox} from 'react-native-elements/dist/checkbox/CheckBox';
 // import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome';
 
-const LeftCardFooter = ({ trip, updateButton, toggler }) => {
+const LeftCardFooter = ({
+  trip,
+  updateButton,
+  toggler,
+  deleteFeedback,
+  deleteFeedbackLive,
+  onApprove,
+  user
+}) => {
   const [feedbackIndex, setFeedbackIndex] = useState(0);
   const [feedbackLiveIndex, setFeedbackLiveIndex] = useState(0);
 
@@ -38,9 +47,35 @@ const LeftCardFooter = ({ trip, updateButton, toggler }) => {
         (feedbackIndex - 1 + trip.feedbacks.length) % trip.feedbacks.length,
       );
   };
+  const delFeed = () => {
+    switchFeedbackLeft();
+    if (!toggleFeedbackLive) {
+      deleteFeedback(trip.id, feedbackIndex, onApprove);
+    }
+    else {
+      deleteFeedbackLive(trip.id, feedbackLiveIndex, onApprove);
+    }
+  }
+  const onDelFeed = () => {
+    return Alert.alert(
+      'Delting trip\'s feedback card !',
+      'Are you sure you want to delete this trip\'s feedback card?',
+      [
+        {
+          text: 'Yes',
+          onPress: () => { delFeed() },
+        },
+        {
+          text: 'No',
+        },
+      ],
+    );
+  };
+
 
   return (
     <View style={styles.container}>
+
       <Button
         title={
           toggler === 'feedback'
@@ -65,7 +100,9 @@ const LeftCardFooter = ({ trip, updateButton, toggler }) => {
             text="Live"
             onPress={ToggleFeedbackLive}
           />
+
           <View style={styles.RLbuttonsView}>
+
             <Button
               title="<"
               onPress={switchFeedbackLeft}
@@ -75,10 +112,22 @@ const LeftCardFooter = ({ trip, updateButton, toggler }) => {
               buttonStyle={styles.RLbuttons}
             />
             <Text style={styles.text}>
-              {toggleFeedbackLive
+              {(toggleFeedbackLive && trip.feedbacksLive.length > 0)
                 ? trip.feedbacksLive[feedbackLiveIndex]
-                : trip.feedbacks[feedbackIndex]}
+                : !toggleFeedbackLive && trip.feedbacks.length > 0
+                  ? trip.feedbacks[feedbackIndex]
+                  : "No feedbacks available"}
             </Text>
+            {(user.admin) && (
+              <Icon
+                name="trash-o"
+                size={20}
+                color="black"
+                onPress={() => onDelFeed()}
+                // onLongPress={() => toggleInfo('Remove trip picture')}
+                style={styles.icon}
+              />
+            )}
             <Button
               title=">"
               onPress={switchFeedbackRight}
@@ -87,6 +136,7 @@ const LeftCardFooter = ({ trip, updateButton, toggler }) => {
               //   containerStyle={styles.buttonRight}
               buttonStyle={styles.RLbuttons}
             />
+
           </View>
           <AddFeedbackForm trip={trip} />
         </View>

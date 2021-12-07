@@ -25,6 +25,8 @@ const TripCard = ({
   toggleApproveCard,
   addTrip,
   deletePicture,
+  deleteFeedback,
+  deleteFeedbackLive,
   onApprove,
   setTripEdit,
   setOnEdit,
@@ -53,10 +55,28 @@ const TripCard = ({
   const updateButton = activeButton => {
     setToggler(activeButton);
   };
-const delPic=()=>{
-  switchPictureLeft();
-  deletePicture(trip.id, pic,onApprove);
-}
+  const delPic = () => {
+    switchPictureLeft();
+    deletePicture(trip.id, pic, onApprove);
+    Alert.alert("Picture deleted!");
+  }
+  const onDelPic = () => {
+    return Alert.alert(
+      'Deleting trip\'s picture card !',
+      'Are you sure you want to delete this trip\'s picture card?',
+      [
+        {
+          text: 'Yes',
+          onPress: () => {
+            delPic();
+          },
+        },
+        {
+          text: 'No',
+        },
+      ],
+    );
+  };
   const onAddTrip = () => {
     return Alert.alert(
       'Add trip card !',
@@ -141,7 +161,7 @@ const delPic=()=>{
             name="trash-o"
             size={20}
             color="white"
-            onPress={() => delPic() }
+            onPress={() => onDelPic()}
             // onLongPress={() => toggleInfo('Remove trip picture')}
             style={styles.icon}
           />)}
@@ -162,12 +182,12 @@ const delPic=()=>{
             />
           </View>
         </ImageBackground>
-        :<ImageBackground
-          style={styles.logo}
-          source={{
-            uri: 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg',
-          }}>
-        </ImageBackground>}
+          : <ImageBackground
+            style={styles.logo}
+            source={{
+              uri: 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg',
+            }}>
+          </ImageBackground>}
 
         {/* There is problem with the image component - hiding the weather and info popups
         for now i changed the opacity so we can see it
@@ -177,6 +197,10 @@ const delPic=()=>{
         trip={trip}
         setPicture={updatePicture}
         updateButton={updateButton}
+        deleteFeedback={deleteFeedback}
+        deleteFeedbackLive={deleteFeedbackLive}
+        onApprove={onApprove}
+        user={user}
         toggler={toggler}
       />
     </View>
@@ -184,7 +208,7 @@ const delPic=()=>{
 };
 TripCard.defaultProps = {
   // toggleApproveCard: false,
-  onApprove:false,
+  onApprove: false,
 };
 
 const styles = StyleSheet.create({

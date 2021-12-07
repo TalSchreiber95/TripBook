@@ -23,6 +23,8 @@ const TripsApprove = ({
   onSendMessage,
   addTrip,
   deletePicture,
+  deleteFeedback,
+  deleteFeedbackLive,
   setTripEdit,
   setOnEdit,
   setOnApprove,
@@ -40,6 +42,8 @@ const TripsApprove = ({
           deleteCard={deleteWaitingCard}
           onSendMessage={onSendMessage}
           deletePicture={deletePicture}
+          deleteFeedback={deleteFeedback}
+          deleteFeedbackLive={deleteFeedbackLive}
           addTrip={addTrip}
           editCard={editCard}
           toggleApproveCard={true}

@@ -15,7 +15,7 @@ import {
 import {Form, FormItem} from 'react-native-form-component';
 import Header from './Header';
 
-const LoginPage = ({Users, navigation, ind, name}) => {
+const LoginPage = ({Users, ind, navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
