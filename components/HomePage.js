@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -11,7 +11,7 @@ import {
 import Header from './Header';
 import TripFilter from './TripFilter';
 
-const HomePage = ({ name, tripSearch,setOnEdit, navigation }) => {
+const HomePage = ({name, tripSearch, navigation}) => {
   const updateFilter = (
     isRelax,
     isDynamic,
@@ -22,8 +22,10 @@ const HomePage = ({ name, tripSearch,setOnEdit, navigation }) => {
     isTrainTravel,
     priceInNis,
     location,
+    tripName,
   ) => {
     const tripInfo = {
+      tripName: tripName,
       category: {
         isRelax: isRelax,
         isDynamic: isDynamic,
@@ -43,7 +45,11 @@ const HomePage = ({ name, tripSearch,setOnEdit, navigation }) => {
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={styles.container}>
           <Header name={name} navigation={navigation} />
-          <TripFilter updateFilter={updateFilter} setOnEdit={setOnEdit} navigation={navigation} />
+          <TripFilter
+            updateFilter={updateFilter}
+            // setOnEdit={setOnEdit}
+            navigation={navigation}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

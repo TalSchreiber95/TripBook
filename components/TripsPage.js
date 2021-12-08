@@ -20,14 +20,14 @@ const TripsPage = ({
   user,
   tripInfo,
   deleteCard,
-  editCard,
+  // editCard,
   onSendMessage,
   deletePicture,
   deleteFeedback,
   deleteFeedbackLive,
   setTripEdit,
-  setOnEdit,
-  setOnApprove,
+  // setOnEdit,
+  // setOnApprove,
   navigation,
 }) => {
   return (
@@ -46,21 +46,25 @@ const TripsPage = ({
           trip={trip}
           user={user}
           deleteCard={deleteCard}
-          editCard={editCard}
+          // editCard={editCard}
           onSendMessage={onSendMessage}
-          toggleApproveCard={false}
+          onApprove={false}
           deletePicture={deletePicture}
           deleteFeedback={deleteFeedback}
           deleteFeedbackLive={deleteFeedbackLive}
           setTripEdit={setTripEdit}
-          setOnEdit={setOnEdit}
-          setOnApprove={setOnApprove}
+          // setOnEdit={setOnEdit}
+          // setOnApprove={setOnApprove}
           navigation={navigation}
         />
       ))}
     </ScrollView>
   );
 };
+
+TripsPage.defaultProps = {
+  onApprove: false,
+}
 
 const styles = StyleSheet.create({
   text: {

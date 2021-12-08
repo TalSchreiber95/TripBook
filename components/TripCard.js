@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, {useReducer} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/AntDesign';
 
@@ -12,26 +12,26 @@ import {
 } from 'react-native';
 import CardFooter from './CardFooter';
 import CardHeader from './CardHeader';
-import { useState } from 'react';
-import { Button } from 'react-native-elements/dist/buttons/Button';
+import {useState} from 'react';
+import {Button} from 'react-native-elements/dist/buttons/Button';
 import LinearGradient from 'react-native-linear-gradient';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 
 const TripCard = ({
   trip,
   user,
   deleteCard,
   onSendMessage,
-  toggleApproveCard,
+  // toggleApproveCard,
   addTrip,
   deletePicture,
   deleteFeedback,
   deleteFeedbackLive,
   onApprove,
   setTripEdit,
-  setOnEdit,
-  setOnApprove,
-  navigation
+  // setOnEdit,
+  // setOnApprove,
+  navigation,
 }) => {
   const [pic, setPicture] = useState(0);
   const [toggler, setToggler] = useState('');
@@ -57,13 +57,13 @@ const TripCard = ({
   };
   const delPic = () => {
     switchPictureLeft();
-    deletePicture(trip.id, pic, onApprove);
-    Alert.alert("Picture deleted!");
-  }
+    deletePicture(trip.id, pic);
+    Alert.alert('Picture deleted!');
+  };
   const onDelPic = () => {
     return Alert.alert(
-      'Deleting trip\'s picture card !',
-      'Are you sure you want to delete this trip\'s picture card?',
+      "Deleting trip's picture card !",
+      "Are you sure you want to delete this trip's picture card?",
       [
         {
           text: 'Yes',
@@ -123,9 +123,8 @@ const TripCard = ({
             //   'card edit supposed to be here im not sure in which way yet',
             // );
             setTripEdit(trip);
-            setOnEdit(true);
-            setOnApprove(onApprove);
-            navigation.navigate('AddTrip');
+            // setOnApprove(onApprove);
+            navigation.navigate('EditTrip');
             // Alert.alert(editCard(id));
             // editCard(trip.id);
           },
@@ -148,46 +147,54 @@ const TripCard = ({
         onEdit={onEdit}
         onSendMessage={onSendMessage}
         onDelete={onDelete}
-        setTripEdit={setTripEdit}
+        // setTripEdit={setTripEdit}
         onApprove={onApprove}
       />
       <View style={styles.picView}>
-        {trip.pictures.length > 0 ? <ImageBackground
-          style={styles.logo}
-          source={{
-            uri: trip.pictures[pic],
-          }}>
-          {(user.admin || user.email == trip.owner) && (<Icon
-            name="trash-o"
-            size={20}
-            color="white"
-            onPress={() => onDelPic()}
-            // onLongPress={() => toggleInfo('Remove trip picture')}
-            style={styles.icon}
-          />)}
-          <View style={styles.RLbuttonsView}>
-            <Button
-              title="<"
-              onPress={switchPictureLeft}
-              type="outline"
-              titleStyle={styles.titleArrowButtons}
-              buttonStyle={styles.RLbuttons}
-            />
-            <Button
-              title=">"
-              onPress={switchPictureRight}
-              type="outline"
-              titleStyle={styles.titleArrowButtons}
-              buttonStyle={styles.RLbuttons}
-            />
-          </View>
-        </ImageBackground>
-          : <ImageBackground
+        {trip.pictures.length > 0 ? (
+          <ImageBackground
             style={styles.logo}
             source={{
-              uri: 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg',
+              uri: trip.pictures[pic],
             }}>
-          </ImageBackground>}
+            {(user.admin || user.email == trip.owner) && (
+              <Icon
+                name="trash-o"
+                size={20}
+                color="white"
+                onPress={() => onDelPic()}
+                // onLongPress={() => toggleInfo('Remove trip picture')}
+                style={styles.icon}
+              />
+            )}
+            <View style={styles.RLbuttonsView}>
+              <Button
+                title="<"
+                onPress={switchPictureLeft}
+                type="outline"
+                titleStyle={styles.titleArrowButtons}
+                buttonStyle={styles.RLbuttons}
+              />
+              <Button
+                title=">"
+                onPress={switchPictureRight}
+                type="outline"
+                titleStyle={styles.titleArrowButtons}
+                buttonStyle={styles.RLbuttons}
+              />
+            </View>
+          </ImageBackground>
+        ) : (
+          <View style={styles.noPictureView}>
+            <Text style={styles.noPictureText}>No images uploaded. you can add some ;)</Text>
+          </View>
+          //   <ImageBackground
+          //     style={styles.logo}
+          //     source={{
+          //       uri: 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg',
+          //     }}></ImageBackground>
+          //
+        )}
 
         {/* There is problem with the image component - hiding the weather and info popups
         for now i changed the opacity so we can see it
@@ -298,6 +305,15 @@ const styles = StyleSheet.create({
   titleArrowButtons: {
     // backgroundColor: 'black',
     color: '#24a0ed',
+  },
+  noPictureView: {
+    backgroundColor: 'silver',
+  },
+  noPictureText: {
+    textAlign: 'center',
+    height: '100%',
+    top: 175,
+    fontSize: 17,
   },
 });
 export default TripCard;

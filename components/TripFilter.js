@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -10,9 +10,10 @@ import {
 } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import {Button} from 'react-native-elements';
-import { Form, FormItem } from 'react-native-form-component';
+import {Form, FormItem} from 'react-native-form-component';
+import Slider from '@react-native-community/slider';
 
-const TripFilter = ({ updateFilter, tripSearch, setOnEdit,navigation }) => {
+const TripFilter = ({updateFilter, tripSearch, navigation}) => {
   const [isRelax, setIsRelax] = useState(false);
   const [isDynamic, setIsDynamic] = useState(false);
   const [isParty, setIsParty] = useState(false);
@@ -22,11 +23,12 @@ const TripFilter = ({ updateFilter, tripSearch, setOnEdit,navigation }) => {
   const [isTrainTravel, setIsTrainTravel] = useState(false);
   const [priceInNis, setPriceInNis] = useState();
   const [location, setLocation] = useState('');
+  const [tripName, setTripName] = useState('');
 
-  const onAddTrip=()=>{
-    setOnEdit(false);
-    navigation.navigate('AddTrip');
-  }
+  // const onAddTrip = () => {
+  //   // setOnEdit(false);
+  //   navigation.navigate('AddTrip');
+  // };
   const onSearch = () => {
     updateFilter(
       isRelax,
@@ -38,6 +40,7 @@ const TripFilter = ({ updateFilter, tripSearch, setOnEdit,navigation }) => {
       isTrainTravel,
       priceInNis,
       location,
+      tripName,
     );
     setIsRelax(false);
     setIsDynamic(false);
@@ -46,18 +49,29 @@ const TripFilter = ({ updateFilter, tripSearch, setOnEdit,navigation }) => {
     setIsCarTravel(false);
     setIsPlaneTravel(false);
     setIsTrainTravel(false);
-    setPriceInNis()
-    setLocation('')
+    setPriceInNis();
+    setLocation('');
+    setTripName('');
     navigation.navigate('TripsPage');
   };
   return (
-    <View >
+    <View>
       <Form
         onButtonPress={onSearch}
         buttonStyle={styles.formButton}
         buttonText="Search Trip">
-        <Text style={styles.text}>Enter your trip info: </Text>
+        <Text style={styles.text}>Enter your desired trip info: </Text>
         <FormItem
+          style={styles.inputView}
+          label="Trip Name"
+          labelStyle={styles.label}
+          value={tripName}
+          placeholder="Add trip name here"
+          onChangeText={tripName => {
+            setTripName(tripName);
+          }}
+        />
+        {/* <FormItem
           style={styles.inputView}
           label="Price limit (NIS)"
           labelStyle={styles.label}
@@ -66,9 +80,23 @@ const TripFilter = ({ updateFilter, tripSearch, setOnEdit,navigation }) => {
           onChangeText={price => {
             setPriceInNis(price);
           }}
-          isRequired
-          asterik
+        /> */}
+
+        <Text style={styles.showTextMoney}>
+          What is the minimum price that this trip cost?
+        </Text>
+        <Slider
+        style={styles.slider}
+          step={1}
+          minimumValue={0}
+          maximumValue={10000}
+          value={priceInNis}
+          onValueChange={slideValue => setPriceInNis(slideValue)}
+          minimumTrackTintColor="#1fb28a"
+          maximumTrackTintColor="#d3d3d3"
+          thumbTintColor="#b9e4c9"
         />
+        <Text style={styles.showMoney}>{priceInNis} ILS</Text>
         <FormItem
           style={styles.inputView}
           label="location"
@@ -78,8 +106,6 @@ const TripFilter = ({ updateFilter, tripSearch, setOnEdit,navigation }) => {
           onChangeText={location => {
             setLocation(location);
           }}
-          isRequired
-          asterik
         />
         <Text style={styles.text}>Filter your trip category</Text>
         <BouncyCheckbox
@@ -154,11 +180,7 @@ const TripFilter = ({ updateFilter, tripSearch, setOnEdit,navigation }) => {
           onPress={setIsTrainTravel}
         />
       </Form>
-      <Button
-        title="Add new trip +"
-        color="red"
-        onPress={onAddTrip}
-      />
+      {/* <Button title="Add new trip +" color="red" onPress={onAddTrip} /> */}
     </View>
   );
 };
@@ -217,6 +239,17 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 20,
     color: 'black',
+  },
+  showTextMoney: {
+    textAlign: 'center',
+  },
+  showMoney: {
+    textAlign: 'center',
+
+  },
+  slider: {
+    marginLeft: 20,
+    marginRight: 20,
   },
 });
 export default TripFilter;

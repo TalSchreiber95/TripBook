@@ -13,7 +13,7 @@ const Header = ({ title, name, connected, navigation }) => {
       colors={['black', '#001f3f']}
       start={{ x: 1, y: 2.5 }}
       end={{ x: 0, y: 1.5 }}>
-      {connected ? (
+      {/* {connected ? (
         <View style={styles.buttonsView}>
           <Button
             containerStyle={styles.myTripsButton}
@@ -37,7 +37,7 @@ const Header = ({ title, name, connected, navigation }) => {
         </View>
       ) : (
         <View style={styles.noButtonsView}></View>
-      )}
+      )} */}
       <Text style={styles.text}>{title}</Text>
       <Text style={styles.name}>
         Wellcome {name.firstName + ' ' + name.lastName}!

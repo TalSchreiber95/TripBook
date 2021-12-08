@@ -6,24 +6,27 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import HomePage from './components/HomePage';
 import AddTrip from './components/AddTrip';
+import EditTrip from './components/EditTrip';
 import TripsPage from './components/TripsPage';
 import MyTrips from './components/MyTrips';
 import TripsApprove from './components/TripsApprove';
 import ForgotPassword from './components/ForgotPassword';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import 'react-native-gesture-handler';
 
-import type { Node } from 'react';
-import { StyleSheet, Alert } from 'react-native';
+import type {Node} from 'react';
+import {StyleSheet, Alert, Text} from 'react-native';
 
-import { appendToMemberExpression, staticBlock } from '@babel/types';
+// import {appendToMemberExpression, staticBlock} from '@babel/types';
 
-const Stack = createNativeStackNavigator();
+// const Stack = createNativeStackNavigator();
 
 const App: () => Node = () => {
   const users = [
@@ -146,6 +149,7 @@ const App: () => Node = () => {
   ];
 
   const tripInfo = {
+    tripName: '',
     category: {
       isRelax: false,
       isDynamic: false,
@@ -155,15 +159,16 @@ const App: () => Node = () => {
       isPlaneTravel: false,
       isTrainTravel: false,
     },
-    location: 'North',
+    location: '',
     priceInNis: 0,
   };
   const [Users, setUsers] = useState(users);
   const [Trips, setTrips] = useState(trips);
   const [WaitingTrips, setWaitingTrips] = useState(waitingTrips);
-  const [Index, setIndex] = useState(1);
+  const [Index, setIndex] = useState(0);
+  const [isUserConnected, setIsUserConnected] = useState(false);
   const [TripInfo, setTripInfo] = useState(tripInfo);
-  const [onEdit, setOnEdit] = useState(false);
+  // const [onEdit, setOnEdit] = useState(false);
   const [onApprove, setOnApprove] = useState(false);
   const [TripEdit, setTripEdit] = useState({
     id: 0,
@@ -212,41 +217,36 @@ const App: () => Node = () => {
     if (!onApprove) {
       const cardDeletePic = Trips.filter(trip => trip.id === tripId)[0];
       cardDeletePic.pictures.splice(pic, 1);
-    }
-    else {
+    } else {
       const cardDeletePic = WaitingTrips.filter(trip => trip.id === tripId)[0];
       cardDeletePic.pictures.splice(pic, 1);
     }
-
   };
   const deleteFeedback = (tripId, feedback, onApprove) => {
     if (!onApprove) {
       const cardDeleteFeed = Trips.filter(trip => trip.id === tripId)[0];
       cardDeleteFeed.feedbacks.splice(feedback, 1);
-    }
-    else {
+    } else {
       const cardDeleteFeed = WaitingTrips.filter(trip => trip.id === tripId)[0];
       cardDeleteFeed.feedbacks.splice(feedback, 1);
     }
-    Alert.alert("Feedback deleted!");
+    Alert.alert('Feedback deleted!');
   };
   const deleteFeedbackLive = (tripId, feedbackLive, onApprove) => {
     if (!onApprove) {
       const cardDeleteFeedLive = Trips.filter(trip => trip.id === tripId)[0];
       cardDeleteFeedLive.feedbacksLive.splice(feedbackLive, 1);
-    }
-    else {
+    } else {
       const cardDeleteFeed = WaitingTrips.filter(trip => trip.id === tripId)[0];
       cardDeleteFeedLive.feedbacksLive.splice(feedbackLive, 1);
     }
-    Alert.alert("Feedback deleted!");
+    Alert.alert('Feedback deleted!');
   };
   const deleteWaitingCard = id => {
     setWaitingTrips(prevCards => {
       return prevCards.filter(card => card.id != id);
     });
   };
-
 
   const editCard = (updatedTrip, onApprove) => {
     if (!onApprove) {
@@ -262,8 +262,7 @@ const App: () => Node = () => {
       trip.location = updatedTrip.location;
       trip.description = updatedTrip.description;
       trip.priceInNis = updatedTrip.priceInNis;
-    }
-    else {
+    } else {
       const waitingTrip = WaitingTrips.filter(t => t.id === updatedTrip.id)[0];
       waitingTrip.tripName = updatedTrip.tripName;
       waitingTrip.category.isRelax = updatedTrip.category.isRelax;
@@ -278,25 +277,138 @@ const App: () => Node = () => {
       waitingTrip.priceInNis = updatedTrip.priceInNis;
     }
   };
-  const onSendMessage = (trip, message, onApprove) => {
+  const onSendMessage = (trip, message) => {
     if (!onApprove) {
       const cardMessage = Trips.filter(t => t.id === trip.id)[0];
       cardMessage.adminMessage = message;
-    }
-    else {
+    } else {
       const cardMessage = WaitingTrips.filter(t => t.id === trip.id)[0];
       cardMessage.adminMessage = message;
     }
   };
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="TripsPage">
+
+  const NavDrawer = () => {
+    const Drawer = createDrawerNavigator();
+
+    return (
+      <Drawer.Navigator initialRouteName="LoginStack">
+        <Drawer.Screen name="LoginStack" component={LoginStack} />
+        {/* <Drawer.Screen name="LoginStack" component={LoginStack} /> */}
+        {isUserConnected && (
+          <Drawer.Screen name="TripsPage">
+            {props => (
+              <TripsPage
+                {...props}
+                Trips={Trips}
+                user={Users[Index]}
+                tripInfo={TripInfo}
+                deleteCard={deleteCard}
+                // editCard={editCard}
+                onSendMessage={onSendMessage}
+                deletePicture={deletePicture}
+                deleteFeedback={deleteFeedback}
+                deleteFeedbackLive={deleteFeedbackLive}
+                setTripEdit={setTripEdit}
+                // setOnEdit={setOnEdit}
+                // setOnApprove={setOnApprove}
+              />
+            )}
+          </Drawer.Screen>
+        )}
+        {Users[Index].admin && isUserConnected && (
+          <Drawer.Screen name="TripsApprove">
+            {props => (
+              <TripsApprove
+                {...props}
+                WaitingTrips={WaitingTrips}
+                user={Users[Index]}
+                deleteWaitingCard={deleteWaitingCard}
+                onSendMessage={onSendMessage}
+                addTrip={addTrip}
+                deletePicture={deletePicture}
+                deleteFeedback={deleteFeedback}
+                deleteFeedbackLive={deleteFeedbackLive}
+                setTripEdit={setTripEdit}
+                // setOnEdit={setOnEdit}
+                // setOnApprove={setOnApprove}
+              />
+            )}
+          </Drawer.Screen>
+        )}
+        {isUserConnected && (
+          <Drawer.Screen name="MyTrips">
+            {props => (
+              <MyTrips
+                {...props}
+                Trips={Trips}
+                WaitingTrips={WaitingTrips}
+                user={Users[Index]}
+                deleteCard={deleteCard}
+                addTrip={addTrip}
+                // editCard={editCard}
+                onSendMessage={onSendMessage}
+                deletePicture={deletePicture}
+                deleteFeedback={deleteFeedback}
+                deleteFeedbackLive={deleteFeedbackLive}
+                setTripEdit={setTripEdit}
+                // setOnEdit={setOnEdit}
+                // setOnApprove={setOnApprove}
+              />
+            )}
+          </Drawer.Screen>
+        )}
+        {isUserConnected && (
+          <Drawer.Screen name="AddTrip">
+            {props => (
+              <AddTrip
+                {...props}
+                addWaitingTrip={addWaitingTrip}
+                user={Users[Index]}
+                getWaitingId={Trips.length + WaitingTrips.length + 1}
+              />
+            )}
+          </Drawer.Screen>
+        )}
+        {isUserConnected && (
+          <Drawer.Screen name="EditTrip">
+            {props => (
+              <EditTrip
+                {...props}
+                user={Users[Index]}
+                trip={TripEdit}
+                setTripEdit={setTripEdit}
+                editCard={editCard}
+              />
+            )}
+          </Drawer.Screen>
+        )}
+        <Drawer.Screen name="Home">
+          {props => (
+            <HomePage
+              {...props}
+              name={Users[Index]}
+              tripSearch={addTripInfo}
+              // setOnEdit={setOnEdit}
+              // getWaitingId={Trips.length + WaitingTrips.length + 1}
+            />
+          )}
+        </Drawer.Screen>
+      </Drawer.Navigator>
+    );
+  };
+
+  const LoginStack = () => {
+    const Stack = createNativeStackNavigator();
+
+    return (
+      <Stack.Navigator>
         <Stack.Screen name="Login">
           {props => (
             <LoginPage
               {...props}
               Users={Users}
               ind={setIndex}
+              setIsUserConnected={setIsUserConnected}
             />
           )}
         </Stack.Screen>
@@ -310,84 +422,52 @@ const App: () => Node = () => {
         </Stack.Screen>
         <Stack.Screen name="Home">
           {props => (
-            <HomePage {...props} name={Users[Index]} tripSearch={addTripInfo}
-              setOnEdit={setOnEdit} />
+            <HomePage
+              {...props}
+              name={Users[Index]}
+              tripSearch={addTripInfo}
+              // setOnEdit={setOnEdit}
+              // getWaitingId={Trips.length + WaitingTrips.length + 1}
+            />
           )}
         </Stack.Screen>
-        <Stack.Screen name="AddTrip">
+        {/* <Stack.Screen name="EditTrip">
           {props => (
-            <AddTrip
+            <EditTrip
               {...props}
-              addWaitingTrip={addWaitingTrip}
               user={Users[Index]}
-              getWaitingId={Trips.length + WaitingTrips.length + 1}
               trip={TripEdit}
               setTripEdit={setTripEdit}
-              onEdit={onEdit}
               editCard={editCard}
-              onApprove={onApprove}
             />
           )}
-        </Stack.Screen>
-        <Stack.Screen name="TripsPage">
-          {props => (
-            <TripsPage
-              {...props}
-              Trips={Trips}
-              user={Users[Index]}
-              tripInfo={TripInfo}
-              deleteCard={deleteCard}
-              editCard={editCard}
-              onSendMessage={onSendMessage}
-              deletePicture={deletePicture}
-              deleteFeedback={deleteFeedback}
-              deleteFeedbackLive={deleteFeedbackLive}
-              setTripEdit={setTripEdit}
-              setOnEdit={setOnEdit}
-              setOnApprove={setOnApprove}
-            />
-          )}
-        </Stack.Screen>
-        {Users[Index].admin && (
-          <Stack.Screen name="TripsApprove">
+        </Stack.Screen> */}
+        {/* <Stack.Screen name="TripsPage">
             {props => (
-              <TripsApprove
+              <TripsPage
                 {...props}
-                WaitingTrips={WaitingTrips}
+                Trips={Trips}
                 user={Users[Index]}
-                deleteWaitingCard={deleteWaitingCard}
+                tripInfo={TripInfo}
+                deleteCard={deleteCard}
+                // editCard={editCard}
                 onSendMessage={onSendMessage}
-                addTrip={addTrip}
                 deletePicture={deletePicture}
                 deleteFeedback={deleteFeedback}
                 deleteFeedbackLive={deleteFeedbackLive}
                 setTripEdit={setTripEdit}
-                setOnEdit={setOnEdit}
-                setOnApprove={setOnApprove}
+                // setOnEdit={setOnEdit}
+                // setOnApprove={setOnApprove}
               />
             )}
-          </Stack.Screen>
-        )}
-        <Stack.Screen name="MyTrips">
-          {props => (
-            <MyTrips
-              {...props}
-              Trips={Trips}
-              WaitingTrips={WaitingTrips}
-              user={Users[Index]}
-              deleteCard={deleteCard}
-              editCard={editCard}
-              onSendMessage={onSendMessage}
-              deletePicture={deletePicture}
-              deleteFeedback={deleteFeedback}
-              deleteFeedbackLive={deleteFeedbackLive}
-              setTripEdit={setTripEdit}
-              setOnEdit={setOnEdit}
-              setOnApprove={setOnApprove}
-            />
-          )}
-        </Stack.Screen>
+          </Stack.Screen> */}
       </Stack.Navigator>
+    );
+  };
+
+  return (
+    <NavigationContainer>
+      <NavDrawer />
     </NavigationContainer>
   );
 };

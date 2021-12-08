@@ -19,15 +19,15 @@ const TripsApprove = ({
   WaitingTrips,
   user,
   deleteWaitingCard,
-  editCard,
+  // editCard,
   onSendMessage,
   addTrip,
   deletePicture,
   deleteFeedback,
   deleteFeedbackLive,
   setTripEdit,
-  setOnEdit,
-  setOnApprove,
+  // setOnEdit,
+  // setOnApprove,
   navigation
 }) => {
   return (
@@ -40,16 +40,16 @@ const TripsApprove = ({
           trip={trip}
           user={user}
           deleteCard={deleteWaitingCard}
+          addTrip={addTrip}
+          // editCard={editCard}
           onSendMessage={onSendMessage}
           deletePicture={deletePicture}
           deleteFeedback={deleteFeedback}
           deleteFeedbackLive={deleteFeedbackLive}
-          addTrip={addTrip}
-          editCard={editCard}
-          toggleApproveCard={true}
+          // toggleApproveCard={true}
           setTripEdit={setTripEdit}
-          setOnEdit={setOnEdit}
-          setOnApprove={setOnApprove}
+          // setOnEdit={setOnEdit}
+          // setOnApprove={setOnApprove}
           onApprove={true}
           navigation={navigation}
         />

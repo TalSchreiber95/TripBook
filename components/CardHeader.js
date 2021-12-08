@@ -2,13 +2,13 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/AntDesign';
 
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import {View, Text, StyleSheet, Alert} from 'react-native';
 import LeftCardHeader from './LeftCardHeader';
 import RightCardHeader from './RightCardHeader';
-import { Header } from 'react-native-elements';
+import {Header} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
-import { Button, Snackbar } from 'react-native-paper';
-import { useState } from 'react';
+import {Button, Snackbar} from 'react-native-paper';
+import {useState} from 'react';
 import {Form, FormItem} from 'react-native-form-component';
 
 const CardHeader = ({
@@ -20,31 +20,29 @@ const CardHeader = ({
   onDelete,
   onEdit,
   onSendMessage,
-  onApprove
+  onApprove,
 }) => {
   const [toggleDescription, setToggleDescription] = useState(false);
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
   const [toggleAddMessage, setToggleAddMessage] = useState(false);
 
-
-
   const toggleInfo = iconPressed => {
     setToggleDescription(true);
     setDescription(iconPressed);
   };
-  const sendMessage=()=>{
-    onSendMessage(trip,message,onApprove)
-    Alert.alert("Message sent successfully!")
-    setMessage("");
+  const sendMessage = () => {
+    onSendMessage(trip, message);
+    Alert.alert('Message sent successfully!');
+    setMessage('');
     setToggleAddMessage(!toggleAddMessage);
-  }
+  };
 
   return (
     <LinearGradient
       colors={['white', 'steelblue']}
-      start={{ x: 1, y: 4 }}
-      end={{ x: 0, y: 2 }}>
+      start={{x: 1, y: 4}}
+      end={{x: 0, y: 2}}>
       <View style={styles.iconHeader}>
         <Snackbar
           style={styles.snackbar}
@@ -58,7 +56,7 @@ const CardHeader = ({
           size={20}
           color="white"
           onPress={() => Alert.alert("Trip's Owner: " + trip.owner)}
-          onLongPress={() => toggleInfo('info')}
+          onLongPress={() => toggleInfo('Trip Owner')}
           style={styles.icon}
         />
         {(user.admin || user.email == trip.owner) && (
@@ -111,24 +109,24 @@ const CardHeader = ({
           />
         )}
       </View>
-      {toggleAddMessage &&
-          <Form
-            onButtonPress={()=>sendMessage()}
-            buttonStyle={styles.formButton}
-            buttonText="Add">
-            <FormItem
-              placeholder="Add message here"
-              style={styles.inputView}
-              // label="Message"
-              labelStyle={styles.label}
-              value={message}
-              onChangeText={msg => {
-                setMessage(msg);
-              }}
-              multiline={true}
-            />
-          </Form>
-        }
+      {toggleAddMessage && (
+        <Form
+          onButtonPress={() => sendMessage()}
+          buttonStyle={styles.formButton}
+          buttonText="Add">
+          <FormItem
+            placeholder="Add message here"
+            style={styles.inputView}
+            // label="Message"
+            labelStyle={styles.label}
+            value={message}
+            onChangeText={msg => {
+              setMessage(msg);
+            }}
+            multiline={true}
+          />
+        </Form>
+      )}
       <View style={styles.textView}>
         <Text style={styles.text}>{trip.tripName}</Text>
       </View>
@@ -150,8 +148,8 @@ const CardHeader = ({
   );
 };
 CardHeader.defaultProps = {
-  toggleApproveCard: false,
-  onApprove:false
+  // toggleApproveCard: false,
+  onApprove: false,
 };
 const styles = StyleSheet.create({
   cardHeader: {
@@ -165,10 +163,10 @@ const styles = StyleSheet.create({
     margin: 10,
     marginTop: 0,
   },
-  showMoney:{
+  showMoney: {
     // borderLeftWidth:1,
     // borderColor:"green"
-    fontSize:30
+    fontSize: 30,
   },
   iconHeader: {
     // flex: 2,
@@ -189,11 +187,11 @@ const styles = StyleSheet.create({
   },
   inputView: {
     flex: 0.3,
-    backgroundColor:'steelblue',
+    backgroundColor: 'steelblue',
     //  '#F5F5F5',a
-    borderRightWidth:1,
-    borderLeftWidth:1,
-    borderTopWidth:0.7,
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    borderTopWidth: 0.7,
     borderBottomWidth: 0.5,
     marginBottom: 15,
     marginTop: 40,

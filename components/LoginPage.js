@@ -15,7 +15,7 @@ import {
 import {Form, FormItem} from 'react-native-form-component';
 import Header from './Header';
 
-const LoginPage = ({Users, ind, navigation}) => {
+const LoginPage = ({Users, ind, setIsUserConnected, navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -24,8 +24,10 @@ const LoginPage = ({Users, ind, navigation}) => {
       if (Users[index].email === email) {
         if (Users[index].pass === password) {
           ind(index);
+          setIsUserConnected(true);
           navigation.navigate('Home');
-          console.log(Users);
+          // console.log(Users);
+
           return;
         } else {
           Alert.alert('wrong password');

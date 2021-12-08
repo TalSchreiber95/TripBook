@@ -13,57 +13,62 @@ import {
 import Header from './Header';
 import TripCard from './TripCard';
 
-import { useState } from 'react';
+import {useState} from 'react';
 
 const MyTrips = ({
   Trips,
   WaitingTrips,
   user,
   deleteCard,
-  editCard,
+  addTrip,
+  // editCard,
   onSendMessage,
   deletePicture,
   deleteFeedback,
   deleteFeedbackLive,
   setTripEdit,
-  setOnEdit,
-  setOnApprove,
-  navigation
+  // setOnEdit,
+  // setOnApprove,
+  navigation,
 }) => {
   return (
     <ScrollView>
       <Header name={user} navigation={navigation} />
-      <Text style={styles.text}>My approve trip list:</Text>
+      <Text style={styles.text}>My posted trips:</Text>
       {Trips.filter(trip => trip.owner === user.email).map(trip => (
         <TripCard
           key={trip.id}
           trip={trip}
           user={user}
           deleteCard={deleteCard}
-          editCard={editCard}
+          // editCard={editCard}
           onSendMessage={onSendMessage}
           deletePicture={deletePicture}
           deleteFeedback={deleteFeedback}
           deleteFeedbackLive={deleteFeedbackLive}
           setTripEdit={setTripEdit}
-          setOnEdit={setOnEdit}
-          setOnApprove={setOnApprove}
+          // setOnEdit={setOnEdit}
+          // setOnApprove={setOnApprove}
+          onApprove={false}
           navigation={navigation}
         />
       ))}
-      <Text style={styles.text}>My unapprove trip list:</Text>
+      <Text style={styles.text}>My waiting trips:</Text>
       {WaitingTrips.filter(trip => trip.owner === user.email).map(trip => (
         <TripCard
           key={trip.id}
           trip={trip}
           user={user}
           deleteCard={deleteCard}
-          editCard={editCard}
+          addTrip={addTrip}
+          // editCard={editCard}
           onSendMessage={onSendMessage}
           deletePicture={deletePicture}
+          deleteFeedback={deleteFeedback}
+          deleteFeedbackLive={deleteFeedbackLive}
           setTripEdit={setTripEdit}
-          setOnEdit={setOnEdit}
-          setOnApprove={setOnApprove}
+          // setOnEdit={setOnEdit}
+          // setOnApprove={setOnApprove}
           onApprove={true}
           navigation={navigation}
         />

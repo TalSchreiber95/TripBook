@@ -10,22 +10,27 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import Slider from '@react-native-community/slider';
 import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Header from './Header';
+import Slider from '@react-native-community/slider';
 
-const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
-  const [tripName, setTripName] = useState('');
-  const [location, setLocation] = useState('');
-  const [feedback, setFeedback] = useState(['']);
-  const [feedbackLive, setFeedbackLive] = useState(['']);
-  const [priceInNis, setPriceInNis] = useState(0);
-
-  const [description, setDescription] = useState('');
-  const [picture, setPicture] = useState(['']);
+const EditTrip = ({trip, user, editCard, setTripEdit, navigation}) => {
+  const [tripName, setTripName] = useState(trip.tripName);
+  const [location, setLocation] = useState(trip.location);
+  const [priceInNis, setPriceInNis] = useState(trip.priceInNis);
+  const [description, setDescription] = useState(trip.description);
 
   //categories
+  const [categories, setCategories] = useState({
+    setIsRelax: false,
+    isDynamic: false,
+    isParty: false,
+    isPetAllowed: false,
+    isCarTravel: false,
+    isPlaneTravel: false,
+    isTrainTravel,
+  });
   const [isRelax, setIsRelax] = useState(false);
   const [isDynamic, setIsDynamic] = useState(false);
   const [isParty, setIsParty] = useState(false);
@@ -41,12 +46,8 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
       description != '' &&
       priceInNis != null
     ) {
-      setPicture([picture]);
-      setFeedback([feedback]);
-      setFeedbackLive([feedbackLive]);
-
       const newTrip = {
-        id: getWaitingId,
+        id: trip.id,
         owner: user.email,
         adminMessage: 'No new admin messages',
         tripName: tripName,
@@ -59,20 +60,37 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
           isPlaneTravel: isPlaneTravel,
           isTrainTravel: isTrainTravel,
         },
-        pictures: picture,
+        // pictures: picture,
         location: location,
         description: description,
-        feedbacks: feedback,
-        feedbacksLive: feedbackLive,
+        // feedbacks: feedback,
+        // feedbacksLive: feedbackLive,
         priceInNis: priceInNis,
       };
-
-      addWaitingTrip(newTrip);
-      Alert.alert('trip posted succesfully');
-
+      editCard(newTrip);
+      Alert.alert('trip updated succesfully');
       navigation.navigate('Home');
-    } else {
-      Alert.alert('Fill all the required fields !');
+      setTripEdit({
+        id: 0,
+        owner: '',
+        adminMessage: 'No new admin messages',
+        tripName: '',
+        category: {
+          isRelax: false,
+          isDynamic: false,
+          isParty: false,
+          isPetAllowed: false,
+          isCarTravel: false,
+          isPlaneTravel: false,
+          isTrainTravel: false,
+        },
+        pictures: [''],
+        location: '',
+        description: '',
+        feedbacks: [''],
+        feedbacksLive: [''],
+        priceInNis: '',
+      });
     }
   };
 
@@ -81,8 +99,9 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
-          <Header title="Add Trip" name={user} navigation={navigation} />
-          <Text style={styles.text}>Fill the details below:</Text>
+          {/* <Text style={styles.title}>Add a Trip</Text> */}
+          <Header title="Edit Trip" name={user} navigation={navigation} />
+          <Text style={styles.text}>Edit the details below:</Text>
           <Form
             onButtonPress={onAddTrip}
             buttonStyle={styles.formButton}
@@ -111,19 +130,6 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               isRequired
               asterik
             />
-            {/* <FormItem
-              placeholder="Add price here"
-              style={styles.inputView}
-              label="Price(NIS)"
-              labelStyle={styles.label}
-              value={priceInNis}
-              onChangeText={price => {
-                setPriceInNis(price);
-              }}
-              // demand int instead of string
-              isRequired
-              asterik
-            /> */}
             <Text style={styles.showTextMoney}>
               What is the minimum price that this trip cost?
             </Text>
@@ -138,7 +144,6 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               thumbTintColor="#b9e4c9"
             />
             <Text style={styles.showMoney}>{priceInNis} ILS</Text>
-
             <FormItem
               placeholder="Add description here"
               style={styles.inputView}
@@ -152,7 +157,7 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               isRequired
               asterik
             />
-            <FormItem
+            {/* <FormItem
               placeholder="Add url pic here"
               style={styles.inputView}
               label="url pic:"
@@ -162,12 +167,12 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               onChangeText={pic => {
                 setPicture(pic);
               }}
-            />
+
+            /> */}
             <View style={styles.checkboxesView}>
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
-                isChecked={isRelax}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
@@ -178,7 +183,6 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
-                isChecked={isDynamic}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
@@ -189,7 +193,6 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
-                isChecked={isParty}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
@@ -200,7 +203,6 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
-                isChecked={isPetAllowed}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
@@ -211,7 +213,6 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
-                isChecked={isCarTravel}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
@@ -223,7 +224,6 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
-                isChecked={isPlaneTravel}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
@@ -234,7 +234,6 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
-                isChecked={isTrainTravel}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
@@ -243,7 +242,7 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
                 onPress={setIsTrainTravel}
               />
             </View>
-            <FormItem
+            {/* <FormItem
               placeholder="Add feedback here"
               style={styles.inputView}
               label="Feedback:"
@@ -264,7 +263,7 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               onChangeText={feedbackLive => {
                 setFeedbackLive(feedbackLive);
               }}
-            />
+            /> */}
           </Form>
         </View>
       </ScrollView>
@@ -297,12 +296,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderRadius: 5,
   },
-  showTextMoney: {
-    textAlign: 'center',
-  },
-  showMoney: {
-    textAlign: 'center',
-  },
+
   formButton: {
     backgroundColor: 'firebrick',
     marginLeft: 100,
@@ -321,6 +315,12 @@ const styles = StyleSheet.create({
     fontFamily: 'JosefinSans-Regular',
     textDecorationLine: 'none',
     fontSize: 20,
+  },
+  showTextMoney: {
+    textAlign: 'center',
+  },
+  showMoney: {
+    textAlign: 'center',
   },
   icon: {
     borderColor: 'black',
@@ -350,4 +350,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddTrip;
+export default EditTrip;
