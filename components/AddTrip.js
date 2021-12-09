@@ -26,13 +26,15 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
   const [picture, setPicture] = useState(['']);
 
   //categories
-  const [isRelax, setIsRelax] = useState(false);
-  const [isDynamic, setIsDynamic] = useState(false);
-  const [isParty, setIsParty] = useState(false);
-  const [isPetAllowed, setIsPetAllowed] = useState(false);
-  const [isCarTravel, setIsCarTravel] = useState(false);
-  const [isPlaneTravel, setIsPlaneTravel] = useState(false);
-  const [isTrainTravel, setIsTrainTravel] = useState(false);
+  const [categories, setCategories] = useState({
+    isRelax: false,
+    isDynamic: false,
+    isParty: false,
+    isPetAllowed: false,
+    isCarTravel: false,
+    isPlaneTravel: false,
+    isTrainTravel: false,
+  });
 
   const onAddTrip = () => {
     if (
@@ -51,13 +53,13 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
         adminMessage: 'No new admin messages',
         tripName: tripName,
         category: {
-          isRelax: isRelax,
-          isDynamic: isDynamic,
-          isParty: isParty,
-          isPetAllowed: isPetAllowed,
-          isCarTravel: isCarTravel,
-          isPlaneTravel: isPlaneTravel,
-          isTrainTravel: isTrainTravel,
+          isRelax: categories.isRelax,
+          isDynamic: categories.isDynamic,
+          isParty: categories.isParty,
+          isPetAllowed: categories.isPetAllowed,
+          isCarTravel: categories.isCarTravel,
+          isPlaneTravel: categories.isPlaneTravel,
+          isTrainTravel: categories.isTrainTravel,
         },
         pictures: picture,
         location: location,
@@ -124,20 +126,6 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               isRequired
               asterik
             /> */}
-            <Text style={styles.showTextMoney}>
-              What is the minimum price that this trip cost?
-            </Text>
-            <Slider
-              step={1}
-              minimumValue={0}
-              maximumValue={10000}
-              value={priceInNis}
-              onValueChange={slideValue => setPriceInNis(slideValue)}
-              minimumTrackTintColor="#1fb28a"
-              maximumTrackTintColor="#d3d3d3"
-              thumbTintColor="#b9e4c9"
-            />
-            <Text style={styles.showMoney}>{priceInNis} ILS</Text>
 
             <FormItem
               placeholder="Add description here"
@@ -163,84 +151,162 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
                 setPicture(pic);
               }}
             />
+            <Text style={styles.showTextMoney}>
+              Minimum price the trip cost:
+            </Text>
+            <Slider
+              style={styles.slider}
+              step={1}
+              minimumValue={0}
+              maximumValue={10000}
+              value={priceInNis}
+              onValueChange={slideValue => setPriceInNis(slideValue)}
+              minimumTrackTintColor="#0074D9"
+              maximumTrackTintColor="grey"
+              thumbTintColor="#0074D9"
+            />
+            <Text style={styles.showMoney}>{priceInNis} ILS</Text>
             <View style={styles.checkboxesView}>
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
-                isChecked={isRelax}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
                 textStyle={styles.checkboxText}
                 text="Relax"
-                onPress={setIsRelax}
+                onPress={() =>
+                  setCategories({
+                    isRelax: !categories.isRelax,
+                    isDynamic: categories.isDynamic,
+                    isParty: categories.isParty,
+                    isPetAllowed: categories.isPetAllowed,
+                    isCarTravel: categories.isCarTravel,
+                    isPlaneTravel: categories.isPlaneTravel,
+                    isTrainTravel: categories.isTrainTravel,
+                  })
+                }
               />
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
-                isChecked={isDynamic}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
                 textStyle={styles.checkboxText}
                 text="Dynamic"
-                onPress={setIsDynamic}
+                onPress={() =>
+                  setCategories({
+                    isRelax: categories.isRelax,
+                    isDynamic: !categories.isDynamic,
+                    isParty: categories.isParty,
+                    isPetAllowed: categories.isPetAllowed,
+                    isCarTravel: categories.isCarTravel,
+                    isPlaneTravel: categories.isPlaneTravel,
+                    isTrainTravel: categories.isTrainTravel,
+                  })
+                }
               />
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
-                isChecked={isParty}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
                 textStyle={styles.checkboxText}
                 text="Party"
-                onPress={setIsParty}
+                onPress={() =>
+                  setCategories({
+                    isRelax: categories.isRelax,
+                    isDynamic: categories.isDynamic,
+                    isParty: !categories.isParty,
+                    isPetAllowed: categories.isPetAllowed,
+                    isCarTravel: categories.isCarTravel,
+                    isPlaneTravel: categories.isPlaneTravel,
+                    isTrainTravel: categories.isTrainTravel,
+                  })
+                }
               />
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
-                isChecked={isPetAllowed}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
                 textStyle={styles.checkboxText}
                 text="Pet"
-                onPress={setIsPetAllowed}
+                onPress={() =>
+                  setCategories({
+                    isRelax: categories.isRelax,
+                    isDynamic: categories.isDynamic,
+                    isParty: categories.isParty,
+                    isPetAllowed: !categories.isPetAllowed,
+                    isCarTravel: categories.isCarTravel,
+                    isPlaneTravel: categories.isPlaneTravel,
+                    isTrainTravel: categories.isTrainTravel,
+                  })
+                }
               />
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
-                isChecked={isCarTravel}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
                 textStyle={styles.checkboxText}
                 text="Car travel"
-                onPress={setIsCarTravel}
+                onPress={() =>
+                  setCategories({
+                    isRelax: categories.isRelax,
+                    isDynamic: categories.isDynamic,
+                    isParty: categories.isParty,
+                    isPetAllowed: categories.isPetAllowed,
+                    isCarTravel: !categories.isCarTravel,
+                    isPlaneTravel: categories.isPlaneTravel,
+                    isTrainTravel: categories.isTrainTravel,
+                  })
+                }
                 setIsPlaneTravel
               />
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
-                isChecked={isPlaneTravel}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
                 textStyle={styles.checkboxText}
                 text="Plane travel"
-                onPress={setIsPlaneTravel}
+                onPress={() =>
+                  setCategories({
+                    isRelax: categories.isRelax,
+                    isDynamic: categories.isDynamic,
+                    isParty: categories.isParty,
+                    isPetAllowed: categories.isPetAllowed,
+                    isCarTravel: categories.isCarTravel,
+                    isPlaneTravel: !categories.isPlaneTravel,
+                    isTrainTravel: categories.isTrainTravel,
+                  })
+                }
               />
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
-                isChecked={isTrainTravel}
                 fillColor="black"
                 unfillColor="silver"
                 iconStyle={styles.icon}
                 textStyle={styles.checkboxText}
                 text="Train travel"
-                onPress={setIsTrainTravel}
+                onPress={() =>
+                  setCategories({
+                    isRelax: categories.isRelax,
+                    isDynamic: categories.isDynamic,
+                    isParty: categories.isParty,
+                    isPetAllowed: categories.isPetAllowed,
+                    isCarTravel: categories.isCarTravel,
+                    isPlaneTravel: categories.isPlaneTravel,
+                    isTrainTravel: !categories.isTrainTravel,
+                  })
+                }
               />
             </View>
             <FormItem
@@ -298,10 +364,21 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   showTextMoney: {
-    textAlign: 'center',
+    // textAlign: 'center',
+    color: 'black',
+    margin: 10,
+    marginLeft: 30,
+    fontWeight: 'bold',
+    fontSize: 17,
   },
   showMoney: {
     textAlign: 'center',
+    marginBottom: 20,
+  },
+  slider: {
+    margin: 10,
+    marginLeft: 25,
+    marginRight: 25,
   },
   formButton: {
     backgroundColor: 'firebrick',

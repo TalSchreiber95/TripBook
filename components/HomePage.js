@@ -12,28 +12,17 @@ import Header from './Header';
 import TripFilter from './TripFilter';
 
 const HomePage = ({name, tripSearch, navigation}) => {
-  const updateFilter = (
-    isRelax,
-    isDynamic,
-    isParty,
-    isPetAllowed,
-    isCarTravel,
-    isPlaneTravel,
-    isTrainTravel,
-    priceInNis,
-    location,
-    tripName,
-  ) => {
+  const updateFilter = categories => {
     const tripInfo = {
       tripName: tripName,
       category: {
-        isRelax: isRelax,
-        isDynamic: isDynamic,
-        isParty: isParty,
-        isPetAllowed: isPetAllowed,
-        isCarTravel: isCarTravel,
-        isPlaneTravel: isPlaneTravel,
-        isTrainTravel: isTrainTravel,
+        isRelax: categories.isRelax,
+        isDynamic: categories.isDynamic,
+        isParty: categories.isParty,
+        isPetAllowed: categories.isPetAllowed,
+        isCarTravel: categories.isCarTravel,
+        isPlaneTravel: categories.isPlaneTravel,
+        isTrainTravel: categories.isTrainTravel,
       },
       location: location,
       priceInNis: priceInNis,

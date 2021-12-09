@@ -7,6 +7,7 @@ import {
   ScrollView,
   SafeAreaView,
   StatusBar,
+  TextInput,
 } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import {Button} from 'react-native-elements';
@@ -14,41 +15,32 @@ import {Form, FormItem} from 'react-native-form-component';
 import Slider from '@react-native-community/slider';
 
 const TripFilter = ({updateFilter, tripSearch, navigation}) => {
-  const [isRelax, setIsRelax] = useState(false);
-  const [isDynamic, setIsDynamic] = useState(false);
-  const [isParty, setIsParty] = useState(false);
-  const [isPetAllowed, setIsPetAllowed] = useState(false);
-  const [isCarTravel, setIsCarTravel] = useState(false);
-  const [isPlaneTravel, setIsPlaneTravel] = useState(false);
-  const [isTrainTravel, setIsTrainTravel] = useState(false);
   const [priceInNis, setPriceInNis] = useState();
   const [location, setLocation] = useState('');
   const [tripName, setTripName] = useState('');
 
-  // const onAddTrip = () => {
-  //   // setOnEdit(false);
-  //   navigation.navigate('AddTrip');
-  // };
+  //categories
+  const [categories, setCategories] = useState({
+    isRelax: false,
+    isDynamic: false,
+    isParty: false,
+    isPetAllowed: false,
+    isCarTravel: false,
+    isPlaneTravel: false,
+    isTrainTravel: false,
+  });
+
   const onSearch = () => {
-    updateFilter(
-      isRelax,
-      isDynamic,
-      isParty,
-      isPetAllowed,
-      isCarTravel,
-      isPlaneTravel,
-      isTrainTravel,
-      priceInNis,
-      location,
-      tripName,
-    );
-    setIsRelax(false);
-    setIsDynamic(false);
-    setIsParty(false);
-    setIsPetAllowed(false);
-    setIsCarTravel(false);
-    setIsPlaneTravel(false);
-    setIsTrainTravel(false);
+    updateFilter(categories);
+    setCategories({
+      isRelax: false,
+      isDynamic: false,
+      isParty: false,
+      isPetAllowed: false,
+      isCarTravel: false,
+      isPlaneTravel: false,
+      isTrainTravel: false,
+    });
     setPriceInNis();
     setLocation('');
     setTripName('');
@@ -82,24 +74,9 @@ const TripFilter = ({updateFilter, tripSearch, navigation}) => {
           }}
         /> */}
 
-        <Text style={styles.showTextMoney}>
-          What is the minimum price that this trip cost?
-        </Text>
-        <Slider
-        style={styles.slider}
-          step={1}
-          minimumValue={0}
-          maximumValue={10000}
-          value={priceInNis}
-          onValueChange={slideValue => setPriceInNis(slideValue)}
-          minimumTrackTintColor="#1fb28a"
-          maximumTrackTintColor="#d3d3d3"
-          thumbTintColor="#b9e4c9"
-        />
-        <Text style={styles.showMoney}>{priceInNis} ILS</Text>
         <FormItem
           style={styles.inputView}
-          label="location"
+          label="Location"
           labelStyle={styles.label}
           value={location}
           placeholder="Add location here"
@@ -107,6 +84,35 @@ const TripFilter = ({updateFilter, tripSearch, navigation}) => {
             setLocation(location);
           }}
         />
+
+        <Text style={styles.showTextMoney}>Maximum price the trip cost:</Text>
+        <Slider
+          style={styles.slider}
+          step={1}
+          minimumValue={0}
+          maximumValue={10000}
+          value={priceInNis}
+          onValueChange={slideValue => setPriceInNis(slideValue)}
+          minimumTrackTintColor="#0074D9"
+          maximumTrackTintColor="grey"
+          thumbTintColor="#0074D9"
+        />
+        <Text style={styles.showMoney}>{priceInNis} ILS</Text>
+        <View style={styles.label}>
+          <TextInput
+            style={styles.showMoney}
+            placeholder="Enter Price"
+            underlineColorAndroid="transparent"
+            onChangeText={newSliderValue => {
+              newSliderValue === null ? setPriceInNis(0) :
+                setPriceInNis(parseInt(newSliderValue));
+
+            }}
+            value={priceInNis}
+            autoCorrect={false}
+            autoCapitalize="characters"
+          />
+        </View>
         <Text style={styles.text}>Filter your trip category</Text>
         <BouncyCheckbox
           style={styles.checkbox}
@@ -116,7 +122,17 @@ const TripFilter = ({updateFilter, tripSearch, navigation}) => {
           iconStyle={styles.icon}
           textStyle={styles.checkboxText}
           text="Relax"
-          onPress={setIsRelax}
+          onPress={() =>
+            setCategories({
+              isRelax: !categories.isRelax,
+              isDynamic: categories.isDynamic,
+              isParty: categories.isParty,
+              isPetAllowed: categories.isPetAllowed,
+              isCarTravel: categories.isCarTravel,
+              isPlaneTravel: categories.isPlaneTravel,
+              isTrainTravel: categories.isTrainTravel,
+            })
+          }
         />
         <BouncyCheckbox
           style={styles.checkbox}
@@ -126,7 +142,17 @@ const TripFilter = ({updateFilter, tripSearch, navigation}) => {
           iconStyle={styles.icon}
           textStyle={styles.checkboxText}
           text="Dynamic"
-          onPress={setIsDynamic}
+          onPress={() =>
+            setCategories({
+              isRelax: categories.isRelax,
+              isDynamic: !categories.isDynamic,
+              isParty: categories.isParty,
+              isPetAllowed: categories.isPetAllowed,
+              isCarTravel: categories.isCarTravel,
+              isPlaneTravel: categories.isPlaneTravel,
+              isTrainTravel: categories.isTrainTravel,
+            })
+          }
         />
         <BouncyCheckbox
           style={styles.checkbox}
@@ -136,7 +162,17 @@ const TripFilter = ({updateFilter, tripSearch, navigation}) => {
           iconStyle={styles.icon}
           textStyle={styles.checkboxText}
           text="Party"
-          onPress={setIsParty}
+          onPress={() =>
+            setCategories({
+              isRelax: categories.isRelax,
+              isDynamic: categories.isDynamic,
+              isParty: !categories.isParty,
+              isPetAllowed: categories.isPetAllowed,
+              isCarTravel: categories.isCarTravel,
+              isPlaneTravel: categories.isPlaneTravel,
+              isTrainTravel: categories.isTrainTravel,
+            })
+          }
         />
         <BouncyCheckbox
           style={styles.checkbox}
@@ -146,7 +182,17 @@ const TripFilter = ({updateFilter, tripSearch, navigation}) => {
           iconStyle={styles.icon}
           textStyle={styles.checkboxText}
           text="Pet"
-          onPress={setIsPetAllowed}
+          onPress={() =>
+            setCategories({
+              isRelax: categories.isRelax,
+              isDynamic: categories.isDynamic,
+              isParty: categories.isParty,
+              isPetAllowed: !categories.isPetAllowed,
+              isCarTravel: categories.isCarTravel,
+              isPlaneTravel: categories.isPlaneTravel,
+              isTrainTravel: categories.isTrainTravel,
+            })
+          }
         />
         <BouncyCheckbox
           style={styles.checkbox}
@@ -156,8 +202,17 @@ const TripFilter = ({updateFilter, tripSearch, navigation}) => {
           iconStyle={styles.icon}
           textStyle={styles.checkboxText}
           text="Car travel"
-          onPress={setIsCarTravel}
-          setIsPlaneTravel
+          onPress={() =>
+            setCategories({
+              isRelax: categories.isRelax,
+              isDynamic: categories.isDynamic,
+              isParty: categories.isParty,
+              isPetAllowed: categories.isPetAllowed,
+              isCarTravel: !categories.isCarTravel,
+              isPlaneTravel: categories.isPlaneTravel,
+              isTrainTravel: categories.isTrainTravel,
+            })
+          }
         />
         <BouncyCheckbox
           style={styles.checkbox}
@@ -167,7 +222,17 @@ const TripFilter = ({updateFilter, tripSearch, navigation}) => {
           iconStyle={styles.icon}
           textStyle={styles.checkboxText}
           text="Plane travel"
-          onPress={setIsPlaneTravel}
+          onPress={() =>
+            setCategories({
+              isRelax: categories.isRelax,
+              isDynamic: categories.isDynamic,
+              isParty: categories.isParty,
+              isPetAllowed: categories.isPetAllowed,
+              isCarTravel: categories.isCarTravel,
+              isPlaneTravel: !categories.isPlaneTravel,
+              isTrainTravel: categories.isTrainTravel,
+            })
+          }
         />
         <BouncyCheckbox
           style={styles.checkbox}
@@ -177,7 +242,17 @@ const TripFilter = ({updateFilter, tripSearch, navigation}) => {
           iconStyle={styles.icon}
           textStyle={styles.checkboxText}
           text="Train travel"
-          onPress={setIsTrainTravel}
+          onPress={() =>
+            setCategories({
+              isRelax: categories.isRelax,
+              isDynamic: categories.isDynamic,
+              isParty: categories.isParty,
+              isPetAllowed: categories.isPetAllowed,
+              isCarTravel: categories.isCarTravel,
+              isPlaneTravel: categories.isPlaneTravel,
+              isTrainTravel: !categories.isTrainTravel,
+            })
+          }
         />
       </Form>
       {/* <Button title="Add new trip +" color="red" onPress={onAddTrip} /> */}
@@ -241,15 +316,21 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   showTextMoney: {
-    textAlign: 'center',
+    // textAlign: 'center',
+    color: 'black',
+    margin: 10,
+    marginLeft: 30,
+    fontWeight: 'bold',
+    fontSize: 17,
   },
   showMoney: {
     textAlign: 'center',
-
+    marginBottom: 20,
   },
   slider: {
-    marginLeft: 20,
-    marginRight: 20,
+    margin: 10,
+    marginLeft: 25,
+    marginRight: 25,
   },
 });
 export default TripFilter;

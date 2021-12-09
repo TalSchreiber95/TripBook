@@ -23,12 +23,17 @@ import 'react-native-gesture-handler';
 
 import type {Node} from 'react';
 import {StyleSheet, Alert, Text} from 'react-native';
+import {
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
 
 // import {appendToMemberExpression, staticBlock} from '@babel/types';
 
 // const Stack = createNativeStackNavigator();
 
-const App: () => Node = () => {
+const App: () => Node = ({navigation}) => {
   const users = [
     //email = Unique-Key
     {
@@ -165,8 +170,8 @@ const App: () => Node = () => {
   const [Users, setUsers] = useState(users);
   const [Trips, setTrips] = useState(trips);
   const [WaitingTrips, setWaitingTrips] = useState(waitingTrips);
-  const [Index, setIndex] = useState(0);
-  const [isUserConnected, setIsUserConnected] = useState(false);
+  const [Index, setIndex] = useState(1);
+  const [isUserConnected, setIsUserConnected] = useState(true);
   const [TripInfo, setTripInfo] = useState(tripInfo);
   // const [onEdit, setOnEdit] = useState(false);
   const [onApprove, setOnApprove] = useState(false);
@@ -291,7 +296,7 @@ const App: () => Node = () => {
     const Drawer = createDrawerNavigator();
 
     return (
-      <Drawer.Navigator initialRouteName="LoginStack">
+      <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="LoginStack" component={LoginStack} />
         {/* <Drawer.Screen name="LoginStack" component={LoginStack} /> */}
         {isUserConnected && (
@@ -393,7 +398,29 @@ const App: () => Node = () => {
             />
           )}
         </Drawer.Screen>
+        <Drawer.Screen name="Logout" component={LoginStack}/>
+          {/* {props => (
+            <LoginPage
+              {...props}
+              Users={Users}
+              ind={setIndex}
+              setIsUserConnected={setIsUserConnected}
+            />
+          )} */}
+        {/* </Drawer.Screen> */}
       </Drawer.Navigator>
+    );
+  };
+
+  const LogOutButton = (props) => {
+    return (
+      <DrawerContentScrollView >
+        <DrawerItemList  {...props}/>
+        <DrawerItem  {...props}
+          label="Logout"
+          onPress={() => navigation.navigate('Login')}
+        />
+      </DrawerContentScrollView>
     );
   };
 
