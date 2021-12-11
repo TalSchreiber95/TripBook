@@ -23,11 +23,12 @@ import 'react-native-gesture-handler';
 
 import type {Node} from 'react';
 import {StyleSheet, Alert, Text} from 'react-native';
-import {
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
+
+// import {
+//   DrawerContentScrollView,
+//   DrawerItemList,
+//   DrawerItem,
+// } from '@react-navigation/drawer';
 
 // import {appendToMemberExpression, staticBlock} from '@babel/types';
 
@@ -124,7 +125,7 @@ const App: () => Node = ({navigation}) => {
   const waitingTrips = [
     {
       id: 3,
-      owner: 'userEmail',
+      owner: 'a',
       adminMessage: 'No new admin messages',
       tripName: 'Eiffel tower',
       category: {
@@ -168,34 +169,12 @@ const App: () => Node = ({navigation}) => {
     priceInNis: 0,
   };
   const [Users, setUsers] = useState(users);
+  const [Index, setIndex] = useState(1);
   const [Trips, setTrips] = useState(trips);
   const [WaitingTrips, setWaitingTrips] = useState(waitingTrips);
-  const [Index, setIndex] = useState(1);
   const [isUserConnected, setIsUserConnected] = useState(true);
   const [TripInfo, setTripInfo] = useState(tripInfo);
-  // const [onEdit, setOnEdit] = useState(false);
-  const [onApprove, setOnApprove] = useState(false);
-  const [TripEdit, setTripEdit] = useState({
-    id: 0,
-    owner: '',
-    adminMessage: 'No new admin messages',
-    tripName: '',
-    category: {
-      isRelax: false,
-      isDynamic: false,
-      isParty: false,
-      isPetAllowed: false,
-      isCarTravel: false,
-      isPlaneTravel: false,
-      isTrainTravel: false,
-    },
-    pictures: [''],
-    location: '',
-    description: '',
-    feedbacks: [''],
-    feedbacksLive: [''],
-    priceInNis: 0,
-  });
+  
   const addNewUser = user => {
     setUsers([...Users, user]);
     setIndex(Users.length - 1);
@@ -242,7 +221,7 @@ const App: () => Node = ({navigation}) => {
       const cardDeleteFeedLive = Trips.filter(trip => trip.id === tripId)[0];
       cardDeleteFeedLive.feedbacksLive.splice(feedbackLive, 1);
     } else {
-      const cardDeleteFeed = WaitingTrips.filter(trip => trip.id === tripId)[0];
+      const cardDeleteFeedLive = WaitingTrips.filter(trip => trip.id === tripId)[0];
       cardDeleteFeedLive.feedbacksLive.splice(feedbackLive, 1);
     }
     Alert.alert('Feedback deleted!');
@@ -296,9 +275,19 @@ const App: () => Node = ({navigation}) => {
     const Drawer = createDrawerNavigator();
 
     return (
-      <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="LoginStack" component={LoginStack} />
-        {/* <Drawer.Screen name="LoginStack" component={LoginStack} /> */}
+      <Drawer.Navigator>
+        {!isUserConnected && (
+          <Drawer.Screen
+            options={{headerShown: false}}
+            name="Home"
+            component={LoginStack}
+          />
+        )}
+        <Drawer.Screen options={{headerShown: true}} name="Home">
+          {props => (
+            <HomePage {...props} user={Users[Index]} tripSearch={addTripInfo} />
+          )}
+        </Drawer.Screen>
         {isUserConnected && (
           <Drawer.Screen name="TripsPage">
             {props => (
@@ -308,14 +297,11 @@ const App: () => Node = ({navigation}) => {
                 user={Users[Index]}
                 tripInfo={TripInfo}
                 deleteCard={deleteCard}
-                // editCard={editCard}
                 onSendMessage={onSendMessage}
                 deletePicture={deletePicture}
                 deleteFeedback={deleteFeedback}
                 deleteFeedbackLive={deleteFeedbackLive}
-                setTripEdit={setTripEdit}
-                // setOnEdit={setOnEdit}
-                // setOnApprove={setOnApprove}
+                editCard={editCard}
               />
             )}
           </Drawer.Screen>
@@ -328,14 +314,12 @@ const App: () => Node = ({navigation}) => {
                 WaitingTrips={WaitingTrips}
                 user={Users[Index]}
                 deleteWaitingCard={deleteWaitingCard}
+                editCard={editCard}
                 onSendMessage={onSendMessage}
                 addTrip={addTrip}
                 deletePicture={deletePicture}
                 deleteFeedback={deleteFeedback}
                 deleteFeedbackLive={deleteFeedbackLive}
-                setTripEdit={setTripEdit}
-                // setOnEdit={setOnEdit}
-                // setOnApprove={setOnApprove}
               />
             )}
           </Drawer.Screen>
@@ -350,14 +334,11 @@ const App: () => Node = ({navigation}) => {
                 user={Users[Index]}
                 deleteCard={deleteCard}
                 addTrip={addTrip}
-                // editCard={editCard}
                 onSendMessage={onSendMessage}
                 deletePicture={deletePicture}
                 deleteFeedback={deleteFeedback}
                 deleteFeedbackLive={deleteFeedbackLive}
-                setTripEdit={setTripEdit}
-                // setOnEdit={setOnEdit}
-                // setOnApprove={setOnApprove}
+                editCard={editCard}
               />
             )}
           </Drawer.Screen>
@@ -374,53 +355,15 @@ const App: () => Node = ({navigation}) => {
             )}
           </Drawer.Screen>
         )}
-        {isUserConnected && (
-          <Drawer.Screen name="EditTrip">
-            {props => (
-              <EditTrip
-                {...props}
-                user={Users[Index]}
-                trip={TripEdit}
-                setTripEdit={setTripEdit}
-                editCard={editCard}
-              />
-            )}
-          </Drawer.Screen>
-        )}
-        <Drawer.Screen name="Home">
-          {props => (
-            <HomePage
-              {...props}
-              name={Users[Index]}
-              tripSearch={addTripInfo}
-              // setOnEdit={setOnEdit}
-              // getWaitingId={Trips.length + WaitingTrips.length + 1}
-            />
-          )}
-        </Drawer.Screen>
-        <Drawer.Screen name="Logout" component={LoginStack}/>
-          {/* {props => (
-            <LoginPage
-              {...props}
-              Users={Users}
-              ind={setIndex}
-              setIsUserConnected={setIsUserConnected}
-            />
-          )} */}
-        {/* </Drawer.Screen> */}
-      </Drawer.Navigator>
-    );
-  };
 
-  const LogOutButton = (props) => {
-    return (
-      <DrawerContentScrollView >
-        <DrawerItemList  {...props}/>
-        <DrawerItem  {...props}
-          label="Logout"
-          onPress={() => navigation.navigate('Login')}
-        />
-      </DrawerContentScrollView>
+        {isUserConnected && (
+          <Drawer.Screen
+            name="Logout"
+            component={LoginStack}
+            options={{headerShown: false}}
+          />
+        )}
+      </Drawer.Navigator>
     );
   };
 
@@ -447,47 +390,6 @@ const App: () => Node = ({navigation}) => {
         <Stack.Screen name="ForgotPassword">
           {props => <ForgotPassword {...props} Users={Users} ind={setIndex} />}
         </Stack.Screen>
-        <Stack.Screen name="Home">
-          {props => (
-            <HomePage
-              {...props}
-              name={Users[Index]}
-              tripSearch={addTripInfo}
-              // setOnEdit={setOnEdit}
-              // getWaitingId={Trips.length + WaitingTrips.length + 1}
-            />
-          )}
-        </Stack.Screen>
-        {/* <Stack.Screen name="EditTrip">
-          {props => (
-            <EditTrip
-              {...props}
-              user={Users[Index]}
-              trip={TripEdit}
-              setTripEdit={setTripEdit}
-              editCard={editCard}
-            />
-          )}
-        </Stack.Screen> */}
-        {/* <Stack.Screen name="TripsPage">
-            {props => (
-              <TripsPage
-                {...props}
-                Trips={Trips}
-                user={Users[Index]}
-                tripInfo={TripInfo}
-                deleteCard={deleteCard}
-                // editCard={editCard}
-                onSendMessage={onSendMessage}
-                deletePicture={deletePicture}
-                deleteFeedback={deleteFeedback}
-                deleteFeedbackLive={deleteFeedbackLive}
-                setTripEdit={setTripEdit}
-                // setOnEdit={setOnEdit}
-                // setOnApprove={setOnApprove}
-              />
-            )}
-          </Stack.Screen> */}
       </Stack.Navigator>
     );
   };

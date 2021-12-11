@@ -15,7 +15,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Header from './Header';
 import Slider from '@react-native-community/slider';
 
-const EditTrip = ({trip, user, editCard, setTripEdit, navigation}) => {
+const EditTrip = ({trip, user, editCard, onApprove, setToggleEditCard}) => {
   const [tripName, setTripName] = useState(trip.tripName);
   const [location, setLocation] = useState(trip.location);
   const [priceInNis, setPriceInNis] = useState(trip.priceInNis);
@@ -23,24 +23,25 @@ const EditTrip = ({trip, user, editCard, setTripEdit, navigation}) => {
 
   //categories
   const [categories, setCategories] = useState({
-    isRelax: false,
-    isDynamic: false,
-    isParty: false,
-    isPetAllowed: false,
-    isCarTravel: false,
-    isPlaneTravel: false,
-    isTrainTravel: false,
+    isRelax: trip.category.isRelax,
+    isDynamic: trip.category.isDynamic,
+    isParty: trip.category.isParty,
+    isPetAllowed: trip.category.isPetAllowed,
+    isCarTravel: trip.category.isCarTravel,
+    isPlaneTravel: trip.category.isPlaneTravel,
+    isTrainTravel: trip.category.isTrainTravel,
   });
 
+  console.log(categories);
 
-  const onAddTrip = () => {
+  const onEditTrip = () => {
     if (
       tripName != '' &&
       location != '' &&
       description != '' &&
       priceInNis != null
     ) {
-      const newTrip = {
+      const updatedTrip = {
         id: trip.id,
         owner: user.email,
         adminMessage: 'No new admin messages',
@@ -54,37 +55,13 @@ const EditTrip = ({trip, user, editCard, setTripEdit, navigation}) => {
           isPlaneTravel: categories.isPlaneTravel,
           isTrainTravel: categories.isTrainTravel,
         },
-        // pictures: picture,
         location: location,
         description: description,
-        // feedbacks: feedback,
-        // feedbacksLive: feedbackLive,
         priceInNis: priceInNis,
       };
-      editCard(newTrip);
+      editCard(updatedTrip, onApprove);
+      setToggleEditCard(false);
       Alert.alert('trip updated succesfully');
-      navigation.navigate('Home');
-      setTripEdit({
-        id: 0,
-        owner: '',
-        adminMessage: 'No new admin messages',
-        tripName: '',
-        category: {
-          isRelax: false,
-          isDynamic: false,
-          isParty: false,
-          isPetAllowed: false,
-          isCarTravel: false,
-          isPlaneTravel: false,
-          isTrainTravel: false,
-        },
-        pictures: [''],
-        location: '',
-        description: '',
-        feedbacks: [''],
-        feedbacksLive: [''],
-        priceInNis: '',
-      });
     }
   };
 
@@ -92,14 +69,12 @@ const EditTrip = ({trip, user, editCard, setTripEdit, navigation}) => {
     <SafeAreaView>
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View>
-          {/* <Text style={styles.title}>Add a Trip</Text> */}
-          <Header title="Edit Trip" name={user} navigation={navigation} />
+        <View style={styles.container}>
           <Text style={styles.text}>Edit the details below:</Text>
           <Form
-            onButtonPress={onAddTrip}
+            onButtonPress={onEditTrip}
             buttonStyle={styles.formButton}
-            buttonText="Post Trip">
+            buttonText="Update Trip">
             <FormItem
               placeholder="Add trip name here"
               style={styles.inputView}
@@ -148,24 +123,28 @@ const EditTrip = ({trip, user, editCard, setTripEdit, navigation}) => {
               minimumValue={0}
               maximumValue={10000}
               value={priceInNis}
-              onValueChange={slideValue => setPriceInNis(slideValue)}
+              onValueChange={slideValue => setPriceInNis(parseInt(slideValue))}
               minimumTrackTintColor="#0074D9"
               maximumTrackTintColor="grey"
               thumbTintColor="#0074D9"
             />
-            <Text style={styles.showMoney}>{priceInNis} ILS</Text>
-            {/* <FormItem
-              placeholder="Add url pic here"
-              style={styles.inputView}
-              label="url pic:"
-              labelStyle={styles.label}
-              multiline={true}
-              value={picture}
-              onChangeText={pic => {
-                setPicture(pic);
-              }}
-
-            /> */}
+            <View style={styles.inputNumberView}>
+              <TextInput
+                keyboardType="number-pad"
+                numeric
+                style={styles.inputNumber}
+                placeholder="Enter Price"
+                underlineColorAndroid="transparent"
+                onChangeText={newSliderValue => {
+                  !isNaN(parseInt(newSliderValue))
+                    ? setPriceInNis(parseInt(newSliderValue))
+                    : setPriceInNis(parseInt(0));
+                }}
+                value={priceInNis}
+                maxLength={6}
+              />
+              <Text style={styles.showMoney}>{priceInNis} ILS</Text>
+            </View>
             <View style={styles.checkboxesView}>
               <BouncyCheckbox
                 style={styles.checkbox}
@@ -186,6 +165,8 @@ const EditTrip = ({trip, user, editCard, setTripEdit, navigation}) => {
                     isTrainTravel: categories.isTrainTravel,
                   })
                 }
+                isChecked={categories.isRelax}
+
               />
               <BouncyCheckbox
                 style={styles.checkbox}
@@ -206,6 +187,7 @@ const EditTrip = ({trip, user, editCard, setTripEdit, navigation}) => {
                     isTrainTravel: categories.isTrainTravel,
                   })
                 }
+                isChecked={categories.isDynamic}
               />
               <BouncyCheckbox
                 style={styles.checkbox}
@@ -226,6 +208,7 @@ const EditTrip = ({trip, user, editCard, setTripEdit, navigation}) => {
                     isTrainTravel: categories.isTrainTravel,
                   })
                 }
+                isChecked={categories.isParty}
               />
               <BouncyCheckbox
                 style={styles.checkbox}
@@ -246,6 +229,7 @@ const EditTrip = ({trip, user, editCard, setTripEdit, navigation}) => {
                     isTrainTravel: categories.isTrainTravel,
                   })
                 }
+                isChecked={categories.isPetAllowed}
               />
               <BouncyCheckbox
                 style={styles.checkbox}
@@ -266,6 +250,7 @@ const EditTrip = ({trip, user, editCard, setTripEdit, navigation}) => {
                     isTrainTravel: categories.isTrainTravel,
                   })
                 }
+                isChecked={categories.isCarTravel}
               />
               <BouncyCheckbox
                 style={styles.checkbox}
@@ -275,15 +260,19 @@ const EditTrip = ({trip, user, editCard, setTripEdit, navigation}) => {
                 iconStyle={styles.icon}
                 textStyle={styles.checkboxText}
                 text="Plane travel"
-                onPress={() => setCategories({
-                  isRelax: categories.isRelax,
-                  isDynamic: categories.isDynamic,
-                  isParty: categories.isParty,
-                  isPetAllowed: categories.isPetAllowed,
-                  isCarTravel: categories.isCarTravel,
-                  isPlaneTravel: !categories.isPlaneTravel,
-                  isTrainTravel: categories.isTrainTravel,
-                })}              />
+                onPress={() =>
+                  setCategories({
+                    isRelax: categories.isRelax,
+                    isDynamic: categories.isDynamic,
+                    isParty: categories.isParty,
+                    isPetAllowed: categories.isPetAllowed,
+                    isCarTravel: categories.isCarTravel,
+                    isPlaneTravel: !categories.isPlaneTravel,
+                    isTrainTravel: categories.isTrainTravel,
+                  })
+                }
+                isChecked={categories.isPlaneTravel}
+              />
               <BouncyCheckbox
                 style={styles.checkbox}
                 size={25}
@@ -292,38 +281,20 @@ const EditTrip = ({trip, user, editCard, setTripEdit, navigation}) => {
                 iconStyle={styles.icon}
                 textStyle={styles.checkboxText}
                 text="Train travel"
-                onPress={() => setCategories({
-                  isRelax: categories.isRelax,
-                  isDynamic: categories.isDynamic,
-                  isParty: categories.isParty,
-                  isPetAllowed: categories.isPetAllowed,
-                  isCarTravel: categories.isCarTravel,
-                  isPlaneTravel: categories.isPlaneTravel,
-                  isTrainTravel: !categories.isTrainTravel,
-                })}              />
+                onPress={() =>
+                  setCategories({
+                    isRelax: categories.isRelax,
+                    isDynamic: categories.isDynamic,
+                    isParty: categories.isParty,
+                    isPetAllowed: categories.isPetAllowed,
+                    isCarTravel: categories.isCarTravel,
+                    isPlaneTravel: categories.isPlaneTravel,
+                    isTrainTravel: !categories.isTrainTravel,
+                  })
+                }
+                isChecked={categories.isTrainTravel}
+              />
             </View>
-            {/* <FormItem
-              placeholder="Add feedback here"
-              style={styles.inputView}
-              label="Feedback:"
-              labelStyle={styles.feedback}
-              multiline={true}
-              value={feedback}
-              onChangeText={feedback => {
-                setFeedback(feedback);
-              }}
-            />
-            <FormItem
-              placeholder="Add live feedback here"
-              style={styles.inputView}
-              label="Feedback Live:"
-              labelStyle={styles.label}
-              multiline={true}
-              value={feedbackLive}
-              onChangeText={feedbackLive => {
-                setFeedbackLive(feedbackLive);
-              }}
-            /> */}
           </Form>
         </View>
       </ScrollView>
@@ -332,6 +303,7 @@ const EditTrip = ({trip, user, editCard, setTripEdit, navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {},
   text: {
     color: 'black',
     fontSize: 23,
@@ -340,7 +312,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: 'black',
-    paddingLeft: 30,
+    // paddingLeft: 30,
     fontWeight: 'bold',
     fontSize: 17,
     paddingTop: 2,
@@ -348,22 +320,22 @@ const styles = StyleSheet.create({
   },
   inputView: {
     flex: 0.3,
-    backgroundColor: '#F5F5F5',
+    // backgroundColor: '#F5F5F5',
     borderBottomWidth: 0.5,
     marginBottom: 20,
-    marginLeft: 20,
-    marginRight: 20,
+    // marginLeft: 20,
+    // marginRight: 20,
     fontSize: 20,
     borderRadius: 5,
   },
 
   formButton: {
-    backgroundColor: 'firebrick',
-    marginLeft: 100,
-    marginRight: 100,
-    marginTop: 10,
     borderRadius: 20,
-    color: 'black',
+    padding: 10,
+    elevation: 2,
+    marginLeft: 20,
+    marginRight: 20,
+    backgroundColor: '#2196F3',
   },
   checkbox: {
     color: 'white',
@@ -388,10 +360,30 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
+  showTextMoney: {
+    color: 'black',
+    margin: 10,
+    marginLeft: 30,
+    fontWeight: 'bold',
+    fontSize: 17,
+  },
+  showMoney: {
+    flex: 3,
+    alignSelf: 'center',
+  },
   slider: {
     margin: 10,
     marginLeft: 25,
     marginRight: 25,
+  },
+  inputNumber: {
+    flex: 2,
+  },
+  inputNumberView: {
+    flex: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 20,
   },
   icon: {
     borderColor: 'black',
@@ -418,6 +410,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     display: 'flex',
+  },
+
+  buttonSend: {
+    backgroundColor: '#2196F3',
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  buttonClose: {
+    backgroundColor: 'grey',
+    marginLeft: 10,
+    marginRight: 10,
   },
 });
 

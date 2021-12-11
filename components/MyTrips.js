@@ -21,19 +21,16 @@ const MyTrips = ({
   user,
   deleteCard,
   addTrip,
-  // editCard,
+  editCard,
   onSendMessage,
   deletePicture,
   deleteFeedback,
   deleteFeedbackLive,
   setTripEdit,
-  // setOnEdit,
-  // setOnApprove,
-  navigation,
 }) => {
   return (
     <ScrollView>
-      <Header name={user} navigation={navigation} />
+      <Header user={user}  />
       <Text style={styles.text}>My posted trips:</Text>
       {Trips.filter(trip => trip.owner === user.email).map(trip => (
         <TripCard
@@ -41,16 +38,12 @@ const MyTrips = ({
           trip={trip}
           user={user}
           deleteCard={deleteCard}
-          // editCard={editCard}
+          editCard={editCard}
           onSendMessage={onSendMessage}
           deletePicture={deletePicture}
           deleteFeedback={deleteFeedback}
           deleteFeedbackLive={deleteFeedbackLive}
-          setTripEdit={setTripEdit}
-          // setOnEdit={setOnEdit}
-          // setOnApprove={setOnApprove}
           onApprove={false}
-          navigation={navigation}
         />
       ))}
       <Text style={styles.text}>My waiting trips:</Text>
@@ -61,16 +54,13 @@ const MyTrips = ({
           user={user}
           deleteCard={deleteCard}
           addTrip={addTrip}
-          // editCard={editCard}
+          editCard={editCard}
           onSendMessage={onSendMessage}
           deletePicture={deletePicture}
           deleteFeedback={deleteFeedback}
           deleteFeedbackLive={deleteFeedbackLive}
           setTripEdit={setTripEdit}
-          // setOnEdit={setOnEdit}
-          // setOnApprove={setOnApprove}
           onApprove={true}
-          navigation={navigation}
         />
       ))}
     </ScrollView>

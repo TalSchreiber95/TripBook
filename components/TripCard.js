@@ -2,39 +2,26 @@ import React, {useReducer} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/AntDesign';
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ImageBackground,
-  Alert,
-} from 'react-native';
+import {View, Text, StyleSheet, ImageBackground, Alert} from 'react-native';
 import CardFooter from './CardFooter';
 import CardHeader from './CardHeader';
 import {useState} from 'react';
 import {Button} from 'react-native-elements/dist/buttons/Button';
-import LinearGradient from 'react-native-linear-gradient';
-import {NavigationContainer} from '@react-navigation/native';
 
 const TripCard = ({
   trip,
   user,
   deleteCard,
   onSendMessage,
-  // toggleApproveCard,
   addTrip,
   deletePicture,
   deleteFeedback,
   deleteFeedbackLive,
   onApprove,
-  setTripEdit,
-  // setOnEdit,
-  // setOnApprove,
-  navigation,
+  editCard,
 }) => {
-  const [pic, setPicture] = useState(0);
   const [toggler, setToggler] = useState('');
+  const [picture, setPicture] = useState(0);
   const [picIndex, setPicIndex] = useState(0);
   // const [pic, setPic] = useState();
 
@@ -57,7 +44,7 @@ const TripCard = ({
   };
   const delPic = () => {
     switchPictureLeft();
-    deletePicture(trip.id, pic);
+    deletePicture(trip.id, picture, onApprove);
     Alert.alert('Picture deleted!');
   };
   const onDelPic = () => {
@@ -77,7 +64,7 @@ const TripCard = ({
       ],
     );
   };
-  const onAddTrip = () => {
+  const onApproveTrip = () => {
     return Alert.alert(
       'Add trip card !',
       'Are you sure you want to add this trip card?',
@@ -111,29 +98,9 @@ const TripCard = ({
       ],
     );
   };
-  const onEdit = () => {
-    return Alert.alert(
-      'Editing trip card !',
-      'Are you sure you want to edit this trip card?',
-      [
-        {
-          text: 'Yes',
-          onPress: () => {
-            // Alert.alert(
-            //   'card edit supposed to be here im not sure in which way yet',
-            // );
-            setTripEdit(trip);
-            // setOnApprove(onApprove);
-            navigation.navigate('EditTrip');
-            // Alert.alert(editCard(id));
-            // editCard(trip.id);
-          },
-        },
-        {
-          text: 'No',
-        },
-      ],
-    );
+
+  TripCard.defaultProps = {
+    addTrip: () => {},
   };
 
   return (
@@ -143,19 +110,18 @@ const TripCard = ({
         updateButton={updateButton}
         toggler={toggler}
         user={user}
-        onAddTrip={onAddTrip}
-        onEdit={onEdit}
+        onApproveTrip={onApproveTrip}
         onSendMessage={onSendMessage}
         onDelete={onDelete}
-        // setTripEdit={setTripEdit}
         onApprove={onApprove}
+        editCard={editCard}
       />
       <View style={styles.picView}>
         {trip.pictures.length > 0 ? (
           <ImageBackground
             style={styles.logo}
             source={{
-              uri: trip.pictures[pic],
+              uri: trip.pictures[picture],
             }}>
             {(user.admin || user.email == trip.owner) && (
               <Icon
@@ -186,19 +152,11 @@ const TripCard = ({
           </ImageBackground>
         ) : (
           <View style={styles.noPictureView}>
-            <Text style={styles.noPictureText}>No images uploaded. you can add some ;)</Text>
+            <Text style={styles.noPictureText}>
+              No images uploaded. you can add some ;)
+            </Text>
           </View>
-          //   <ImageBackground
-          //     style={styles.logo}
-          //     source={{
-          //       uri: 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg',
-          //     }}></ImageBackground>
-          //
         )}
-
-        {/* There is problem with the image component - hiding the weather and info popups
-        for now i changed the opacity so we can see it
-        need to find solution - i tried a lot of css modifications without succeed */}
       </View>
       <CardFooter
         trip={trip}
@@ -214,26 +172,19 @@ const TripCard = ({
   );
 };
 TripCard.defaultProps = {
-  // toggleApproveCard: false,
   onApprove: false,
 };
 
 const styles = StyleSheet.create({
   card: {
     borderRadius: 5,
-    // borderWidth: 1,
     borderColor: 'grey',
     margin: 10,
     flex: 1,
     elevation: 2,
   },
   iconHeader: {
-    // flex: 2,
-    // borderRadius: 15,
-
-    // justifyContent: 'flex-end',
     flexDirection: 'row',
-    // alignItems:"center",
   },
   title: {
     color: 'black',
@@ -250,25 +201,12 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: '100%',
-    // height:'auto',
-    // opacity: 0.5,
     flex: 1,
-    // resizeMode: 'center',
     justifyContent: 'center',
-    // alignSelf: 'center',
-
-    // borderWidth: 1,
-    // borderColor: 'transparent'
-    // flex: 1,
-    // position: 'relative',
-    // top: 0,
-    // left: 0,
-    // backgroundColor: 'indigo',
   },
 
   picView: {
     height: 400,
-    // opacity: 0.5,
   },
 
   iconView: {
@@ -277,7 +215,6 @@ const styles = StyleSheet.create({
   RLbuttons: {
     width: 40,
     height: 40,
-    // margin: 100,
     marginLeft: 130,
     marginRight: 130,
     borderRadius: 35,
@@ -286,8 +223,6 @@ const styles = StyleSheet.create({
     elevation: 0.5,
     backgroundColor: 'white',
     color: '#24a0ed',
-    // alignItems: 'center',
-    // alignSelf: 'center',
   },
   icon: {
     margin: 10,
@@ -298,12 +233,9 @@ const styles = StyleSheet.create({
     flex: 2,
     flexDirection: 'row',
     justifyContent: 'center',
-    // padding: 10,
     alignItems: 'center',
-    // alignSelf: 'center',
   },
   titleArrowButtons: {
-    // backgroundColor: 'black',
     color: '#24a0ed',
   },
   noPictureView: {

@@ -11,8 +11,8 @@ import {
 import Header from './Header';
 import TripFilter from './TripFilter';
 
-const HomePage = ({name, tripSearch, navigation}) => {
-  const updateFilter = categories => {
+const HomePage = ({user, tripSearch, navigation}) => {
+  const updateFilter = (categories, tripName, location, priceInNis) => {
     const tripInfo = {
       tripName: tripName,
       category: {
@@ -33,10 +33,9 @@ const HomePage = ({name, tripSearch, navigation}) => {
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={styles.container}>
-          <Header name={name} navigation={navigation} />
+          <Header user={user} navigation={navigation} />
           <TripFilter
             updateFilter={updateFilter}
-            // setOnEdit={setOnEdit}
             navigation={navigation}
           />
         </View>
@@ -44,12 +43,11 @@ const HomePage = ({name, tripSearch, navigation}) => {
     </SafeAreaView>
   );
 };
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  name: {
-    color: 'red',
   },
 });
 

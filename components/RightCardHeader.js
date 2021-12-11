@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     top: 45,
     backgroundColor: '#000000c0',
     alignSelf: 'flex-end',
-    elevation: 1,
+    elevation: 0.1,
     padding: 3,
   },
   button: {

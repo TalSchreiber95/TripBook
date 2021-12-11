@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Button } from 'react-native-elements';
 import { NavigationContainer } from '@react-navigation/native';
 
-const Header = ({ title, name, connected, navigation }) => {
+const Header = ({ title, user, connected, navigation }) => {
   return (
     // Added LinearGradient
     <LinearGradient
@@ -20,7 +20,7 @@ const Header = ({ title, name, connected, navigation }) => {
             title="My Trips"
             onPress={() => navigation.navigate('MyTrips')}
           />
-          {name.admin ? (
+          {user.admin ? (
             <Button
               containerStyle={styles.approveTripsButton}
               title="Approve Trips"
@@ -39,15 +39,15 @@ const Header = ({ title, name, connected, navigation }) => {
         <View style={styles.noButtonsView}></View>
       )} */}
       <Text style={styles.text}>{title}</Text>
-      <Text style={styles.name}>
-        Wellcome {name.firstName + ' ' + name.lastName}!
+      <Text style={styles.user}>
+        Wellcome {user.firstName + ' ' + user.lastName}!
       </Text>
     </LinearGradient>
   );
 };
 Header.defaultProps = {
   title: 'TripBook',
-  name: {
+  user: {
     firstName: '',
     lastName: '',
   },
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
 
     paddingTop: 25,
   },
-  name: {
+  user: {
     color: 'white',
     fontSize: 20,
     paddingBottom: 20,

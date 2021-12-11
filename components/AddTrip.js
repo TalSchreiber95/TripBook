@@ -18,12 +18,12 @@ import Header from './Header';
 const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
   const [tripName, setTripName] = useState('');
   const [location, setLocation] = useState('');
-  const [feedback, setFeedback] = useState(['']);
-  const [feedbackLive, setFeedbackLive] = useState(['']);
+  const [feedback, setFeedback] = useState('');
+  const [feedbackLive, setFeedbackLive] = useState('');
   const [priceInNis, setPriceInNis] = useState(0);
 
   const [description, setDescription] = useState('');
-  const [picture, setPicture] = useState(['']);
+  const [picture, setPicture] = useState('');
 
   //categories
   const [categories, setCategories] = useState({
@@ -83,7 +83,7 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
-          <Header title="Add Trip" name={user} navigation={navigation} />
+          <Header title="Add Trip" user={user} navigation={navigation} />
           <Text style={styles.text}>Fill the details below:</Text>
           <Form
             onButtonPress={onAddTrip}
@@ -152,7 +152,7 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               }}
             />
             <Text style={styles.showTextMoney}>
-              Minimum price the trip cost:
+              Maximum price the trip cost:
             </Text>
             <Slider
               style={styles.slider}
@@ -160,12 +160,28 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               minimumValue={0}
               maximumValue={10000}
               value={priceInNis}
-              onValueChange={slideValue => setPriceInNis(slideValue)}
+              onValueChange={slideValue => setPriceInNis(parseInt(slideValue))}
               minimumTrackTintColor="#0074D9"
               maximumTrackTintColor="grey"
               thumbTintColor="#0074D9"
             />
-            <Text style={styles.showMoney}>{priceInNis} ILS</Text>
+            <View style={styles.inputNumberView}>
+              <TextInput
+                keyboardType="number-pad"
+                numeric
+                style={styles.inputNumber}
+                placeholder="Enter Price"
+                underlineColorAndroid="transparent"
+                onChangeText={newSliderValue => {
+                  !isNaN(parseInt(newSliderValue))
+                    ? setPriceInNis(parseInt(newSliderValue))
+                    : setPriceInNis(parseInt(0));
+                }}
+                value={priceInNis}
+                maxLength={6}
+              />
+              <Text style={styles.showMoney}>{priceInNis} ILS</Text>
+            </View>
             <View style={styles.checkboxesView}>
               <BouncyCheckbox
                 style={styles.checkbox}
@@ -364,7 +380,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   showTextMoney: {
-    // textAlign: 'center',
     color: 'black',
     margin: 10,
     marginLeft: 30,
@@ -375,10 +390,30 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
+  showTextMoney: {
+    color: 'black',
+    margin: 10,
+    marginLeft: 30,
+    fontWeight: 'bold',
+    fontSize: 17,
+  },
+  showMoney: {
+    flex: 3,
+    alignSelf: 'center',
+  },
   slider: {
     margin: 10,
     marginLeft: 25,
     marginRight: 25,
+  },
+  inputNumber: {
+    flex: 2,
+  },
+  inputNumberView: {
+    flex: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 20,
   },
   formButton: {
     backgroundColor: 'firebrick',

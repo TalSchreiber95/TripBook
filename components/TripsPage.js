@@ -20,19 +20,17 @@ const TripsPage = ({
   user,
   tripInfo,
   deleteCard,
-  // editCard,
+  editCard,
   onSendMessage,
   deletePicture,
   deleteFeedback,
   deleteFeedbackLive,
   setTripEdit,
-  // setOnEdit,
-  // setOnApprove,
   navigation,
 }) => {
   return (
-    <ScrollView>
-      <Header name={user} navigation={navigation} />
+    <ScrollView >
+      <Header user={user} navigation={navigation} />
       <Text style={styles.text}>Search Results:</Text>
       <Text style={styles.locationText}>
         {' '}
@@ -46,16 +44,12 @@ const TripsPage = ({
           trip={trip}
           user={user}
           deleteCard={deleteCard}
-          // editCard={editCard}
+          editCard={editCard}
           onSendMessage={onSendMessage}
-          onApprove={false}
           deletePicture={deletePicture}
           deleteFeedback={deleteFeedback}
           deleteFeedbackLive={deleteFeedbackLive}
-          setTripEdit={setTripEdit}
-          // setOnEdit={setOnEdit}
-          // setOnApprove={setOnApprove}
-          navigation={navigation}
+          onApprove={false}
         />
       ))}
     </ScrollView>

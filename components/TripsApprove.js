@@ -19,20 +19,16 @@ const TripsApprove = ({
   WaitingTrips,
   user,
   deleteWaitingCard,
-  // editCard,
+  editCard,
   onSendMessage,
   addTrip,
   deletePicture,
   deleteFeedback,
   deleteFeedbackLive,
-  setTripEdit,
-  // setOnEdit,
-  // setOnApprove,
-  navigation
 }) => {
   return (
     <ScrollView>
-      <Header name={user} navigation={navigation} />
+      <Header user={user} />
       <Text style={styles.text}>Approve trips List:</Text>
       {WaitingTrips.map(trip => (
         <TripCard
@@ -41,17 +37,12 @@ const TripsApprove = ({
           user={user}
           deleteCard={deleteWaitingCard}
           addTrip={addTrip}
-          // editCard={editCard}
+          editCard={editCard}
           onSendMessage={onSendMessage}
           deletePicture={deletePicture}
           deleteFeedback={deleteFeedback}
           deleteFeedbackLive={deleteFeedbackLive}
-          // toggleApproveCard={true}
-          setTripEdit={setTripEdit}
-          // setOnEdit={setOnEdit}
-          // setOnApprove={setOnApprove}
           onApprove={true}
-          navigation={navigation}
         />
       ))}
     </ScrollView>

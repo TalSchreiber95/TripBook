@@ -14,7 +14,7 @@ import {Button} from 'react-native-elements';
 import {Form, FormItem} from 'react-native-form-component';
 import Slider from '@react-native-community/slider';
 
-const TripFilter = ({updateFilter, tripSearch, navigation}) => {
+const TripFilter = ({updateFilter, navigation}) => {
   const [priceInNis, setPriceInNis] = useState();
   const [location, setLocation] = useState('');
   const [tripName, setTripName] = useState('');
@@ -31,7 +31,7 @@ const TripFilter = ({updateFilter, tripSearch, navigation}) => {
   });
 
   const onSearch = () => {
-    updateFilter(categories);
+    updateFilter(categories, tripName, location, priceInNis);
     setCategories({
       isRelax: false,
       isDynamic: false,
@@ -92,26 +92,27 @@ const TripFilter = ({updateFilter, tripSearch, navigation}) => {
           minimumValue={0}
           maximumValue={10000}
           value={priceInNis}
-          onValueChange={slideValue => setPriceInNis(slideValue)}
+          onValueChange={slideValue => setPriceInNis(parseInt(slideValue))}
           minimumTrackTintColor="#0074D9"
           maximumTrackTintColor="grey"
           thumbTintColor="#0074D9"
         />
-        <Text style={styles.showMoney}>{priceInNis} ILS</Text>
-        <View style={styles.label}>
+        <View style={styles.inputNumberView}>
           <TextInput
-            style={styles.showMoney}
+            keyboardType="number-pad"
+            numeric
+            style={styles.inputNumber}
             placeholder="Enter Price"
             underlineColorAndroid="transparent"
             onChangeText={newSliderValue => {
-              newSliderValue === null ? setPriceInNis(0) :
-                setPriceInNis(parseInt(newSliderValue));
-
+              !isNaN(parseInt(newSliderValue))
+                ? setPriceInNis(parseInt(newSliderValue))
+                : setPriceInNis(parseInt(0));
             }}
             value={priceInNis}
-            autoCorrect={false}
-            autoCapitalize="characters"
+            maxLength={6}
           />
+          <Text style={styles.showMoney}>{priceInNis} ILS</Text>
         </View>
         <Text style={styles.text}>Filter your trip category</Text>
         <BouncyCheckbox
@@ -316,7 +317,6 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   showTextMoney: {
-    // textAlign: 'center',
     color: 'black',
     margin: 10,
     marginLeft: 30,
@@ -324,13 +324,23 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   showMoney: {
-    textAlign: 'center',
-    marginBottom: 20,
+    flex: 3,
+    alignSelf: 'center',
+
   },
   slider: {
     margin: 10,
     marginLeft: 25,
     marginRight: 25,
+  },
+  inputNumber: {
+    flex: 2,
+  },
+  inputNumberView: {
+    flex: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 20,
   },
 });
 export default TripFilter;

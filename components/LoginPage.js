@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -16,6 +16,9 @@ import {Form, FormItem} from 'react-native-form-component';
 import Header from './Header';
 
 const LoginPage = ({Users, ind, setIsUserConnected, navigation}) => {
+  useEffect(() => {
+    setIsUserConnected(false);
+  });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 

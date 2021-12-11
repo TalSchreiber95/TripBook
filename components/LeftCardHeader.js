@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 45,
     backgroundColor: '#000000c0',
-    elevation: 1,
+    elevation: 0.1,
     padding: 3,    
   },
   button: {

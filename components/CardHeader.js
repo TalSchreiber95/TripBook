@@ -18,32 +18,27 @@ import LinearGradient from 'react-native-linear-gradient';
 import {Button, Snackbar} from 'react-native-paper';
 import {useState} from 'react';
 import {Form, FormItem} from 'react-native-form-component';
+import PopUpMessageForm from './PopUpMessageForm';
+import PopUpEditTrip from './PopUpEditTrip';
 
 const CardHeader = ({
   trip,
   updateButton,
   toggler,
   user,
-  onAddTrip,
+  onApproveTrip,
   onDelete,
-  onEdit,
   onSendMessage,
   onApprove,
+  editCard,
 }) => {
   const [toggleDescription, setToggleDescription] = useState(false);
   const [description, setDescription] = useState('');
-  const [message, setMessage] = useState('');
-  const [toggleAddMessage, setToggleAddMessage] = useState(false);
+
 
   const toggleInfo = iconPressed => {
     setToggleDescription(true);
     setDescription(iconPressed);
-  };
-  const sendMessage = () => {
-    onSendMessage(trip, message);
-    Alert.alert('Message sent successfully!');
-    setMessage('');
-    setToggleAddMessage(!toggleAddMessage);
   };
 
   return (
@@ -68,16 +63,22 @@ const CardHeader = ({
           onLongPress={() => toggleInfo('Trip Owner')}
           style={styles.icon}
         />
-        {(user.admin || user.email == trip.owner) && (
-          <Icon
-            name="edit"
-            size={20}
-            color="white"
-            onPress={() => onEdit()}
-            onLongPress={() => toggleInfo('Edit card')}
-            style={styles.icon}
-          />
-        )}
+
+        <PopUpEditTrip
+          user={user}
+          trip={trip}
+          toggleInfo={toggleInfo}
+          editCard={editCard}
+          onApprove={onApprove}
+        />
+
+        <PopUpMessageForm
+          user={user}
+          trip={trip}
+          toggleInfo={toggleInfo}
+          onSendMessage={onSendMessage}
+        />
+
         {(user.admin || user.email == trip.owner) && (
           <Icon1
             name="message1"
@@ -88,16 +89,7 @@ const CardHeader = ({
             style={styles.icon}
           />
         )}
-        {user.admin && (
-          <Icon
-            name="send"
-            size={20}
-            color="white"
-            onPress={() => setToggleAddMessage(!toggleAddMessage)}
-            onLongPress={() => toggleInfo('Send admin messages')}
-            style={styles.icon}
-          />
-        )}
+
         {(user.admin || user.email == trip.owner) && (
           <Icon
             name="trash-o"
@@ -113,56 +105,12 @@ const CardHeader = ({
             name="check"
             size={20}
             color="white"
-            onPress={() => onAddTrip()}
+            onPress={() => onApproveTrip()}
             style={styles.icon}
           />
         )}
       </View>
 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={toggleAddMessage}
-        onRequestClose={() => {
-          // Alert.alert('Modal has been closed.');
-          setToggleAddMessage(!toggleAddMessage);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Admin Message</Text>
-            <TextInput
-              placeholder="Add message to owner here"
-              style={styles.inputView}
-              label="Message"
-              labelStyle={styles.label}
-              value={message}
-              onChangeText={msg => {
-                setMessage(msg);
-              }}
-              multiline={true}
-            />
-            <View style={styles.modalButtons}>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
-                  setToggleAddMessage(!toggleAddMessage);
-                  setMessage('');
-                }}>
-                <Text style={styles.textStyle}>Close</Text>
-              </Pressable>
-              <Pressable
-                style={[styles.button, styles.buttonSend]}
-                onPress={() => {
-                  setToggleAddMessage(!toggleAddMessage);
-                  sendMessage();
-                  setMessage('');
-                }}>
-                <Text style={styles.textStyle}>Send</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
-      </Modal>
       <View style={styles.textView}>
         <Text style={styles.text}>{trip.tripName}</Text>
       </View>
@@ -267,55 +215,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     // height: '80%',
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  modalButtons: {
-    flex: 0,
-    flexDirection: 'row',
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonSend: {
-    backgroundColor: '#2196F3',
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  buttonClose: {
-    backgroundColor: 'grey',
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
 });
 export default CardHeader;
