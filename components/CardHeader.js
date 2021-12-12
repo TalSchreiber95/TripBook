@@ -7,9 +7,6 @@ import {
   Text,
   StyleSheet,
   Alert,
-  Modal,
-  Pressable,
-  TextInput,
 } from 'react-native';
 import LeftCardHeader from './LeftCardHeader';
 import RightCardHeader from './RightCardHeader';

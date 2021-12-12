@@ -307,7 +307,8 @@ const styles = StyleSheet.create({
   text: {
     color: 'black',
     fontSize: 23,
-    marginLeft: 20,
+    // marginLeft: 20,
+    textAlign: 'center',
     marginBottom: 20,
   },
   label: {
@@ -349,32 +350,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   showTextMoney: {
-    // textAlign: 'center',
     color: 'black',
-    margin: 10,
-    marginLeft: 30,
-    fontWeight: 'bold',
-    fontSize: 17,
-  },
-  showMoney: {
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  showTextMoney: {
-    color: 'black',
-    margin: 10,
-    marginLeft: 30,
+    // margin: 10,
+    marginRight: 50,
     fontWeight: 'bold',
     fontSize: 17,
   },
   showMoney: {
     flex: 3,
-    alignSelf: 'center',
+    // alignSelf: 'center',
   },
   slider: {
     margin: 10,
-    marginLeft: 25,
-    marginRight: 25,
+    // marginLeft: 25,
+    // marginRight: 25,
   },
   inputNumber: {
     flex: 2,
@@ -383,7 +372,7 @@ const styles = StyleSheet.create({
     flex: 5,
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 20,
+    // marginLeft: 20,
   },
   icon: {
     borderColor: 'black',

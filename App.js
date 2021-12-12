@@ -20,9 +20,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import 'react-native-gesture-handler';
+// import axios from 'axios';
 
 import type {Node} from 'react';
-import {StyleSheet, Alert, Text} from 'react-native';
+import {StyleSheet, Alert, Text, Pressable} from 'react-native';
+import {Button} from 'react-native-elements';
 
 // import {
 //   DrawerContentScrollView,
@@ -67,6 +69,7 @@ const App: () => Node = ({navigation}) => {
     {
       id: 1,
       owner: 'u',
+      isWaiting: false,
       adminMessage: 'No new admin messages',
       tripName: 'sky',
       category: {
@@ -96,6 +99,7 @@ const App: () => Node = ({navigation}) => {
     {
       id: 2,
       owner: 'a',
+      isWaiting: false,
       adminMessage: 'No new admin messages 2',
       tripName: 'SpiderMan vs Batman movie',
       category: {
@@ -126,6 +130,7 @@ const App: () => Node = ({navigation}) => {
     {
       id: 3,
       owner: 'a',
+      isWaiting: true,
       adminMessage: 'No new admin messages',
       tripName: 'Eiffel tower',
       category: {
@@ -172,9 +177,21 @@ const App: () => Node = ({navigation}) => {
   const [Index, setIndex] = useState(1);
   const [Trips, setTrips] = useState(trips);
   const [WaitingTrips, setWaitingTrips] = useState(waitingTrips);
-  const [isUserConnected, setIsUserConnected] = useState(true);
+  const [isUserConnected, setIsUserConnected] = useState(false);
   const [TripInfo, setTripInfo] = useState(tripInfo);
-  
+
+  // useEffect(() => {
+  //   const trip = getTrip('K4z8mYKWR5GWuV11WAHG');
+  //   console.log(trip);
+  // });
+
+  // const getTrip = id => {
+  //   const trip = axios
+  //     .get(`http://localhost8080/api/:${id}`)
+  //     .then(res => res.data);
+  //   return trip;
+  // };
+
   const addNewUser = user => {
     setUsers([...Users, user]);
     setIndex(Users.length - 1);
@@ -221,7 +238,9 @@ const App: () => Node = ({navigation}) => {
       const cardDeleteFeedLive = Trips.filter(trip => trip.id === tripId)[0];
       cardDeleteFeedLive.feedbacksLive.splice(feedbackLive, 1);
     } else {
-      const cardDeleteFeedLive = WaitingTrips.filter(trip => trip.id === tripId)[0];
+      const cardDeleteFeedLive = WaitingTrips.filter(
+        trip => trip.id === tripId,
+      )[0];
       cardDeleteFeedLive.feedbacksLive.splice(feedbackLive, 1);
     }
     Alert.alert('Feedback deleted!');
@@ -271,7 +290,7 @@ const App: () => Node = ({navigation}) => {
     }
   };
 
-  const NavDrawer = () => {
+  const NavDrawer = ({navigation}) => {
     const Drawer = createDrawerNavigator();
 
     return (
@@ -279,11 +298,27 @@ const App: () => Node = ({navigation}) => {
         {!isUserConnected && (
           <Drawer.Screen
             options={{headerShown: false}}
-            name="Home"
+            name="Login"
             component={LoginStack}
           />
         )}
-        <Drawer.Screen options={{headerShown: true}} name="Home">
+        <Drawer.Screen
+          // options={{headerShown: true}}
+          name="Home"
+          options={{
+            headerShown: true,
+            // headerTitle: props => <LogoTitle {...props} />,
+            headerRight: () => (
+              <Pressable
+                style={[styles.button, styles.buttonSend]}
+                onPress={() => {
+                  setIsUserConnected(false);
+                  navigation.navigate('Login');
+                }}>
+                <Text style={styles.textStyle}>LogOut</Text>
+              </Pressable>
+            ),
+          }}>
           {props => (
             <HomePage {...props} user={Users[Index]} tripSearch={addTripInfo} />
           )}
@@ -356,13 +391,13 @@ const App: () => Node = ({navigation}) => {
           </Drawer.Screen>
         )}
 
-        {isUserConnected && (
+        {/* {isUserConnected && (
           <Drawer.Screen
             name="Logout"
             component={LoginStack}
             options={{headerShown: false}}
           />
-        )}
+        )} */}
       </Drawer.Navigator>
     );
   };
@@ -401,6 +436,27 @@ const App: () => Node = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonSend: {
+    backgroundColor: '#2196F3',
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  // buttonClose: {
+  //   backgroundColor: 'grey',
+  //   marginLeft: 10,
+  //   marginRight: 10,
+  // },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});
 
 export default App;
