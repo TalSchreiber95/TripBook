@@ -11,12 +11,12 @@ import {
 import {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const PopUpMessageForm = ({user, trip, toggleInfo, onSendMessage}) => {
+const PopUpMessageForm = ({user, trip, toggleInfo, onSendMessage,onApprove}) => {
   const [message, setMessage] = useState('');
   const [toggleAddMessage, setToggleAddMessage] = useState(false);
 
   const sendMessage = () => {
-    onSendMessage(trip, message);
+    onSendMessage(trip, message,onApprove);
     Alert.alert('Message sent successfully!');
     setMessage('');
     setToggleAddMessage(!toggleAddMessage);

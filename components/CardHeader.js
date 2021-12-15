@@ -37,6 +37,17 @@ const CardHeader = ({
     setToggleDescription(true);
     setDescription(iconPressed);
   };
+  const showCardInfo =() => {
+    let cate="Trip's Owner: " + trip.owner;
+    trip.category.isRelax===true?cate+="\nRelax,":cate+="\n"
+    trip.category.isDynamic===true?cate+="Dynamic,":cate+="";
+    trip.category.isParty===true?cate+="Party,":cate+="";
+    trip.category.isPetAllowed===true?cate+="\nPet Allowed,":cate+="\n";
+    trip.category.isCarTravel===true?cate+="Car Travel,":cate+="";
+    trip.category.isPlaneTravel===true?cate+="Plane Travel,":cate+="";
+    trip.category.isTrainTravel===true?cate+="Train Travel,":cate+="";
+    Alert.alert(cate);
+  }
 
   return (
     <LinearGradient
@@ -56,7 +67,8 @@ const CardHeader = ({
           name="infocirlceo"
           size={20}
           color="white"
-          onPress={() => Alert.alert("Trip's Owner: " + trip.owner)}
+          onPress={() =>showCardInfo()} 
+          // Alert.alert("Trip's Owner: " + trip.owner)}
           onLongPress={() => toggleInfo('Trip Owner')}
           style={styles.icon}
         />
@@ -74,6 +86,7 @@ const CardHeader = ({
           trip={trip}
           toggleInfo={toggleInfo}
           onSendMessage={onSendMessage}
+          onApprove={onApprove}
         />
 
         {(user.admin || user.email == trip.owner) && (

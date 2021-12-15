@@ -414,7 +414,7 @@ const App: () => Node = ({navigation}) => {
       // setWaitingTrips(WaitingTrips);
     }
   };
-  const onSendMessage = (trip, message) => {
+  const onSendMessage = (trip, message,onApprove) => {
     if (!onApprove) {
       const cardMessage = Trips.filter(t => t.id === trip.id)[0];
       cardMessage.adminMessage = message;
