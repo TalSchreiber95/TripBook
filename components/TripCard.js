@@ -89,7 +89,7 @@ const TripCard = ({
         {
           text: 'Yes',
           onPress: () => {
-            deleteCard(trip.id);
+            deleteCard(trip.trip_id);
           },
         },
         {

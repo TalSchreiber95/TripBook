@@ -15,7 +15,7 @@ import {Form, FormItem} from 'react-native-form-component';
 import Slider from '@react-native-community/slider';
 
 const TripFilter = ({updateFilter, navigation}) => {
-  const [priceInNis, setPriceInNis] = useState();
+  const [price, setPrice] = useState();
   const [location, setLocation] = useState('');
   const [tripName, setTripName] = useState('');
 
@@ -31,7 +31,7 @@ const TripFilter = ({updateFilter, navigation}) => {
   });
 
   const onSearch = () => {
-    updateFilter(categories, tripName, location, priceInNis);
+    updateFilter(categories, tripName, location, price);
     setCategories({
       isRelax: false,
       isDynamic: false,
@@ -41,7 +41,7 @@ const TripFilter = ({updateFilter, navigation}) => {
       isPlaneTravel: false,
       isTrainTravel: false,
     });
-    setPriceInNis();
+    setPrice();
     setLocation('');
     setTripName('');
     navigation.navigate('TripsPage');
@@ -67,10 +67,10 @@ const TripFilter = ({updateFilter, navigation}) => {
           style={styles.inputView}
           label="Price limit (NIS)"
           labelStyle={styles.label}
-          value={priceInNis}
+          value={price}
           placeholder="Add price here"
           onChangeText={price => {
-            setPriceInNis(price);
+            setPrice(price);
           }}
         /> */}
 
@@ -91,8 +91,8 @@ const TripFilter = ({updateFilter, navigation}) => {
           step={1}
           minimumValue={0}
           maximumValue={10000}
-          value={priceInNis}
-          onValueChange={slideValue => setPriceInNis(parseInt(slideValue))}
+          value={price}
+          onValueChange={slideValue => setPrice(parseInt(slideValue))}
           minimumTrackTintColor="#0074D9"
           maximumTrackTintColor="grey"
           thumbTintColor="#0074D9"
@@ -106,13 +106,13 @@ const TripFilter = ({updateFilter, navigation}) => {
             underlineColorAndroid="transparent"
             onChangeText={newSliderValue => {
               !isNaN(parseInt(newSliderValue))
-                ? setPriceInNis(parseInt(newSliderValue))
-                : setPriceInNis(parseInt(0));
+                ? setPrice(parseInt(newSliderValue))
+                : setPrice(parseInt(0));
             }}
-            value={priceInNis}
+            value={price}
             maxLength={6}
           />
-          <Text style={styles.showMoney}>{priceInNis} ILS</Text>
+          <Text style={styles.showMoney}>{price} ILS</Text>
         </View>
         <Text style={styles.text}>Filter your trip category</Text>
         <BouncyCheckbox

@@ -89,6 +89,6 @@ export default MyTrips;
         trip =>
           trip.location === tripInfo.location &&
           trip.category.isRelax === tripInfo.category.isRelax &&
-          trip.priceInNis >= tripInfo.priceInNis
+          trip.price >= tripInfo.price
       )
  */

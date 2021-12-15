@@ -35,7 +35,7 @@ const TripsPage = ({
       <Text style={styles.locationText}>
         {' '}
         Showing trips located in {tripInfo.location} not over{' '}
-        {tripInfo.priceInNis} ILS{' '}
+        {tripInfo.price} ILS{' '}
       </Text>
       {/* Should implement The filter algorithm include the sort */}
       {Trips.map(trip => (
@@ -82,6 +82,6 @@ export default TripsPage;
         trip =>
           trip.location === tripInfo.location &&
           trip.category.isRelax === tripInfo.category.isRelax &&
-          trip.priceInNis >= tripInfo.priceInNis
+          trip.price >= tripInfo.price
       )
  */

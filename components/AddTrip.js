@@ -15,12 +15,12 @@ import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Header from './Header';
 
-const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
+const AddTrip = ({addWaitingTrip, user, navigation}) => {
   const [tripName, setTripName] = useState('');
   const [location, setLocation] = useState('');
   const [feedback, setFeedback] = useState('');
   const [feedbackLive, setFeedbackLive] = useState('');
-  const [priceInNis, setPriceInNis] = useState(0);
+  const [price, setPrice] = useState(0);
 
   const [description, setDescription] = useState('');
   const [picture, setPicture] = useState('');
@@ -41,32 +41,31 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
       tripName != '' &&
       location != '' &&
       description != '' &&
-      priceInNis != null
+      price != null
     ) {
       setPicture([picture]);
       setFeedback([feedback]);
       setFeedbackLive([feedbackLive]);
+      let actualCategory = [];
+      Object.keys(categories).forEach(key => {
+        if (categories[key] === true)
+        actualCategory.push(String(key))
+        // console.log(key, category[key]);
+      })
 
       const newTrip = {
-        id: getWaitingId,
-        owner: user.email,
+        // trip_id: '',
+        user_id: user.email,
+        isWaiting: true,
         adminMessage: 'No new admin messages',
         tripName: tripName,
-        category: {
-          isRelax: categories.isRelax,
-          isDynamic: categories.isDynamic,
-          isParty: categories.isParty,
-          isPetAllowed: categories.isPetAllowed,
-          isCarTravel: categories.isCarTravel,
-          isPlaneTravel: categories.isPlaneTravel,
-          isTrainTravel: categories.isTrainTravel,
-        },
+        category: actualCategory,
         pictures: picture,
         location: location,
         description: description,
         feedbacks: feedback,
         feedbacksLive: feedbackLive,
-        priceInNis: priceInNis,
+        price: price,
       };
 
       addWaitingTrip(newTrip);
@@ -118,9 +117,9 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               style={styles.inputView}
               label="Price(NIS)"
               labelStyle={styles.label}
-              value={priceInNis}
+              value={price}
               onChangeText={price => {
-                setPriceInNis(price);
+                setPrice(price);
               }}
               // demand int instead of string
               isRequired
@@ -159,8 +158,8 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
               step={1}
               minimumValue={0}
               maximumValue={10000}
-              value={priceInNis}
-              onValueChange={slideValue => setPriceInNis(parseInt(slideValue))}
+              value={price}
+              onValueChange={slideValue => setPrice(parseInt(slideValue))}
               minimumTrackTintColor="#0074D9"
               maximumTrackTintColor="grey"
               thumbTintColor="#0074D9"
@@ -174,13 +173,13 @@ const AddTrip = ({addWaitingTrip, user, getWaitingId, navigation}) => {
                 underlineColorAndroid="transparent"
                 onChangeText={newSliderValue => {
                   !isNaN(parseInt(newSliderValue))
-                    ? setPriceInNis(parseInt(newSliderValue))
-                    : setPriceInNis(parseInt(0));
+                    ? setPrice(parseInt(newSliderValue))
+                    : setPrice(parseInt(0));
                 }}
-                value={priceInNis}
+                value={price}
                 maxLength={6}
               />
-              <Text style={styles.showMoney}>{priceInNis} ILS</Text>
+              <Text style={styles.showMoney}>{price} ILS</Text>
             </View>
             <View style={styles.checkboxesView}>
               <BouncyCheckbox

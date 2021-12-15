@@ -15,10 +15,10 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Header from './Header';
 import Slider from '@react-native-community/slider';
 
-const EditTrip = ({trip, user, editCard, onApprove, setToggleEditCard}) => {
+const EditTrip = ({trip, editCard, onApprove, setToggleEditCard}) => {
   const [tripName, setTripName] = useState(trip.tripName);
   const [location, setLocation] = useState(trip.location);
-  const [priceInNis, setPriceInNis] = useState(trip.priceInNis);
+  const [price, setPrice] = useState(trip.price);
   const [description, setDescription] = useState(trip.description);
 
   //categories
@@ -32,32 +32,37 @@ const EditTrip = ({trip, user, editCard, onApprove, setToggleEditCard}) => {
     isTrainTravel: trip.category.isTrainTravel,
   });
 
-  console.log(categories);
-
   const onEditTrip = () => {
     if (
       tripName != '' &&
       location != '' &&
       description != '' &&
-      priceInNis != null
+      price != null
     ) {
+      let actualCategory = [];
+      Object.keys(categories).forEach(key => {
+        if (categories[key] === true)
+        actualCategory.push(String(key))
+        // console.log(key, category[key]);
+      })
       const updatedTrip = {
-        id: trip.id,
-        owner: user.email,
-        adminMessage: 'No new admin messages',
+        trip_id: trip.trip_id,
+        // owner: user.email,
+        // adminMessage: 'No new admin messages',
         tripName: tripName,
-        category: {
-          isRelax: categories.isRelax,
-          isDynamic: categories.isDynamic,
-          isParty: categories.isParty,
-          isPetAllowed: categories.isPetAllowed,
-          isCarTravel: categories.isCarTravel,
-          isPlaneTravel: categories.isPlaneTravel,
-          isTrainTravel: categories.isTrainTravel,
-        },
+        category: actualCategory,
+        // {
+        //   isRelax: categories.isRelax,
+        //   isDynamic: categories.isDynamic,
+        //   isParty: categories.isParty,
+        //   isPetAllowed: categories.isPetAllowed,
+        //   isCarTravel: categories.isCarTravel,
+        //   isPlaneTravel: categories.isPlaneTravel,
+        //   isTrainTravel: categories.isTrainTravel,
+        // },
         location: location,
         description: description,
-        priceInNis: priceInNis,
+        price: price,
       };
       editCard(updatedTrip, onApprove);
       setToggleEditCard(false);
@@ -122,8 +127,8 @@ const EditTrip = ({trip, user, editCard, onApprove, setToggleEditCard}) => {
               step={1}
               minimumValue={0}
               maximumValue={10000}
-              value={priceInNis}
-              onValueChange={slideValue => setPriceInNis(parseInt(slideValue))}
+              value={price}
+              onValueChange={slideValue => setPrice(parseInt(slideValue))}
               minimumTrackTintColor="#0074D9"
               maximumTrackTintColor="grey"
               thumbTintColor="#0074D9"
@@ -137,13 +142,13 @@ const EditTrip = ({trip, user, editCard, onApprove, setToggleEditCard}) => {
                 underlineColorAndroid="transparent"
                 onChangeText={newSliderValue => {
                   !isNaN(parseInt(newSliderValue))
-                    ? setPriceInNis(parseInt(newSliderValue))
-                    : setPriceInNis(parseInt(0));
+                    ? setPrice(parseInt(newSliderValue))
+                    : setPrice(parseInt(0));
                 }}
-                value={priceInNis}
+                value={price}
                 maxLength={6}
               />
-              <Text style={styles.showMoney}>{priceInNis} ILS</Text>
+              <Text style={styles.showMoney}>{price} ILS</Text>
             </View>
             <View style={styles.checkboxesView}>
               <BouncyCheckbox
@@ -166,7 +171,6 @@ const EditTrip = ({trip, user, editCard, onApprove, setToggleEditCard}) => {
                   })
                 }
                 isChecked={categories.isRelax}
-
               />
               <BouncyCheckbox
                 style={styles.checkbox}

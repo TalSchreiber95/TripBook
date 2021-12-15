@@ -5,7 +5,6 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  Button,
   Alert,
   TouchableHighlight,
   View,
@@ -14,6 +13,7 @@ import {
 
 import {Form, FormItem} from 'react-native-form-component';
 import Header from './Header';
+import {Button, CheckBox} from 'react-native-elements';
 
 const LoginPage = ({Users, ind, setIsUserConnected, navigation}) => {
   useEffect(() => {
@@ -77,18 +77,16 @@ const LoginPage = ({Users, ind, setIsUserConnected, navigation}) => {
             asterik
           />
         </Form>
-        <Pressable
-          style={styles.buttonf}
-          onPress={() => navigation.navigate('ForgotPassword')}>
-          <Text style={styles.buttonTextf}>
-            Forgot your password?! Press here!
-          </Text>
-        </Pressable>
-        <Pressable
-          style={styles.button}
-          onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.buttonText}>Dont have an account? Sign up</Text>
-        </Pressable>
+        <Button
+          title="Forgot your password ? Press here!"
+          type='inline'
+          containerStyle={styles.button}
+          titleStyle={styles.buttonText}
+          onPress={() => navigation.navigate('ForgotPassword')}></Button>
+        <Button
+          title="Dont have an account? Sign up"
+          type="clear"
+          onPress={() => navigation.navigate('Register')}></Button>
       </ScrollView>
     </SafeAreaView>
   );
@@ -123,34 +121,16 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 20,
+    // paddingVertical: 12,
+    // paddingHorizontal: 32,
+    borderRadius: 10,
     elevation: 3,
-    backgroundColor: 'black',
+    backgroundColor: 'grey',
     marginLeft: 45,
     marginRight: 45,
+    marginBottom: 30,
   },
   buttonText: {
-    fontSize: 16,
-    lineHeight: 21,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: 'white',
-  },
-  buttonf: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 32,
-    borderRadius: 20,
-    elevation: 3,
-    backgroundColor: 'firebrick',
-    marginLeft: 30,
-    marginRight: 30,
-    marginBottom: 20,
-  },
-  buttonTextf: {
     fontSize: 16,
     lineHeight: 21,
     fontWeight: 'bold',
@@ -162,7 +142,7 @@ const styles = StyleSheet.create({
     marginLeft: 100,
     marginRight: 100,
     borderRadius: 20,
-    marginBottom: 25,
+    marginBottom: 40,
   },
 });
 

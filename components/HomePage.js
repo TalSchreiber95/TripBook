@@ -12,7 +12,7 @@ import Header from './Header';
 import TripFilter from './TripFilter';
 
 const HomePage = ({user, tripSearch, navigation}) => {
-  const updateFilter = (categories, tripName, location, priceInNis) => {
+  const updateFilter = (categories, tripName, location, price) => {
     const tripInfo = {
       tripName: tripName,
       category: {
@@ -25,7 +25,7 @@ const HomePage = ({user, tripSearch, navigation}) => {
         isTrainTravel: categories.isTrainTravel,
       },
       location: location,
-      priceInNis: priceInNis,
+      price: price,
     };
     tripSearch(tripInfo);
   };

@@ -6,12 +6,11 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import HomePage from './components/HomePage';
 import AddTrip from './components/AddTrip';
-import EditTrip from './components/EditTrip';
 import TripsPage from './components/TripsPage';
 import MyTrips from './components/MyTrips';
 import TripsApprove from './components/TripsApprove';
@@ -19,22 +18,10 @@ import ForgotPassword from './components/ForgotPassword';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import 'react-native-gesture-handler';
-// import axios from 'axios';
-
+// import 'react-native-gesture-handler';
 import type {Node} from 'react';
 import {StyleSheet, Alert, Text, Pressable} from 'react-native';
 import {Button} from 'react-native-elements';
-
-// import {
-//   DrawerContentScrollView,
-//   DrawerItemList,
-//   DrawerItem,
-// } from '@react-navigation/drawer';
-
-// import {appendToMemberExpression, staticBlock} from '@babel/types';
-
-// const Stack = createNativeStackNavigator();
 
 const App: () => Node = ({navigation}) => {
   const users = [
@@ -94,7 +81,7 @@ const App: () => Node = ({navigation}) => {
         'eofkldnslkvf sdklfndslkfdslk fsdklfdslkmkldsf',
       ],
       feedbacksLive: ['Live', 'Im Liveee'],
-      priceInNis: 10,
+      price: 10,
     },
     {
       id: 2,
@@ -122,42 +109,42 @@ const App: () => Node = ({navigation}) => {
         'not a regular feedback',
         'you can call me live feedback',
       ],
-      priceInNis: 45,
+      price: 45,
     },
   ];
 
-  const waitingTrips = [
-    {
-      id: 3,
-      owner: 'a',
-      isWaiting: true,
-      adminMessage: 'No new admin messages',
-      tripName: 'Eiffel tower',
-      category: {
-        isRelax: false,
-        isDynamic: true,
-        isParty: false,
-        isPetAllowed: false,
-        isCarTravel: false,
-        isPlaneTravel: true,
-        isTrainTravel: false,
-      },
-      pictures: [
-        'https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg',
-        'https://fadeceilings.com/wp-content/uploads/2019/08/AdobeStock_65117955-720x460.jpeg',
-      ],
-      location: 'waiting',
-      description: 'The sky is blue and infinite waitingwaiting ',
-      feedbacks: [
-        'waiting sky',
-        'Blue waiting sky',
-        'Tal the waiting PoliceOfficer',
-        'eofkldnslkvf waiting sdklfndslkfdslk fsdklfdslkmkldsf',
-      ],
-      feedbacksLive: ['Live waiting', 'Im Liveee waiting'],
-      priceInNis: 400,
-    },
-  ];
+  // const waitingTrips = [
+  //   {
+  //     id: 3,
+  //     owner: 'a',
+  //     isWaiting: true,
+  //     adminMessage: 'No new admin messages',
+  //     tripName: 'Eiffel tower',
+  //     category: {
+  //       isRelax: false,
+  //       isDynamic: true,
+  //       isParty: false,
+  //       isPetAllowed: false,
+  //       isCarTravel: false,
+  //       isPlaneTravel: true,
+  //       isTrainTravel: false,
+  //     },
+  //     pictures: [
+  //       'https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg',
+  //       'https://fadeceilings.com/wp-content/uploads/2019/08/AdobeStock_65117955-720x460.jpeg',
+  //     ],
+  //     location: 'waiting',
+  //     description: 'The sky is blue and infinite waitingwaiting ',
+  //     feedbacks: [
+  //       'waiting sky',
+  //       'Blue waiting sky',
+  //       'Tal the waiting PoliceOfficer',
+  //       'eofkldnslkvf waiting sdklfndslkfdslk fsdklfdslkmkldsf',
+  //     ],
+  //     feedbacksLive: ['Live waiting', 'Im Liveee waiting'],
+  //     price: 400,
+  //   },
+  // ];
 
   const tripInfo = {
     tripName: '',
@@ -171,39 +158,171 @@ const App: () => Node = ({navigation}) => {
       isTrainTravel: false,
     },
     location: '',
-    priceInNis: 0,
+    price: 0,
   };
   const [Users, setUsers] = useState(users);
   const [Index, setIndex] = useState(1);
   const [Trips, setTrips] = useState(trips);
-  const [WaitingTrips, setWaitingTrips] = useState(waitingTrips);
+  const [WaitingTrips, setWaitingTrips] = useState([]);
   const [isUserConnected, setIsUserConnected] = useState(false);
   const [TripInfo, setTripInfo] = useState(tripInfo);
+  const [tr, setTr] = useState([]);
 
-  // useEffect(() => {
-  //   const trip = getTrip('K4z8mYKWR5GWuV11WAHG');
-  //   console.log(trip);
-  // });
+  const fetchTripById = id => {
+    fetch(`http://10.0.2.2:8080/api/tripID/${id}`)
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        return json;
+      })
+      .catch(error => console.error(error));
+  };
 
-  // const getTrip = id => {
-  //   const trip = axios
-  //     .get(`http://localhost8080/api/:${id}`)
-  //     .then(res => res.data);
-  //   return trip;
-  // };
+  const fetchTripByOwner = ownerId => {
+    fetch(`http://10.0.2.2:8080/api/tripOwner/${ownerId}`)
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        return json;
+        7;
+      })
+      .catch(error => console.error(error));
+  };
+
+  const fetchWaitingTrips = () => {
+    fetch(`http://10.0.2.2:8080/api/tripIsWaiting`)
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        let array = [];
+        json.forEach(trip => {
+          array.push(
+            ({
+              trip_id,
+              user_id,
+              isWaiting,
+              adminMessage,
+              tripName,
+              location,
+              description,
+              price,
+            } = trip),
+          );
+        });
+        console.log(array);
+        setWaitingTrips(array);
+
+        // var array = [];
+        // trips.forEach(doc => {
+        //   array.push(doc.data());
+        // });
+        // return json;
+      })
+      .catch(error => console.error(error));
+  };
+
+  const fetchTrips = categories => {
+    try {
+      fetch(`http://10.0.2.2:8080/api/tripByCategory/`, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({categories}),
+      })
+        .then(res => res.json())
+        .then(json => {
+          console.log(json);
+          return json;
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const AddTripToDB = async trip => {
+    await fetch(`http://10.0.2.2:8080/api/Trip`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(trip),
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        // return json;
+      })
+      .catch(error => console.error(error));
+    fetchWaitingTrips();
+  };
+
+  const UpdateTripToDB = (id, trip) => {
+    fetch(`http://10.0.2.2:8080/api/trip/${id}`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(trip),
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        // return json;
+      })
+      .catch(error => console.error(error));
+    fetchWaitingTrips();
+  };
+
+  const deleteTripFromDB = async id => {
+    await fetch(`http://10.0.2.2:8080/api/trip/${id}`, {
+      method: 'DELETE',
+      // headers: {'Content-Type': 'application/json'},
+      // body: JSON.stringify(trip),
+    })
+      // .then(res => Alert.alert(String(res)))
+      // .then(json => {
+      //   console.log(json);
+      //   // return json;
+      // })
+      .catch(error => console.error(error));
+
+    fetchWaitingTrips();
+  };
+
+  useEffect(() => {
+    // const getTrips = () => {
+
+    // };
+
+    fetchWaitingTrips();
+    // const trip = {
+    //   trip_id: '',
+    //   isWaiting: true,
+    //   tripName: 'Kruval',
+    //   location: 'Ariel',
+    //   user_id: 'Gf4EHaovM5IlAbEnuj6g',
+    //   price: 150,
+    //   adminMessage: '',
+    //   feedbacksLive: [],
+    //   feedbacks: [],
+    //   pictures: [],
+    //   description: 'schriber the gay',
+    // }
+    // AddTripToDB(trip);
+    // deleteTripFromDB('GmCv1qHElG5eMvqtOAr8')
+    // console.log(fetchedTrips);
+  }, []);
 
   const addNewUser = user => {
     setUsers([...Users, user]);
     setIndex(Users.length - 1);
   };
   const addTrip = trip => {
-    setTrips([...Trips, trip]);
-    setWaitingTrips(prevCards => {
-      return prevCards.filter(card => card.id != trip.id);
-    });
+    // setTrips([...Trips, trip]);
+    // setWaitingTrips(prevCards => {
+    //   return prevCards.filter(card => card.id != trip.id);
+    // });
+    // AddTripToDB(trip);
   };
   const addWaitingTrip = waitingTrip => {
-    setWaitingTrips([...WaitingTrips, waitingTrip]);
+    // setWaitingTrips([...WaitingTrips, waitingTrip]);
+    AddTripToDB(waitingTrip);
+    // fetchWaitingTrips();
   };
   const addTripInfo = tripInfo => {
     setTripInfo(tripInfo);
@@ -246,38 +365,53 @@ const App: () => Node = ({navigation}) => {
     Alert.alert('Feedback deleted!');
   };
   const deleteWaitingCard = id => {
-    setWaitingTrips(prevCards => {
-      return prevCards.filter(card => card.id != id);
-    });
+    // setWaitingTrips(prevCards => {
+    //   return prevCards.filter(card => card.id != id);
+    // });
+    console.log(id);
+    deleteTripFromDB(id);
+    // fetchWaitingTrips();
   };
 
   const editCard = (updatedTrip, onApprove) => {
     if (!onApprove) {
       const trip = Trips.filter(t => t.id === updatedTrip.id)[0];
       trip.tripName = updatedTrip.tripName;
-      trip.category.isRelax = updatedTrip.category.isRelax;
-      trip.category.isDynamic = updatedTrip.category.isDynamic;
-      trip.category.isParty = updatedTrip.category.isParty;
-      trip.category.isPetAllowed = updatedTrip.category.isPetAllowed;
-      trip.category.isCarTravel = updatedTrip.category.isCarTravel;
-      trip.category.isPlaneTravel = updatedTrip.category.isPlaneTravel;
-      trip.category.isTrainTravel = updatedTrip.category.isTrainTravel;
+      // trip.category.isRelax = updatedTrip.category.isRelax;
+      // trip.category.isDynamic = updatedTrip.category.isDynamic;
+      // trip.category.isParty = updatedTrip.category.isParty;
+      // trip.category.isPetAllowed = updatedTrip.category.isPetAllowed;
+      // trip.category.isCarTravel = updatedTrip.category.isCarTravel;
+      // trip.category.isPlaneTravel = updatedTrip.category.isPlaneTravel;
+      // trip.category.isTrainTravel = updatedTrip.category.isTrainTravel;
       trip.location = updatedTrip.location;
       trip.description = updatedTrip.description;
-      trip.priceInNis = updatedTrip.priceInNis;
+      trip.price = updatedTrip.price;
     } else {
-      const waitingTrip = WaitingTrips.filter(t => t.id === updatedTrip.id)[0];
-      waitingTrip.tripName = updatedTrip.tripName;
-      waitingTrip.category.isRelax = updatedTrip.category.isRelax;
-      waitingTrip.category.isDynamic = updatedTrip.category.isDynamic;
-      waitingTrip.category.isParty = updatedTrip.category.isParty;
-      waitingTrip.category.isPetAllowed = updatedTrip.category.isPetAllowed;
-      waitingTrip.category.isCarTravel = updatedTrip.category.isCarTravel;
-      waitingTrip.category.isPlaneTravel = updatedTrip.category.isPlaneTravel;
-      waitingTrip.category.isTrainTravel = updatedTrip.category.isTrainTravel;
-      waitingTrip.location = updatedTrip.location;
-      waitingTrip.description = updatedTrip.description;
-      waitingTrip.priceInNis = updatedTrip.priceInNis;
+      // const waitingTrip = updatedTrip.id;
+      // waitingTrip.tripName = updatedTrip.tripName;
+      // waitingTrip.category.isRelax = updatedTrip.category.isRelax;
+      // waitingTrip.category.isDynamic = updatedTrip.category.isDynamic;
+      // waitingTrip.category.isParty = updatedTrip.category.isParty;
+      // waitingTrip.category.isPetAllowed = updatedTrip.category.isPetAllowed;
+      // waitingTrip.category.isCarTravel = updatedTrip.category.isCarTravel;
+      // waitingTrip.category.isPlaneTravel = updatedTrip.category.isPlaneTravel;
+      // waitingTrip.category.isTrainTravel = updatedTrip.category.isTrainTravel;
+      // waitingTrip.location = updatedTrip.location;
+      // waitingTrip.description = updatedTrip.description;
+      // waitingTrip.price = updatedTrip.price;
+
+      const updatedWaitingTrip = {
+        tripName: updatedTrip.tripName,
+        category: updatedTrip.category,
+        price: updatedTrip.price,
+        location: updatedTrip.location,
+        description: updatedTrip.description,
+      };
+      // const id = String(updatedTrip.id);
+      // console.log(id);
+      UpdateTripToDB(updatedTrip.trip_id, updatedWaitingTrip);
+      // setWaitingTrips(WaitingTrips);
     }
   };
   const onSendMessage = (trip, message) => {
@@ -290,11 +424,11 @@ const App: () => Node = ({navigation}) => {
     }
   };
 
-  const NavDrawer = ({navigation}) => {
+  const NavDrawer = () => {
     const Drawer = createDrawerNavigator();
 
     return (
-      <Drawer.Navigator>
+      <Drawer.Navigator initialRouteName="Login">
         {!isUserConnected && (
           <Drawer.Screen
             options={{headerShown: false}}
@@ -313,7 +447,6 @@ const App: () => Node = ({navigation}) => {
                 style={[styles.button, styles.buttonSend]}
                 onPress={() => {
                   setIsUserConnected(false);
-                  navigation.navigate('Login');
                 }}>
                 <Text style={styles.textStyle}>LogOut</Text>
               </Pressable>
@@ -390,14 +523,6 @@ const App: () => Node = ({navigation}) => {
             )}
           </Drawer.Screen>
         )}
-
-        {/* {isUserConnected && (
-          <Drawer.Screen
-            name="Logout"
-            component={LoginStack}
-            options={{headerShown: false}}
-          />
-        )} */}
       </Drawer.Navigator>
     );
   };
@@ -407,7 +532,7 @@ const App: () => Node = ({navigation}) => {
 
     return (
       <Stack.Navigator>
-        <Stack.Screen name="Login">
+        <Stack.Screen name="LoginPage">
           {props => (
             <LoginPage
               {...props}

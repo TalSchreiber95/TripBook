@@ -46,7 +46,7 @@ const CardFooter = ({
             color="whitesmoke"
             style={styles.ilsIcon}
           />
-          <Text style={styles.priceText}>{trip.priceInNis}</Text>
+          <Text style={styles.priceText}>{trip.price}</Text>
         </View>
         <RightCardFooter
           trip={trip}

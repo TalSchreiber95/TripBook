@@ -1,19 +1,10 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TextInput,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, Text} from 'react-native';
 
 import Header from './Header';
 import TripCard from './TripCard';
 
-import { useState } from 'react';
+import {useState} from 'react';
 
 const TripsApprove = ({
   WaitingTrips,
@@ -27,25 +18,27 @@ const TripsApprove = ({
   deleteFeedbackLive,
 }) => {
   return (
-    <ScrollView>
-      <Header user={user} />
-      <Text style={styles.text}>Approve trips List:</Text>
-      {WaitingTrips.map(trip => (
-        <TripCard
-          key={trip.id}
-          trip={trip}
-          user={user}
-          deleteCard={deleteWaitingCard}
-          addTrip={addTrip}
-          editCard={editCard}
-          onSendMessage={onSendMessage}
-          deletePicture={deletePicture}
-          deleteFeedback={deleteFeedback}
-          deleteFeedbackLive={deleteFeedbackLive}
-          onApprove={true}
-        />
-      ))}
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView>
+        <Header user={user} />
+        <Text style={styles.text}>Approve trips List:</Text>
+        {WaitingTrips.map(trip => (
+          <TripCard
+            key={trip.trip_id}
+            trip={trip}
+            user={user}
+            deleteCard={deleteWaitingCard}
+            addTrip={addTrip}
+            editCard={editCard}
+            onSendMessage={onSendMessage}
+            deletePicture={deletePicture}
+            deleteFeedback={deleteFeedback}
+            deleteFeedbackLive={deleteFeedbackLive}
+            onApprove={true}
+          />
+        ))}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -71,6 +64,6 @@ export default TripsApprove;
         trip =>
           trip.location === tripInfo.location &&
           trip.category.isRelax === tripInfo.category.isRelax &&
-          trip.priceInNis >= tripInfo.priceInNis
+          trip.price >= tripInfo.price
       )
  */
