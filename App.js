@@ -168,6 +168,67 @@ const App: () => Node = ({navigation}) => {
   const [TripInfo, setTripInfo] = useState(tripInfo);
   const [tr, setTr] = useState([]);
 
+  const fetchUserById = id => {
+    fetch(`http://10.0.2.2:8080/api/user/${id}`)
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        return json;
+      })
+      .catch(error => console.error(error));
+  };
+
+  const fetchAuthentication = user => {
+    fetch(`http://10.0.2.2:8080/api/user/`),
+      {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(user),
+      }
+        .then(res => res.json())
+        .then(json => {
+          console.log(json);
+          return json;
+        })
+        .catch(error => console.error(error));
+  };
+
+  const UpdateUserToDB = async (id, user) => {
+    await fetch(`http://10.0.2.2:8080/api/user/${id}`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(user),
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        // return json;
+      })
+      .catch(error => console.error(error));
+  };
+
+  const AddUserToDB = async trip => {
+    await fetch(`http://10.0.2.2:8080/api/user`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(trip),
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        // return json;
+      })
+      .catch(error => console.error(error));
+    // fetchWaitingTrips();
+  };
+
+  const deleteUserFromDB = async id => {
+    await fetch(`http://10.0.2.2:8080/api/user/${id}`, {
+      method: 'DELETE',
+    }).catch(error => console.error(error));
+    // fetchWaitingTrips();
+  };
+
   const fetchTripById = id => {
     fetch(`http://10.0.2.2:8080/api/tripID/${id}`)
       .then(res => res.json())
@@ -189,8 +250,8 @@ const App: () => Node = ({navigation}) => {
       .catch(error => console.error(error));
   };
 
-  const fetchWaitingTrips = () => {
-    fetch(`http://10.0.2.2:8080/api/tripIsWaiting`)
+  const fetchWaitingTrips = async () => {
+    await fetch(`http://10.0.2.2:8080/api/tripIsWaiting`)
       .then(res => res.json())
       .then(json => {
         console.log(json);
@@ -221,25 +282,22 @@ const App: () => Node = ({navigation}) => {
       .catch(error => console.error(error));
   };
 
-  const fetchTrips = categories => {
-    try {
-      fetch(`http://10.0.2.2:8080/api/tripByCategory/`, {
-        method: 'GET',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({categories}),
+  const fetchTrips = async categories => {
+    await fetch(`http://10.0.2.2:8080/api/tripByCategory`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(categories),
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        return json;
       })
-        .then(res => res.json())
-        .then(json => {
-          console.log(json);
-          return json;
-        });
-    } catch (error) {
-      console.error(error);
-    }
+      .catch(error => console.error(error));
   };
 
   const AddTripToDB = async trip => {
-    await fetch(`http://10.0.2.2:8080/api/Trip`, {
+    await fetch(`http://10.0.2.2:8080/api/trip`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(trip),
@@ -253,8 +311,8 @@ const App: () => Node = ({navigation}) => {
     fetchWaitingTrips();
   };
 
-  const UpdateTripToDB = (id, trip) => {
-    fetch(`http://10.0.2.2:8080/api/trip/${id}`, {
+  const UpdateTripToDB = async (id, trip) => {
+    await fetch(`http://10.0.2.2:8080/api/trip/${id}`, {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(trip),
@@ -288,8 +346,9 @@ const App: () => Node = ({navigation}) => {
     // const getTrips = () => {
 
     // };
-
+    // fetchUserById('Gf4EHaovM5IlAbEnuj6g');
     fetchWaitingTrips();
+    // fetchTrips({categories: []});
     // const trip = {
     //   trip_id: '',
     //   isWaiting: true,
@@ -312,12 +371,13 @@ const App: () => Node = ({navigation}) => {
     setUsers([...Users, user]);
     setIndex(Users.length - 1);
   };
-  const addTrip = trip => {
+
+  const addTrip = id => {
     // setTrips([...Trips, trip]);
     // setWaitingTrips(prevCards => {
     //   return prevCards.filter(card => card.id != trip.id);
     // });
-    // AddTripToDB(trip);
+    UpdateTripToDB(id, {isWaiting: false});
   };
   const addWaitingTrip = waitingTrip => {
     // setWaitingTrips([...WaitingTrips, waitingTrip]);
@@ -414,7 +474,7 @@ const App: () => Node = ({navigation}) => {
       // setWaitingTrips(WaitingTrips);
     }
   };
-  const onSendMessage = (trip, message,onApprove) => {
+  const onSendMessage = (trip, message, onApprove) => {
     if (!onApprove) {
       const cardMessage = Trips.filter(t => t.id === trip.id)[0];
       cardMessage.adminMessage = message;

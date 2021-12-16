@@ -72,7 +72,7 @@ const TripCard = ({
         {
           text: 'Yes',
           onPress: () => {
-            addTrip(trip);
+            addTrip(trip.trip_id);
           },
         },
         {
