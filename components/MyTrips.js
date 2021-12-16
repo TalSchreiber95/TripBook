@@ -12,8 +12,8 @@ import {
 
 import Header from './Header';
 import TripCard from './TripCard';
-
-import {useState} from 'react';
+import GroupTripCard from './GroupTripCard';
+import { useState } from 'react';
 
 const MyTrips = ({
   Trips,
@@ -30,7 +30,7 @@ const MyTrips = ({
 }) => {
   return (
     <ScrollView>
-      <Header user={user}  />
+      <Header user={user} />
       <Text style={styles.text}>My posted trips:</Text>
       {Trips.filter(trip => trip.owner === user.email).map(trip => (
         <TripCard
@@ -63,6 +63,22 @@ const MyTrips = ({
           onApprove={true}
         />
       ))}
+      <Text style={styles.text2}>My waiting group Trips:</Text>
+      {WaitingTrips.map(trip => (
+        <GroupTripCard
+          key={trip.id}
+          trip={trip}
+          user={user}
+          deleteCard={deleteCard}
+          editCard={editCard}
+          onSendMessage={onSendMessage}
+          deletePicture={deletePicture}
+          deleteFeedback={deleteFeedback}
+          deleteFeedbackLive={deleteFeedbackLive}
+          onApprove={true}
+          onGroup={true}
+        />
+      ))}
     </ScrollView>
   );
 };
@@ -73,6 +89,13 @@ const styles = StyleSheet.create({
     fontSize: 23,
     marginLeft: 20,
     // marginBottom: 20,
+  },
+  text2: {
+    color: 'black',
+    fontSize: 23,
+    marginLeft: 10,
+    marginEnd: 160,
+    backgroundColor: 'green'
   },
   locationText: {
     margin: 10,

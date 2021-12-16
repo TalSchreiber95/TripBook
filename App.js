@@ -11,6 +11,7 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import HomePage from './components/HomePage';
 import AddTrip from './components/AddTrip';
+import AddGroupTrip from './components/AddGroupTrip';
 import TripsPage from './components/TripsPage';
 import MyTrips from './components/MyTrips';
 import TripsApprove from './components/TripsApprove';
@@ -379,6 +380,9 @@ const App: () => Node = ({navigation}) => {
     // });
     UpdateTripToDB(id, {isWaiting: false});
   };
+  const addWaitingGroupTrip=(waitingGroupTrip)=>{
+    Alert.alert("asdsad"+String(waitingGroupTrip).toString);
+  }
   const addWaitingTrip = waitingTrip => {
     // setWaitingTrips([...WaitingTrips, waitingTrip]);
     AddTripToDB(waitingTrip);
@@ -577,6 +581,18 @@ const App: () => Node = ({navigation}) => {
               <AddTrip
                 {...props}
                 addWaitingTrip={addWaitingTrip}
+                user={Users[Index]}
+                getWaitingId={Trips.length + WaitingTrips.length + 1}
+              />
+            )}
+          </Drawer.Screen>
+        )}
+        {isUserConnected && (
+          <Drawer.Screen name="AddGroupTrip">
+            {props => (
+              <AddGroupTrip
+                {...props}
+                addWaitingGroupTrip={addWaitingGroupTrip}
                 user={Users[Index]}
                 getWaitingId={Trips.length + WaitingTrips.length + 1}
               />

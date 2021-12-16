@@ -12,6 +12,8 @@ import {
 
 import Header from './Header';
 import TripCard from './TripCard';
+import GroupTripCard from './GroupTripCard';
+
 
 import { useState } from 'react';
 
@@ -52,6 +54,22 @@ const TripsPage = ({
           onApprove={false}
         />
       ))}
+      <Text style={styles.text2}>Group Trips:</Text>
+      {Trips.map(trip => (
+        <GroupTripCard
+          key={trip.id}
+          trip={trip}
+          user={user}
+          deleteCard={deleteCard}
+          editCard={editCard}
+          onSendMessage={onSendMessage}
+          deletePicture={deletePicture}
+          deleteFeedback={deleteFeedback}
+          deleteFeedbackLive={deleteFeedbackLive}
+          onApprove={false}
+          onGroup={true}
+        />
+      ))}
     </ScrollView>
   );
 };
@@ -66,6 +84,13 @@ const styles = StyleSheet.create({
     fontSize: 23,
     marginLeft: 20,
     // marginBottom: 20,
+  },
+  text2:{
+    color:'black',
+    fontSize:23,
+    marginLeft: 10,
+    marginEnd:260,
+    backgroundColor:'green'
   },
   locationText: {
     margin: 10,

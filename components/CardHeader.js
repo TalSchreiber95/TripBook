@@ -10,13 +10,14 @@ import {
 } from 'react-native';
 import LeftCardHeader from './LeftCardHeader';
 import RightCardHeader from './RightCardHeader';
-import {Header} from 'react-native-elements';
+import { Button, Header } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
-import {Button, Snackbar} from 'react-native-paper';
-import {useState} from 'react';
-import {Form, FormItem} from 'react-native-form-component';
+import { Snackbar } from 'react-native-paper';
+import { useState } from 'react';
+import { Form, FormItem } from 'react-native-form-component';
 import PopUpMessageForm from './PopUpMessageForm';
 import PopUpEditTrip from './PopUpEditTrip';
+import { color } from 'react-native-reanimated';
 
 const CardHeader = ({
   trip,
@@ -28,8 +29,10 @@ const CardHeader = ({
   onSendMessage,
   onApprove,
   editCard,
+  onGroup
 }) => {
   const [toggleDescription, setToggleDescription] = useState(false);
+  const [toggleOnJoin, setToggleOnJoin] = useState(false);
   const [description, setDescription] = useState('');
 
 
@@ -37,23 +40,30 @@ const CardHeader = ({
     setToggleDescription(true);
     setDescription(iconPressed);
   };
-  const showCardInfo =() => {
-    let cate="Trip's Owner: " + trip.owner;
-    trip.category.isRelax===true?cate+="\nRelax,":cate+="\n"
-    trip.category.isDynamic===true?cate+="Dynamic,":cate+="";
-    trip.category.isParty===true?cate+="Party,":cate+="";
-    trip.category.isPetAllowed===true?cate+="\nPet Allowed,":cate+="\n";
-    trip.category.isCarTravel===true?cate+="Car Travel,":cate+="";
-    trip.category.isPlaneTravel===true?cate+="Plane Travel,":cate+="";
-    trip.category.isTrainTravel===true?cate+="Train Travel,":cate+="";
+  const setJoinGroup = () => {
+    setToggleOnJoin(!toggleOnJoin);
+    //Note: should add the member to the group here.
+    toggleOnJoin ?
+      Alert.alert("Group join Canceled") :
+      Alert.alert("Group join successfully");
+  }
+  const showCardInfo = () => {
+    let cate = "Trip's Owner: " + trip.owner;
+    trip.category.isRelax === true ? cate += "\nRelax," : cate += "\n"
+    trip.category.isDynamic === true ? cate += "Dynamic," : cate += "";
+    trip.category.isParty === true ? cate += "Party," : cate += "";
+    trip.category.isPetAllowed === true ? cate += "\nPet Allowed," : cate += "\n";
+    trip.category.isCarTravel === true ? cate += "Car Travel," : cate += "";
+    trip.category.isPlaneTravel === true ? cate += "Plane Travel," : cate += "";
+    trip.category.isTrainTravel === true ? cate += "Train Travel," : cate += "";
     Alert.alert(cate);
   }
 
   return (
     <LinearGradient
       colors={['white', 'steelblue']}
-      start={{x: 1, y: 4}}
-      end={{x: 0, y: 2}}>
+      start={{ x: 1, y: 4 }}
+      end={{ x: 0, y: 2 }}>
       <View style={styles.iconHeader}>
         <Snackbar
           style={styles.snackbar}
@@ -67,7 +77,7 @@ const CardHeader = ({
           name="infocirlceo"
           size={20}
           color="white"
-          onPress={() =>showCardInfo()} 
+          onPress={() => showCardInfo()}
           // Alert.alert("Trip's Owner: " + trip.owner)}
           onLongPress={() => toggleInfo('Trip Owner')}
           style={styles.icon}
@@ -131,7 +141,16 @@ const CardHeader = ({
           toggler={toggler}
           updateButton={updateButton}
         />
-
+        {onGroup &&
+          <Button
+            title={toggleOnJoin ? "Cencel join" : "Join Group"}
+            onPress={() => setJoinGroup()}
+            type="secondary"
+            titleStyle={styles.button}
+            containerStyle={styles.buttonContainer}
+            raised
+          />
+        }
         <RightCardHeader
           trip={trip}
           toggler={toggler}
@@ -144,6 +163,7 @@ const CardHeader = ({
 CardHeader.defaultProps = {
   // toggleApproveCard: false,
   onApprove: false,
+  onGroup: false,
 };
 const styles = StyleSheet.create({
   cardHeader: {
@@ -157,7 +177,16 @@ const styles = StyleSheet.create({
     margin: 10,
     marginTop: 0,
   },
-
+  button: {
+    // backgroundColor: 'green',
+    fontSize: 15,
+    // color:'White'
+  },
+  buttonContainer: {
+    // backgroundColor: 'black',
+    // color:'black',
+    width: 91,
+  },
   iconHeader: {
     // flex: 2,
     // borderRadius: 15,
