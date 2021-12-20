@@ -21,6 +21,35 @@ const LeftCardFooter = ({
   const [feedbackLiveIndex, setFeedbackLiveIndex] = useState(0);
 
   const [toggleFeedbackLive, setToggleFeedbackLive] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [livePosts, setLivePosts] = useState([]);
+
+  useEffect(() => {
+    getPostsByTripID(trip.id)
+  }, []);
+
+  const getPostsByTripID = async trip_id => {
+    // var flag = false;
+    await fetch(`http://10.0.2.2:8080/api/postsByTripID/${trip_id}`)
+      .then(res => {
+        // res.ok && (flag = true);
+        return res.json();
+      })
+      .then(
+        json => {
+          // if (flag) {
+          console.log(json);
+          // const newJson = json;
+          setPosts(json);
+          // console.log(activeUser);
+        },
+        // }
+      )
+      .catch(error => console.error(error));
+    console.log(posts);
+  };
+
+  
 
   const ToggleFeedback = () => {
     toggler === 'feedback' ? updateButton('none') : updateButton('feedback');
@@ -34,7 +63,7 @@ const LeftCardFooter = ({
       ? setFeedbackLiveIndex(
           (feedbackLiveIndex + 1) % trip.feedbacksLive.length,
         )
-      : setFeedbackIndex((feedbackIndex + 1) % trip.feedbacks.length);
+      : setFeedbackIndex((feedbackIndex + 1) % posts.length);
   };
 
   const switchFeedbackLeft = () => {
@@ -44,7 +73,7 @@ const LeftCardFooter = ({
             trip.feedbacksLive.length,
         )
       : setFeedbackIndex(
-          (feedbackIndex - 1 + trip.feedbacks.length) % trip.feedbacks.length,
+          (feedbackIndex - 1 + posts.length) % posts.length,
         );
   };
   const delFeed = () => {
@@ -112,8 +141,8 @@ const LeftCardFooter = ({
             <Text style={styles.text}>
               {toggleFeedbackLive && trip.feedbacksLive.length > 0
                 ? trip.feedbacksLive[feedbackLiveIndex]
-                : !toggleFeedbackLive && trip.feedbacks.length > 0
-                ? trip.feedbacks[feedbackIndex]
+                : !toggleFeedbackLive && posts.length > 0
+                ? posts[feedbackIndex].description
                 : 'No feedbacks available'}
             </Text>
 

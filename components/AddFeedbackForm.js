@@ -21,6 +21,7 @@ const AddFeedbackForm = ({trip}) => {
     toggleFeedbackLive
       ? trip.feedbacksLive.push(feedbackLive)
       : trip.feedbacks.push(feedback);
+      
   };
 
   return (

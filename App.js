@@ -167,7 +167,7 @@ const App: () => Node = ({navigation}) => {
   const [WaitingTrips, setWaitingTrips] = useState([]);
   const [isUserConnected, setIsUserConnected] = useState(false);
   const [TripInfo, setTripInfo] = useState(tripInfo);
-  const [tr, setTr] = useState([]);
+  const [activeUser, setActiveUser] = useState({});
 
   const fetchUserById = id => {
     fetch(`http://10.0.2.2:8080/api/user/${id}`)
@@ -179,20 +179,36 @@ const App: () => Node = ({navigation}) => {
       .catch(error => console.error(error));
   };
 
-  const fetchAuthentication = user => {
-    fetch(`http://10.0.2.2:8080/api/user/`),
+  // params in url instead of body: email and password on URL, and turn back to GET
+  const fetchAuthentication = async user => {
+    var flag = false;
+    await fetch(
+      `http://10.0.2.2:8080/api/authUser/`,
       {
-        method: 'GET',
+        method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(user),
-      }
-        .then(res => res.json())
-        .then(json => {
+      },
+    )
+      .then(res => {
+        res.ok && (flag = true);
+        return res.json();
+      })
+      .then(json => {
+        if (flag) {
           console.log(json);
-          return json;
-        })
-        .catch(error => console.error(error));
+          // const newJson = json;
+          setActiveUser(json);
+          console.log(activeUser);
+        }
+      })
+      .catch(error => console.error(error));
+    console.log(activeUser);
+
+    return flag;
   };
+
+  const recoverPassword = () => {};
 
   const UpdateUserToDB = async (id, user) => {
     await fetch(`http://10.0.2.2:8080/api/user/${id}`, {
@@ -217,17 +233,15 @@ const App: () => Node = ({navigation}) => {
       .then(res => res.json())
       .then(json => {
         console.log(json);
-        // return json;
+        return json;
       })
       .catch(error => console.error(error));
-    // fetchWaitingTrips();
   };
 
   const deleteUserFromDB = async id => {
     await fetch(`http://10.0.2.2:8080/api/user/${id}`, {
       method: 'DELETE',
     }).catch(error => console.error(error));
-    // fetchWaitingTrips();
   };
 
   const fetchTripById = id => {
@@ -246,7 +260,6 @@ const App: () => Node = ({navigation}) => {
       .then(json => {
         console.log(json);
         return json;
-        7;
       })
       .catch(error => console.error(error));
   };
@@ -255,7 +268,7 @@ const App: () => Node = ({navigation}) => {
     await fetch(`http://10.0.2.2:8080/api/tripIsWaiting`)
       .then(res => res.json())
       .then(json => {
-        console.log(json);
+        // console.log(json);
         let array = [];
         json.forEach(trip => {
           array.push(
@@ -271,7 +284,7 @@ const App: () => Node = ({navigation}) => {
             } = trip),
           );
         });
-        console.log(array);
+        // console.log(array);
         setWaitingTrips(array);
 
         // var array = [];
@@ -283,16 +296,24 @@ const App: () => Node = ({navigation}) => {
       .catch(error => console.error(error));
   };
 
-  const fetchTrips = async categories => {
-    await fetch(`http://10.0.2.2:8080/api/tripByCategory`, {
+  const fetchTrips = async tripSearchInfo => {
+    console.log(tripSearchInfo);
+    await fetch(`http://10.0.2.2:8080/api/tripByCategory/`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(categories),
+      body: JSON.stringify(tripSearchInfo),
     })
       .then(res => res.json())
       .then(json => {
-        console.log(json);
-        return json;
+        // console.log(json);
+        let array = [];
+        json.forEach(trip => {
+          array.push(({location, category, price} = trip));
+        });
+        setTrips(array);
+        console.log(Trips);
+
+        // return array;
       })
       .catch(error => console.error(error));
   };
@@ -330,26 +351,66 @@ const App: () => Node = ({navigation}) => {
   const deleteTripFromDB = async id => {
     await fetch(`http://10.0.2.2:8080/api/trip/${id}`, {
       method: 'DELETE',
-      // headers: {'Content-Type': 'application/json'},
-      // body: JSON.stringify(trip),
-    })
-      // .then(res => Alert.alert(String(res)))
-      // .then(json => {
-      //   console.log(json);
-      //   // return json;
-      // })
-      .catch(error => console.error(error));
+    }).catch(error => console.error(error));
 
     fetchWaitingTrips();
   };
 
+  const getPostsByTripID = async trip_id => {
+    // var flag = false;
+    await fetch(`http://10.0.2.2:8080/api/postsByTripID/${trip_id}`)
+      .then(res => {
+        // res.ok && (flag = true);
+        return res.json();
+      })
+      .then(
+        json => {
+          // if (flag) {
+          console.log(json);
+          // const newJson = json;
+          // setActiveUser(json);
+          // console.log(activeUser);
+        },
+        // }
+      )
+      .catch(error => console.error(error));
+    // console.log(activeUser);
+
+    // return flag;
+  };
+
+  const AddPostToDB = async post => {
+    await fetch(`http://10.0.2.2:8080/api/post`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(post),
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        return json;
+      })
+      .catch(error => console.error(error));
+  };
+
+  const deletePostFromDB = async id => {
+    await fetch(`http://10.0.2.2:8080/api/post/${id}`, {
+      method: 'DELETE',
+    }).catch(error => console.error(error));
+  };
+
   useEffect(() => {
     // const getTrips = () => {
-
+    // getPostsByTripID('7hY3YJgh5F4C3KMGjPZP');
     // };
     // fetchUserById('Gf4EHaovM5IlAbEnuj6g');
     fetchWaitingTrips();
-    // fetchTrips({categories: []});
+
+    // fetchAuthentication({email: 'a', password: 'a'});
+
+    fetchTrips({category: []});
+    // deleteUserFromDB('cXWSbpE91XhgrLFbuqSI');
+    // UpdateUserToDB('vHqHkblYfGRo6OrGcp4U', {firstName: 'admin'})
     // const trip = {
     //   trip_id: '',
     //   isWaiting: true,
@@ -368,6 +429,10 @@ const App: () => Node = ({navigation}) => {
     // console.log(fetchedTrips);
   }, []);
 
+  // const authenticateUser = details => {
+  //   getAuth()
+  // };
+
   const addNewUser = user => {
     setUsers([...Users, user]);
     setIndex(Users.length - 1);
@@ -380,16 +445,15 @@ const App: () => Node = ({navigation}) => {
     // });
     UpdateTripToDB(id, {isWaiting: false});
   };
-  const addWaitingGroupTrip=(waitingGroupTrip)=>{
-    Alert.alert("asdsad"+String(waitingGroupTrip).toString);
-  }
+  const addWaitingGroupTrip = waitingGroupTrip => {
+    Alert.alert('asdsad' + String(waitingGroupTrip).toString);
+  };
   const addWaitingTrip = waitingTrip => {
-    // setWaitingTrips([...WaitingTrips, waitingTrip]);
     AddTripToDB(waitingTrip);
-    // fetchWaitingTrips();
   };
   const addTripInfo = tripInfo => {
-    setTripInfo(tripInfo);
+    // setTripInfo(tripInfo);
+    fetchTrips(tripInfo);
   };
   const deleteCard = id => {
     setTrips(prevCards => {
@@ -612,16 +676,13 @@ const App: () => Node = ({navigation}) => {
           {props => (
             <LoginPage
               {...props}
-              Users={Users}
-              ind={setIndex}
               setIsUserConnected={setIsUserConnected}
+              authenticateUser={fetchAuthentication}
             />
           )}
         </Stack.Screen>
         <Stack.Screen name="Register">
-          {props => (
-            <RegisterPage {...props} Users={Users} addNewUser={addNewUser} />
-          )}
+          {props => <RegisterPage {...props} addNewUser={AddUserToDB} />}
         </Stack.Screen>
         <Stack.Screen name="ForgotPassword">
           {props => <ForgotPassword {...props} Users={Users} ind={setIndex} />}

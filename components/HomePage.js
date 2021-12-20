@@ -13,18 +13,14 @@ import TripFilter from './TripFilter';
 
 const HomePage = ({user, tripSearch, navigation}) => {
   const updateFilter = (categories, tripName, location, price) => {
+    let actualCategory = [' '];
+    Object.keys(categories).forEach(key => {
+      if (categories[key] === true) actualCategory.push(String(key));
+    });
     const tripInfo = {
       tripName: tripName,
-      category: {
-        isRelax: categories.isRelax,
-        isDynamic: categories.isDynamic,
-        isParty: categories.isParty,
-        isPetAllowed: categories.isPetAllowed,
-        isCarTravel: categories.isCarTravel,
-        isPlaneTravel: categories.isPlaneTravel,
-        isTrainTravel: categories.isTrainTravel,
-      },
       location: location,
+      category: actualCategory,
       price: price,
     };
     tripSearch(tripInfo);
@@ -34,16 +30,12 @@ const HomePage = ({user, tripSearch, navigation}) => {
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={styles.container}>
           <Header user={user} navigation={navigation} />
-          <TripFilter
-            updateFilter={updateFilter}
-            navigation={navigation}
-          />
+          <TripFilter updateFilter={updateFilter} navigation={navigation} />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {

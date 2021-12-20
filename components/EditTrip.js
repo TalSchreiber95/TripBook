@@ -39,7 +39,7 @@ const EditTrip = ({trip, editCard, onApprove, setToggleEditCard}) => {
       description != '' &&
       price != null
     ) {
-      let actualCategory = [];
+      let actualCategory = [' '];
       Object.keys(categories).forEach(key => {
         if (categories[key] === true)
         actualCategory.push(String(key))

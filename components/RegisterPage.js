@@ -13,34 +13,34 @@ import {Form, FormItem} from 'react-native-form-component';
 import Header from './Header';
 
 const RegisterPage = ({Users, addNewUser, navigation}) => {
-  const [newUser, setNewUser] = useState('');
+  const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [passRecoverAnswer, setPassRecoverAnswer] = useState('');
 
-  const onRegister = () => {
-    const userExist = Users.find(user => {
-      return user.id === newUser;
-    });
-    if (userExist) {
-      Alert.alert('Email is already exists - choose other');
-    } else {
-      if (newUser != '' && newPassword != '') {
+  const onRegister = async () => {
+    // const userExist = Users.find(user => {
+    //   return user.id === newEmail;
+    // });
+    // if (userExist) {
+    //   Alert.alert('Email is already exists - choose other');
+    // } else {
+      if (newEmail != '' && newPassword != '') {
         const newuser = {
-          email: newUser,
-          pass: newPassword,
-          firstName: firstName,
-          lastName: lastName,
+          email: newEmail, 
+          password: newPassword,
+          first_name: firstName,
+          last_name: lastName,
           passRecoverAnswer: passRecoverAnswer,
           admin: false,
         };
-        addNewUser(newuser);
+        await addNewUser(newuser);
         navigation.navigate('Login');
       } else {
         Alert.alert('Email and Password required');
       }
-    }
+    // }
   };
 
   return (
@@ -85,9 +85,9 @@ const RegisterPage = ({Users, addNewUser, navigation}) => {
             label="Email"
             labelStyle={styles.label}
             isRequired
-            value={newUser}
-            onChangeText={newUser => {
-              setNewUser(newUser);
+            value={newEmail}
+            onChangeText={newEmail => {
+              setNewEmail(newEmail);
             }}
             asterik
           />

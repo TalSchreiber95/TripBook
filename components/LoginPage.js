@@ -15,31 +15,42 @@ import {Form, FormItem} from 'react-native-form-component';
 import Header from './Header';
 import {Button, CheckBox} from 'react-native-elements';
 
-const LoginPage = ({Users, ind, setIsUserConnected, navigation}) => {
-  useEffect(() => {
-    setIsUserConnected(false);
-  });
+const LoginPage = ({
+  setIsUserConnected,
+  authenticateUser,
+  navigation,
+}) => {
+  // useEffect(() => {
+  //   setIsUserConnected(false);
+  // });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onLogin = () => {
-    for (let index = 0; index < Users.length; index++) {
-      if (Users[index].email === email) {
-        if (Users[index].pass === password) {
-          ind(index);
-          setIsUserConnected(true);
-          navigation.navigate('Home');
-          // console.log(Users);
-
-          return;
-        } else {
-          Alert.alert('wrong password');
-          return;
-        }
+  const onLogin = async () => {
+      if (await authenticateUser({email: email, password: password})) {
+        // console.log(email, password, 'xxxx');
+        setIsUserConnected(true);
+        navigation.navigate('Home');
+      } else {
+        Alert.alert('wrong password or email');
       }
-    }
 
-    Alert.alert('user not exist');
+      // if (Users[index].email === email) {
+      //   if (Users[index].pass === password) {
+      //     ind(index);
+      //     setIsUserConnected(true);
+      //     navigation.navigate('Home');
+      //     // console.log(Users);
+
+      //     return;
+      //   } else {
+      //     Alert.alert('wrong password');
+      //     return;
+      //   }
+      // }
+    
+
+    // Alert.alert('user not exist');
   };
 
   return (
@@ -79,7 +90,7 @@ const LoginPage = ({Users, ind, setIsUserConnected, navigation}) => {
         </Form>
         <Button
           title="Forgot your password ? Press here!"
-          type='inline'
+          type="inline"
           containerStyle={styles.button}
           titleStyle={styles.buttonText}
           onPress={() => navigation.navigate('ForgotPassword')}></Button>

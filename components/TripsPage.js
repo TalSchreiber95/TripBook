@@ -14,8 +14,11 @@ import Header from './Header';
 import TripCard from './TripCard';
 import GroupTripCard from './GroupTripCard';
 
+import {useState} from 'react';
 
-import { useState } from 'react';
+// useEffect(() => {
+//   fetchTrips();
+// }, []);
 
 const TripsPage = ({
   Trips,
@@ -31,13 +34,13 @@ const TripsPage = ({
   navigation,
 }) => {
   return (
-    <ScrollView >
+    <ScrollView>
       <Header user={user} navigation={navigation} />
       <Text style={styles.text}>Search Results:</Text>
       <Text style={styles.locationText}>
         {' '}
-        Showing trips located in {tripInfo.location} not over{' '}
-        {tripInfo.price} ILS{' '}
+        Showing trips located in {tripInfo.location} not over {tripInfo.price}{' '}
+        ILS{' '}
       </Text>
       {/* Should implement The filter algorithm include the sort */}
       {Trips.map(trip => (
@@ -76,7 +79,7 @@ const TripsPage = ({
 
 TripsPage.defaultProps = {
   onApprove: false,
-}
+};
 
 const styles = StyleSheet.create({
   text: {
@@ -85,12 +88,12 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     // marginBottom: 20,
   },
-  text2:{
-    color:'black',
-    fontSize:23,
+  text2: {
+    color: 'black',
+    fontSize: 23,
     marginLeft: 10,
-    marginEnd:260,
-    backgroundColor:'green'
+    marginEnd: 260,
+    backgroundColor: 'green',
   },
   locationText: {
     margin: 10,
