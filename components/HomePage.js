@@ -1,29 +1,38 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
+import AddTrip from './AddTrip';
 
 import Header from './Header';
 import TripFilter from './TripFilter';
 
-const HomePage = ({user, tripSearch, navigation}) => {
+const HomePage = ({user, addTripInfo, setMyTrips, navigation}) => {
+
+  // useEffect(() => {
+  //   console.log(user.user_id);
+  //   // fetchTripByOwner(user.user_id);
+
+  // }, []);
+
   const updateFilter = (categories, tripName, location, price) => {
-    let actualCategory = [' '];
+    let actualCategory = [];
     Object.keys(categories).forEach(key => {
       if (categories[key] === true) actualCategory.push(String(key));
     });
     const tripInfo = {
-      tripName: tripName,
-      location: location,
+      // tripName: tripName,
+      // location: location,
       category: actualCategory,
-      price: price,
+      // price: price,
     };
-    tripSearch(tripInfo);
+    // setTripInfo(tripInfo);
+    addTripInfo(tripInfo);
+    // tripSearch(tripInfo);
   };
   return (
     <SafeAreaView>

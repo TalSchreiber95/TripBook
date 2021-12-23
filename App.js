@@ -24,95 +24,95 @@ import type {Node} from 'react';
 import {StyleSheet, Alert, Text, Pressable} from 'react-native';
 import {Button} from 'react-native-elements';
 
-const App: () => Node = ({navigation}) => {
-  const users = [
-    //email = Unique-Key
-    {
-      email: 'u',
-      pass: 'u',
-      firstName: 'regular',
-      lastName: 'user',
-      passRecoverAnswer: '',
-      admin: false,
-    },
-    {
-      email: 'a',
-      pass: 'a',
-      firstName: 'Tal',
-      lastName: 'Schreiber',
-      passRecoverAnswer: 'av',
-      admin: true,
-    },
-    {
-      email: 'admin',
-      pass: 'admin',
-      firstName: 'Omer',
-      lastName: 'Shalom',
-      passRecoverAnswer: '',
-      admin: true,
-    },
-  ];
+const App: () => Node = () => {
+  // const users = [
+  //   //email = Unique-Key
+  //   {
+  //     email: 'u',
+  //     pass: 'u',
+  //     firstName: 'regular',
+  //     lastName: 'user',
+  //     passRecoverAnswer: '',
+  //     admin: false,
+  //   },
+  //   {
+  //     email: 'a',
+  //     pass: 'a',
+  //     firstName: 'Tal',
+  //     lastName: 'Schreiber',
+  //     passRecoverAnswer: 'av',
+  //     admin: true,
+  //   },
+  //   {
+  //     email: 'admin',
+  //     pass: 'admin',
+  //     firstName: 'Omer',
+  //     lastName: 'Shalom',
+  //     passRecoverAnswer: '',
+  //     admin: true,
+  //   },
+  // ];
 
-  const trips = [
-    {
-      id: 1,
-      owner: 'u',
-      isWaiting: false,
-      adminMessage: 'No new admin messages',
-      tripName: 'sky',
-      category: {
-        isRelax: true,
-        isDynamic: false,
-        isParty: false,
-        isPetAllowed: false,
-        isCarTravel: false,
-        isPlaneTravel: false,
-        isTrainTravel: false,
-      },
-      pictures: [
-        'https://thumbs.dreamstime.com/b/colorful-vibrant-sunrise-sky-background-colorful-sunrise-sky-background-125577925.jpg',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSjzoRJBCcaW-Tj1pn9kaj3J1-FJjRN26Gsw&usqp=CAU',
-      ],
-      location: 'location',
-      description: 'The sky is blue and infinite ',
-      feedbacks: [
-        'beautifull sky',
-        'Blue deep sky',
-        'Tal the PoliceOfficer',
-        'eofkldnslkvf sdklfndslkfdslk fsdklfdslkmkldsf',
-      ],
-      feedbacksLive: ['Live', 'Im Liveee'],
-      price: 10,
-    },
-    {
-      id: 2,
-      owner: 'a',
-      isWaiting: false,
-      adminMessage: 'No new admin messages 2',
-      tripName: 'SpiderMan vs Batman movie',
-      category: {
-        isRelax: true,
-        isDynamic: false,
-        isParty: false,
-        isPetAllowed: false,
-        isCarTravel: false,
-        isPlaneTravel: false,
-        isTrainTravel: false,
-      },
-      pictures: [
-        'https://amc-theatres-res.cloudinary.com/image/upload/f_auto,fl_lossy,h_465,q_auto,w_310/v1636383824/amc-cdn/production/2/movies/66500/66520/PosterDynamic/131442.jpg',
-        'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/spider-man-movies-in-order-index-1631199371.jpeg',
-      ],
-      location: 'location',
-      description: 'Watch now the new movie of Pokemon! ',
-      feedbacks: ['lovely and fun place', 'beautiful place'],
-      feedbacksLive: [
-        'not a regular feedback',
-        'you can call me live feedback',
-      ],
-      price: 45,
-    },
-  ];
+  // const trips = [
+  //   {
+  //     id: 1,
+  //     owner: 'u',
+  //     isWaiting: false,
+  //     adminMessage: 'No new admin messages',
+  //     tripName: 'sky',
+  //     category: {
+  //       isRelax: true,
+  //       isDynamic: false,
+  //       isParty: false,
+  //       isPetAllowed: false,
+  //       isCarTravel: false,
+  //       isPlaneTravel: false,
+  //       isTrainTravel: false,
+  //     },
+  //     pictures: [
+  //       'https://thumbs.dreamstime.com/b/colorful-vibrant-sunrise-sky-background-colorful-sunrise-sky-background-125577925.jpg',
+  //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSjzoRJBCcaW-Tj1pn9kaj3J1-FJjRN26Gsw&usqp=CAU',
+  //     ],
+  //     location: 'location',
+  //     description: 'The sky is blue and infinite ',
+  //     feedbacks: [
+  //       'beautifull sky',
+  //       'Blue deep sky',
+  //       'Tal the PoliceOfficer',
+  //       'eofkldnslkvf sdklfndslkfdslk fsdklfdslkmkldsf',
+  //     ],
+  //     feedbacksLive: ['Live', 'Im Liveee'],
+  //     price: 10,
+  //   },
+  //   {
+  //     id: 2,
+  //     owner: 'a',
+  //     isWaiting: false,
+  //     adminMessage: 'No new admin messages 2',
+  //     tripName: 'SpiderMan vs Batman movie',
+  //     category: {
+  //       isRelax: true,
+  //       isDynamic: false,
+  //       isParty: false,
+  //       isPetAllowed: false,
+  //       isCarTravel: false,
+  //       isPlaneTravel: false,
+  //       isTrainTravel: false,
+  //     },
+  //     pictures: [
+  //       'https://amc-theatres-res.cloudinary.com/image/upload/f_auto,fl_lossy,h_465,q_auto,w_310/v1636383824/amc-cdn/production/2/movies/66500/66520/PosterDynamic/131442.jpg',
+  //       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/spider-man-movies-in-order-index-1631199371.jpeg',
+  //     ],
+  //     location: 'location',
+  //     description: 'Watch now the new movie of Pokemon! ',
+  //     feedbacks: ['lovely and fun place', 'beautiful place'],
+  //     feedbacksLive: [
+  //       'not a regular feedback',
+  //       'you can call me live feedback',
+  //     ],
+  //     price: 45,
+  //   },
+  // ];
 
   // const waitingTrips = [
   //   {
@@ -147,26 +147,28 @@ const App: () => Node = ({navigation}) => {
   //   },
   // ];
 
-  const tripInfo = {
-    tripName: '',
-    category: {
-      isRelax: false,
-      isDynamic: false,
-      isParty: false,
-      isPetAllowed: false,
-      isCarTravel: false,
-      isPlaneTravel: false,
-      isTrainTravel: false,
-    },
-    location: '',
-    price: 0,
-  };
-  const [Users, setUsers] = useState(users);
-  const [Index, setIndex] = useState(1);
-  const [Trips, setTrips] = useState(trips);
+  // const tripInfo = {
+  //   tripName: '',
+  //   category: {
+  //     isRelax: false,
+  //     isDynamic: false,
+  //     isParty: false,
+  //     isPetAllowed: false,
+  //     isCarTravel: false,
+  //     isPlaneTravel: false,
+  //     isTrainTravel: false,
+  //   },
+  //   location: '',
+  //   price: 0,
+  // };
+  // const [Users, setUsers] = useState(users);
+  // const [Index, setIndex] = useState(1);
+
+  const [Trips, setTrips] = useState([]);
   const [WaitingTrips, setWaitingTrips] = useState([]);
+  const [myTrips, setMyTrips] = useState([]);
   const [isUserConnected, setIsUserConnected] = useState(false);
-  const [TripInfo, setTripInfo] = useState(tripInfo);
+  const [TripInfo, setTripInfo] = useState({});
   const [activeUser, setActiveUser] = useState({});
 
   const fetchUserById = id => {
@@ -182,14 +184,11 @@ const App: () => Node = ({navigation}) => {
   // params in url instead of body: email and password on URL, and turn back to GET
   const fetchAuthentication = async user => {
     var flag = false;
-    await fetch(
-      `http://10.0.2.2:8080/api/authUser/`,
-      {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(user),
-      },
-    )
+    await fetch(`http://10.0.2.2:8080/api/authUser/`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(user),
+    })
       .then(res => {
         res.ok && (flag = true);
         return res.json();
@@ -199,16 +198,15 @@ const App: () => Node = ({navigation}) => {
           console.log(json);
           // const newJson = json;
           setActiveUser(json);
-          console.log(activeUser);
+          // console.log(activeUser);
+          return json;
         }
       })
       .catch(error => console.error(error));
-    console.log(activeUser);
+    // console.log(activeUser);
 
     return flag;
   };
-
-  const recoverPassword = () => {};
 
   const UpdateUserToDB = async (id, user) => {
     await fetch(`http://10.0.2.2:8080/api/user/${id}`, {
@@ -232,7 +230,7 @@ const App: () => Node = ({navigation}) => {
     })
       .then(res => res.json())
       .then(json => {
-        console.log(json);
+        // console.log(json);
         return json;
       })
       .catch(error => console.error(error));
@@ -254,14 +252,36 @@ const App: () => Node = ({navigation}) => {
       .catch(error => console.error(error));
   };
 
-  const fetchTripByOwner = ownerId => {
-    fetch(`http://10.0.2.2:8080/api/tripOwner/${ownerId}`)
-      .then(res => res.json())
-      .then(json => {
-        console.log(json);
-        return json;
-      })
-      .catch(error => console.error(error));
+  const fetchTripByOwner = async ownerId => {
+    try {
+      const res = await fetch(`http://10.0.2.2:8080/api/tripOwner/${ownerId}`);
+      const json = await res.json();
+      {
+        // console.log(json);
+        let array = [];
+        json.forEach(trip => {
+          array.push(
+            ({
+              trip_id,
+              user_id,
+              isWaiting,
+              adminMessage,
+              tripName,
+              location,
+              description,
+              price,
+            } = trip),
+          );
+        });
+        // console.log(array);
+        setMyTrips(array);
+      }
+      //     .then(res => res.json())
+      //     .then(json => )
+      //     .catch(error => console.error(error));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const fetchWaitingTrips = async () => {
@@ -297,7 +317,7 @@ const App: () => Node = ({navigation}) => {
   };
 
   const fetchTrips = async tripSearchInfo => {
-    console.log(tripSearchInfo);
+    // console.log(tripSearchInfo);
     await fetch(`http://10.0.2.2:8080/api/tripByCategory/`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -305,15 +325,12 @@ const App: () => Node = ({navigation}) => {
     })
       .then(res => res.json())
       .then(json => {
-        // console.log(json);
         let array = [];
         json.forEach(trip => {
           array.push(({location, category, price} = trip));
         });
         setTrips(array);
-        console.log(Trips);
-
-        // return array;
+        // console.log(Trips);
       })
       .catch(error => console.error(error));
   };
@@ -367,9 +384,6 @@ const App: () => Node = ({navigation}) => {
         json => {
           // if (flag) {
           console.log(json);
-          // const newJson = json;
-          // setActiveUser(json);
-          // console.log(activeUser);
         },
         // }
       )
@@ -379,25 +393,9 @@ const App: () => Node = ({navigation}) => {
     // return flag;
   };
 
-  const AddPostToDB = async post => {
-    await fetch(`http://10.0.2.2:8080/api/post`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(post),
-    })
-      .then(res => res.json())
-      .then(json => {
-        console.log(json);
-        return json;
-      })
-      .catch(error => console.error(error));
-  };
 
-  const deletePostFromDB = async id => {
-    await fetch(`http://10.0.2.2:8080/api/post/${id}`, {
-      method: 'DELETE',
-    }).catch(error => console.error(error));
-  };
+
+
 
   useEffect(() => {
     // const getTrips = () => {
@@ -426,17 +424,18 @@ const App: () => Node = ({navigation}) => {
     // }
     // AddTripToDB(trip);
     // deleteTripFromDB('GmCv1qHElG5eMvqtOAr8')
-    // console.log(fetchedTrips);
+    // fetchTripByOwner(activeUser.user_id);
+    // console.log(activeUser);
   }, []);
 
   // const authenticateUser = details => {
   //   getAuth()
   // };
 
-  const addNewUser = user => {
-    setUsers([...Users, user]);
-    setIndex(Users.length - 1);
-  };
+  // const addNewUser = user => {
+  //   setUsers([...Users, user]);
+  //   setIndex(Users.length - 1);
+  // };
 
   const addTrip = id => {
     // setTrips([...Trips, trip]);
@@ -454,6 +453,7 @@ const App: () => Node = ({navigation}) => {
   const addTripInfo = tripInfo => {
     // setTripInfo(tripInfo);
     fetchTrips(tripInfo);
+    // console.log(Trips);
   };
   const deleteCard = id => {
     setTrips(prevCards => {
@@ -581,7 +581,15 @@ const App: () => Node = ({navigation}) => {
             ),
           }}>
           {props => (
-            <HomePage {...props} user={Users[Index]} tripSearch={addTripInfo} />
+            <HomePage
+              {...props}
+              user={activeUser}
+              setTripInfo={setTripInfo}
+              addTripInfo={addTripInfo}
+              // fetchWaitingTrips={fetchWaitingTrips}
+              setMyTrips={setMyTrips}
+              // fetchTrips={fetchTrips}
+            />
           )}
         </Drawer.Screen>
         {isUserConnected && (
@@ -590,7 +598,7 @@ const App: () => Node = ({navigation}) => {
               <TripsPage
                 {...props}
                 Trips={Trips}
-                user={Users[Index]}
+                user={activeUser}
                 tripInfo={TripInfo}
                 deleteCard={deleteCard}
                 onSendMessage={onSendMessage}
@@ -602,13 +610,13 @@ const App: () => Node = ({navigation}) => {
             )}
           </Drawer.Screen>
         )}
-        {Users[Index].admin && isUserConnected && (
+        {activeUser.admin && isUserConnected && (
           <Drawer.Screen name="TripsApprove">
             {props => (
               <TripsApprove
                 {...props}
                 WaitingTrips={WaitingTrips}
-                user={Users[Index]}
+                user={activeUser}
                 deleteWaitingCard={deleteWaitingCard}
                 editCard={editCard}
                 onSendMessage={onSendMessage}
@@ -625,9 +633,9 @@ const App: () => Node = ({navigation}) => {
             {props => (
               <MyTrips
                 {...props}
-                Trips={Trips}
-                WaitingTrips={WaitingTrips}
-                user={Users[Index]}
+                myTrips={myTrips}
+                fetchTripByOwner={fetchTripByOwner}
+                user={activeUser}
                 deleteCard={deleteCard}
                 addTrip={addTrip}
                 onSendMessage={onSendMessage}
@@ -645,7 +653,7 @@ const App: () => Node = ({navigation}) => {
               <AddTrip
                 {...props}
                 addWaitingTrip={addWaitingTrip}
-                user={Users[Index]}
+                user={activeUser}
                 getWaitingId={Trips.length + WaitingTrips.length + 1}
               />
             )}
@@ -657,7 +665,7 @@ const App: () => Node = ({navigation}) => {
               <AddGroupTrip
                 {...props}
                 addWaitingGroupTrip={addWaitingGroupTrip}
-                user={Users[Index]}
+                user={activeUser}
                 getWaitingId={Trips.length + WaitingTrips.length + 1}
               />
             )}
@@ -685,7 +693,7 @@ const App: () => Node = ({navigation}) => {
           {props => <RegisterPage {...props} addNewUser={AddUserToDB} />}
         </Stack.Screen>
         <Stack.Screen name="ForgotPassword">
-          {props => <ForgotPassword {...props} Users={Users} ind={setIndex} />}
+          {props => <ForgotPassword {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
     );

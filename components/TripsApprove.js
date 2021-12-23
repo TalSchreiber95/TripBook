@@ -39,7 +39,7 @@ const TripsApprove = ({
           />
         ))}
         <Text style={styles.text2}>Approve group trips List:</Text>
-        {WaitingTrips.map(trip => (
+        {/* {WaitingTrips.map(trip => (
           <GroupTripCard
             key={trip.id}
             trip={trip}
@@ -53,7 +53,7 @@ const TripsApprove = ({
             onApprove={false}
             onGroup={true}
           />
-        ))}
+        ))} */}
       </ScrollView>
     </SafeAreaView>
   );

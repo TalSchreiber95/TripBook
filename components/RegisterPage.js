@@ -5,8 +5,6 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
-  View,
 } from 'react-native';
 
 import {Form, FormItem} from 'react-native-form-component';
@@ -36,7 +34,9 @@ const RegisterPage = ({Users, addNewUser, navigation}) => {
           admin: false,
         };
         await addNewUser(newuser);
-        navigation.navigate('Login');
+        navigation.navigate('LoginPage');
+        Alert.alert('User added successfully, you can log in now !');
+
       } else {
         Alert.alert('Email and Password required');
       }

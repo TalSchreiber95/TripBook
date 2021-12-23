@@ -4,11 +4,7 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   Alert,
-  TouchableHighlight,
-  View,
-  Pressable,
 } from 'react-native';
 
 import {Form, FormItem} from 'react-native-form-component';
@@ -20,9 +16,7 @@ const LoginPage = ({
   authenticateUser,
   navigation,
 }) => {
-  // useEffect(() => {
-  //   setIsUserConnected(false);
-  // });
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 

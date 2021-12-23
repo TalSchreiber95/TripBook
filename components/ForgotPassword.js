@@ -4,7 +4,7 @@ import {ScrollView, StyleSheet, Text, Alert} from 'react-native';
 import {Form, FormItem} from 'react-native-form-component';
 import Header from './Header';
 
-const ForgotPassword = ({Users, ind, navigation}) => {
+const ForgotPassword = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [answer, setAnswer] = useState('');
 
@@ -25,19 +25,13 @@ const ForgotPassword = ({Users, ind, navigation}) => {
         } else {
           Alert.alert(`Wrong answer!`);
         }
-        // if (flag) {
-        //   console.log(json);
-        //   // const newJson = json;
-        //   setActiveUser(json);
-        //   console.log(activeUser);
-        // }
       })
       .catch(error => console.error(error));
-    console.log(activeUser);
   };
 
-  const onRestorePass = () => {
-    recoverPassword({email: email, passRecoverAnswer: answer});
+  const onRestorePass = async () => {
+    await recoverPassword({email: email, passRecoverAnswer: answer});
+    navigation.navigate('LoginPage');
 
     //     for (let index = 0; index < Users.length; index++) {
     //         if (Users[index].email === email) {
@@ -46,7 +40,6 @@ const ForgotPassword = ({Users, ind, navigation}) => {
     //                 // Note: here it's supposed to send the
     //                 //       password to the mail of the user!
     //                 Alert.alert("user password is: " + Users[index].pass);
-    //                 navigation.navigate('Login');
     //                 return;
     //             } else {
     //                 Alert.alert('Wrong answer!');

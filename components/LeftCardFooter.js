@@ -25,31 +25,50 @@ const LeftCardFooter = ({
   const [livePosts, setLivePosts] = useState([]);
 
   useEffect(() => {
-    getPostsByTripID(trip.id)
+    getPostsByTripID(trip.trip_id);
+    getLivePostsByTripID(trip.trip_id);
+    console.log('effected');
   }, []);
 
   const getPostsByTripID = async trip_id => {
-    // var flag = false;
     await fetch(`http://10.0.2.2:8080/api/postsByTripID/${trip_id}`)
       .then(res => {
-        // res.ok && (flag = true);
         return res.json();
       })
-      .then(
-        json => {
-          // if (flag) {
-          console.log(json);
-          // const newJson = json;
-          setPosts(json);
-          // console.log(activeUser);
-        },
-        // }
-      )
+      .then(json => {
+        // console.log(json);
+        setPosts(json);
+      })
       .catch(error => console.error(error));
-    console.log(posts);
+    // console.log(posts);
   };
 
-  
+  const getLivePostsByTripID = async trip_id => {
+    await fetch(`http://10.0.2.2:8080/api/livepostsByTripID/${trip_id}`)
+      .then(res => {
+        return res.json();
+      })
+      .then(json => {
+        // console.log(json);
+        setLivePosts(json);
+      })
+      .catch(error => console.error(error));
+    // console.log(livePosts);
+  };
+
+  const deletePostFromDB = async id => {
+    await fetch(`http://10.0.2.2:8080/api/post/${id}`, {
+      method: 'DELETE',
+    }).catch(error => console.error(error));
+    getPostsByTripID(trip.trip_id);
+  };
+
+  const deleteLivePostFromDB = async id => {
+    await fetch(`http://10.0.2.2:8080/api/livepost/${id}`, {
+      method: 'DELETE',
+    }).catch(error => console.error(error));
+    getLivePostsByTripID(trip.trip_id);
+  };
 
   const ToggleFeedback = () => {
     toggler === 'feedback' ? updateButton('none') : updateButton('feedback');
@@ -60,28 +79,26 @@ const LeftCardFooter = ({
 
   const switchFeedbackRight = () => {
     toggleFeedbackLive
-      ? setFeedbackLiveIndex(
-          (feedbackLiveIndex + 1) % trip.feedbacksLive.length,
-        )
+      ? setFeedbackLiveIndex((feedbackLiveIndex + 1) % livePosts.length)
       : setFeedbackIndex((feedbackIndex + 1) % posts.length);
   };
 
   const switchFeedbackLeft = () => {
     toggleFeedbackLive
       ? setFeedbackLiveIndex(
-          (feedbackLiveIndex - 1 + trip.feedbacksLive.length) %
-            trip.feedbacksLive.length,
-        )
-      : setFeedbackIndex(
-          (feedbackIndex - 1 + posts.length) % posts.length,
-        );
+          (feedbackLiveIndex - 1 + livePosts.length) % livePosts.length,)
+      : setFeedbackIndex((feedbackIndex - 1 + posts.length) % posts.length);
   };
   const delFeed = () => {
     switchFeedbackLeft();
     if (!toggleFeedbackLive) {
-      deleteFeedback(trip.id, feedbackIndex, onApprove);
+      // deleteFeedback(trip.id, feedbackIndex, onApprove);
+      deletePostFromDB(posts[feedbackIndex].post_id);
+      // await getPostsByTripID(trip.trip_id);
     } else {
-      deleteFeedbackLive(trip.id, feedbackLiveIndex, onApprove);
+      // deleteFeedbackLive(trip.id, feedbackLiveIndex, onApprove);
+      deleteLivePostFromDB(livePosts[feedbackLiveIndex].post_id);
+      // await getLivePostsByTripID(trip.trip_id);
     }
   };
   const onDelFeed = () => {
@@ -139,8 +156,8 @@ const LeftCardFooter = ({
               buttonStyle={styles.RLbuttons}
             />
             <Text style={styles.text}>
-              {toggleFeedbackLive && trip.feedbacksLive.length > 0
-                ? trip.feedbacksLive[feedbackLiveIndex]
+              {toggleFeedbackLive && livePosts.length > 0
+                ? livePosts[feedbackLiveIndex].description
                 : !toggleFeedbackLive && posts.length > 0
                 ? posts[feedbackIndex].description
                 : 'No feedbacks available'}
@@ -165,7 +182,12 @@ const LeftCardFooter = ({
               style={styles.deleteFeedbackIcon}
             />
           )}
-          <AddFeedbackForm trip={trip} />
+          <AddFeedbackForm
+            trip={trip}
+            user={user}
+            getPost={getPostsByTripID}
+            getLivePost={getLivePostsByTripID}
+          />
         </View>
       )}
     </View>

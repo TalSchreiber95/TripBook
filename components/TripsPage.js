@@ -14,11 +14,7 @@ import Header from './Header';
 import TripCard from './TripCard';
 import GroupTripCard from './GroupTripCard';
 
-import {useState} from 'react';
-
-// useEffect(() => {
-//   fetchTrips();
-// }, []);
+import {useState, useEffect} from 'react';
 
 const TripsPage = ({
   Trips,
@@ -30,9 +26,15 @@ const TripsPage = ({
   deletePicture,
   deleteFeedback,
   deleteFeedbackLive,
-  setTripEdit,
   navigation,
 }) => {
+
+  
+  // useEffect(() => {
+  //   console.log(1);
+  //   console.log(Trips);
+  // }, []);
+
   return (
     <ScrollView>
       <Header user={user} navigation={navigation} />
@@ -45,7 +47,7 @@ const TripsPage = ({
       {/* Should implement The filter algorithm include the sort */}
       {Trips.map(trip => (
         <TripCard
-          key={trip.id}
+          key={trip.trip_id}
           trip={trip}
           user={user}
           deleteCard={deleteCard}
@@ -57,8 +59,8 @@ const TripsPage = ({
           onApprove={false}
         />
       ))}
-      <Text style={styles.text2}>Group Trips:</Text>
-      {Trips.map(trip => (
+      {/* <Text style={styles.text2}>Group Trips:</Text> */}
+      {/* {Trips.map(trip => (
         <GroupTripCard
           key={trip.id}
           trip={trip}
@@ -72,7 +74,7 @@ const TripsPage = ({
           onApprove={false}
           onGroup={true}
         />
-      ))}
+      ))} */}
     </ScrollView>
   );
 };

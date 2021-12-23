@@ -13,11 +13,11 @@ import {
 import Header from './Header';
 import TripCard from './TripCard';
 import GroupTripCard from './GroupTripCard';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const MyTrips = ({
-  Trips,
-  WaitingTrips,
+  myTrips,
+  // WaitingTrips,
   user,
   deleteCard,
   addTrip,
@@ -27,12 +27,19 @@ const MyTrips = ({
   deleteFeedback,
   deleteFeedbackLive,
   setTripEdit,
+  fetchTripByOwner
 }) => {
+
+  useEffect(() => {
+    // fetchTripByOwner(user.user_id);
+  }, [])
+
+
   return (
     <ScrollView>
       <Header user={user} />
       <Text style={styles.text}>My posted trips:</Text>
-      {Trips.filter(trip => trip.owner === user.email).map(trip => (
+      {myTrips.map(trip => (
         <TripCard
           key={trip.id}
           trip={trip}
@@ -47,9 +54,9 @@ const MyTrips = ({
         />
       ))}
       <Text style={styles.text}>My waiting trips:</Text>
-      {WaitingTrips.filter(trip => trip.owner === user.email).map(trip => (
+      {myTrips.map(trip => (
         <TripCard
-          key={trip.id}
+          key={trip.trip_id}
           trip={trip}
           user={user}
           deleteCard={deleteCard}
@@ -63,10 +70,10 @@ const MyTrips = ({
           onApprove={true}
         />
       ))}
-      <Text style={styles.text2}>My waiting group Trips:</Text>
+      {/* <Text style={styles.text2}>My waiting group Trips:</Text>
       {WaitingTrips.map(trip => (
         <GroupTripCard
-          key={trip.id}
+          key={trip.trip_id}
           trip={trip}
           user={user}
           deleteCard={deleteCard}
@@ -78,7 +85,7 @@ const MyTrips = ({
           onApprove={true}
           onGroup={true}
         />
-      ))}
+      ))} */}
     </ScrollView>
   );
 };

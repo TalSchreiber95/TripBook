@@ -4,12 +4,43 @@ import {Button, CheckBox} from 'react-native-elements';
 import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
-const AddFeedbackForm = ({trip}) => {
+const AddFeedbackForm = ({trip, user, getPost, getLivePost}) => {
   const [feedback, setFeedback] = useState('');
   const [feedbackLive, setFeedbackLive] = useState('');
 
   const [toggleFeedback, setToggleFeedback] = useState(false);
   const [toggleFeedbackLive, setToggleFeedbackLive] = useState(false);
+
+  const AddPostToDB = async post => {
+    await fetch(`http://10.0.2.2:8080/api/post`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(post),
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        return json;
+      })
+      .catch(error => console.error(error));
+      getPost(trip.trip_id);
+
+  };
+
+  const AddLivePostToDB = async post => {
+    await fetch(`http://10.0.2.2:8080/api/livepost`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(post),
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        return json;
+      })
+      .catch(error => console.error(error));
+      getLivePost(trip.trip_id);
+    };
 
   const ToggleFeedback = () => {
     setToggleFeedback(!toggleFeedback);
@@ -18,10 +49,24 @@ const AddFeedbackForm = ({trip}) => {
     setToggleFeedbackLive(!toggleFeedbackLive);
   };
   const onAddFeedback = () => {
-    toggleFeedbackLive
-      ? trip.feedbacksLive.push(feedbackLive)
-      : trip.feedbacks.push(feedback);
-      
+    //   ? trip.feedbacksLive.push(feedbackLive)
+    //   : trip.feedbacks.push(feedback);
+    const newPost = {
+      title: !toggleFeedbackLive ? 'post' : 'livepost',
+      description: !toggleFeedbackLive ? feedback : feedbackLive,
+      trip_id: trip.trip_id,
+      user_id: user.user_id,
+    };
+    if (toggleFeedbackLive) {
+      AddLivePostToDB(newPost);
+      // getLivePost(trip.trip_id);
+    } else {
+      AddPostToDB(newPost);
+      // getPost(trip.trip_id);
+    }
+    setToggleFeedback(false);
+    setFeedback('');
+    setFeedbackLive('');
   };
 
   return (
