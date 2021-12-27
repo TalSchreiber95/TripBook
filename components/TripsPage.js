@@ -15,36 +15,62 @@ import TripCard from './TripCard';
 import GroupTripCard from './GroupTripCard';
 
 import {useState, useEffect} from 'react';
+import {Button} from 'react-native-elements/dist/buttons/Button';
 
 const TripsPage = ({
-  Trips,
+  // Trips,
   user,
   tripInfo,
   deleteCard,
   editCard,
   onSendMessage,
   deletePicture,
-  deleteFeedback,
-  deleteFeedbackLive,
-  navigation,
+  setIsOnSearch,
+  isOnSearch,
+  // deleteFeedback,
+  // deleteFeedbackLive,
+  // navigation,
 }) => {
+  const [Trips, setTrips] = useState([]);
 
-  
-  // useEffect(() => {
-  //   console.log(1);
-  //   console.log(Trips);
-  // }, []);
+  const fetchTrips = async tripSearchInfo => {
+    console.log(tripSearchInfo);
+
+    await fetch(`http://10.0.2.2:8080/api/tripByCategory/`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(tripSearchInfo),
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        setTrips(json);
+        // // console.log(Trips);
+      })
+      .catch(error => console.error(error));
+  };
+
+  useEffect(() => {
+    fetchTrips(tripInfo);
+    console.log('kruval');
+  }, [isOnSearch]);
 
   return (
     <ScrollView>
-      <Header user={user} navigation={navigation} />
-      <Text style={styles.text}>Search Results:</Text>
+      {/* <Header user={user} /> */}
+      <View style={styles.backButtonPanel}>
+        <Text style={styles.text}>Search Results:</Text>
+        <Button
+          title="Back to Search"
+          containerStyle={styles.backButton}
+          onPress={() => setIsOnSearch(false)}
+        />
+      </View>
       <Text style={styles.locationText}>
         {' '}
         Showing trips located in {tripInfo.location} not over {tripInfo.price}{' '}
         ILS{' '}
       </Text>
-      {/* Should implement The filter algorithm include the sort */}
       {Trips.map(trip => (
         <TripCard
           key={trip.trip_id}
@@ -54,8 +80,8 @@ const TripsPage = ({
           editCard={editCard}
           onSendMessage={onSendMessage}
           deletePicture={deletePicture}
-          deleteFeedback={deleteFeedback}
-          deleteFeedbackLive={deleteFeedbackLive}
+          // deleteFeedback={deleteFeedback}
+          // deleteFeedbackLive={deleteFeedbackLive}
           onApprove={false}
         />
       ))}
@@ -84,7 +110,15 @@ TripsPage.defaultProps = {
 };
 
 const styles = StyleSheet.create({
+  backButtonPanel: {
+    flex: 3,
+    flexDirection: 'row',
+  },
+  backButton: {
+    backgroundColor: 'black',
+  },
   text: {
+    flex: 1,
     color: 'black',
     fontSize: 23,
     marginLeft: 20,

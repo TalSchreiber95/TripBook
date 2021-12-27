@@ -48,7 +48,7 @@ const CardHeader = ({
       Alert.alert("Group join successfully");
   }
   const showCardInfo = () => {
-    let cate = "Trip's Owner: " + trip.owner;
+    let cate = "Trip's Owner: " + trip.user_id;
     trip.category.isRelax === true ? cate += "\nRelax," : cate += "\n"
     trip.category.isDynamic === true ? cate += "Dynamic," : cate += "";
     trip.category.isParty === true ? cate += "Party," : cate += "";

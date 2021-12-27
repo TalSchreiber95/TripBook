@@ -27,7 +27,7 @@ const LeftCardFooter = ({
   useEffect(() => {
     getPostsByTripID(trip.trip_id);
     getLivePostsByTripID(trip.trip_id);
-    console.log('effected');
+    console.log('leftCard footer effected');
   }, []);
 
   const getPostsByTripID = async trip_id => {
@@ -91,11 +91,11 @@ const LeftCardFooter = ({
   };
   const delFeed = () => {
     switchFeedbackLeft();
-    if (!toggleFeedbackLive) {
+    if (!toggleFeedbackLive && posts.length > 0) {
       // deleteFeedback(trip.id, feedbackIndex, onApprove);
       deletePostFromDB(posts[feedbackIndex].post_id);
       // await getPostsByTripID(trip.trip_id);
-    } else {
+    } else if (toggleFeedbackLive && livePosts.length > 0){
       // deleteFeedbackLive(trip.id, feedbackLiveIndex, onApprove);
       deleteLivePostFromDB(livePosts[feedbackLiveIndex].post_id);
       // await getLivePostsByTripID(trip.trip_id);

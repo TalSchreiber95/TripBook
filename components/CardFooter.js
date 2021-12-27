@@ -11,8 +11,8 @@ const CardFooter = ({
   setPicture,
   toggler,
   updateButton,
-  deleteFeedback,
-  deleteFeedbackLive,
+  // deleteFeedback,
+  // deleteFeedbackLive,
   onApprove,
   user,
 }) => {
@@ -34,8 +34,8 @@ const CardFooter = ({
           trip={trip}
           toggler={toggler}
           updateButton={updateButton}
-          deleteFeedback={deleteFeedback}
-          deleteFeedbackLive={deleteFeedbackLive}
+          // deleteFeedback={deleteFeedback}
+          // deleteFeedbackLive={deleteFeedbackLive}
           onApprove={onApprove}
           user={user}
         />

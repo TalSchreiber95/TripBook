@@ -23,13 +23,13 @@ const EditTrip = ({trip, editCard, onApprove, setToggleEditCard}) => {
 
   //categories
   const [categories, setCategories] = useState({
-    isRelax: trip.category.isRelax,
-    isDynamic: trip.category.isDynamic,
-    isParty: trip.category.isParty,
-    isPetAllowed: trip.category.isPetAllowed,
-    isCarTravel: trip.category.isCarTravel,
-    isPlaneTravel: trip.category.isPlaneTravel,
-    isTrainTravel: trip.category.isTrainTravel,
+    isRelax: trip.category.filter(category => category === 'isRelax').length > 0,
+    isDynamic: trip.category.filter(category => category === 'isDynamic').length > 0,
+    isParty: trip.category.filter(category => category === 'isParty').length > 0,
+    isPetAllowed: trip.category.filter(category => category === 'isPetAllowed').length > 0,
+    isCarTravel: trip.category.filter(category => category === 'isCarTravel').length > 0,
+    isPlaneTravel: trip.category.filter(category => category === 'isPlaneTravel').length > 0,
+    isTrainTravel: trip.category.filter(category => category === 'isTrainTravel').length > 0,
   });
 
   const onEditTrip = () => {

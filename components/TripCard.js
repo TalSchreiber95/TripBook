@@ -15,8 +15,8 @@ const TripCard = ({
   onSendMessage,
   addTrip,
   deletePicture,
-  deleteFeedback,
-  deleteFeedbackLive,
+  // deleteFeedback,
+  // deleteFeedbackLive,
   onApprove,
   editCard,
 }) => {
@@ -162,8 +162,8 @@ const TripCard = ({
         trip={trip}
         setPicture={updatePicture}
         updateButton={updateButton}
-        deleteFeedback={deleteFeedback}
-        deleteFeedbackLive={deleteFeedbackLive}
+        // deleteFeedback={deleteFeedback}
+        // deleteFeedbackLive={deleteFeedbackLive}
         onApprove={onApprove}
         user={user}
         toggler={toggler}

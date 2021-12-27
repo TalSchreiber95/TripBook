@@ -44,7 +44,7 @@ const TripFilter = ({updateFilter, navigation}) => {
     setPrice();
     setLocation('');
     setTripName('');
-    navigation.navigate('TripsPage');
+    // navigation.navigate('TripsPage');
   };
   return (
     <View>

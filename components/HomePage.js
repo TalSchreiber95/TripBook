@@ -5,19 +5,21 @@ import {
   StatusBar,
   StyleSheet,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import AddTrip from './AddTrip';
 
 import Header from './Header';
 import TripFilter from './TripFilter';
+import TripsPage from './TripsPage';
 
-const HomePage = ({user, addTripInfo, setMyTrips, navigation}) => {
+const HomePage = ({user, navigation}) => {
+  const [TripInfo, setTripInfo] = useState({category: []});
+  const [isOnSearch, setIsOnSearch] = useState(false);
 
-  // useEffect(() => {
-  //   console.log(user.user_id);
-  //   // fetchTripByOwner(user.user_id);
-
-  // }, []);
+  useEffect(() => {
+    console.log(user.user_id);
+  }, []);
 
   const updateFilter = (categories, tripName, location, price) => {
     let actualCategory = [];
@@ -30,16 +32,34 @@ const HomePage = ({user, addTripInfo, setMyTrips, navigation}) => {
       category: actualCategory,
       // price: price,
     };
-    // setTripInfo(tripInfo);
-    addTripInfo(tripInfo);
-    // tripSearch(tripInfo);
+    // addTripInfo(tripInfo);
+    setTripInfo(tripInfo);
+    setIsOnSearch(true);
+    console.log('shalom omer shalom');
   };
   return (
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={styles.container}>
-          <Header user={user} navigation={navigation} />
-          <TripFilter updateFilter={updateFilter} navigation={navigation} />
+          <Header user={user} />
+          {!isOnSearch ? (
+            <TripFilter updateFilter={updateFilter} navigation={navigation} />
+          ) : (
+            <TripsPage
+              // {...props}
+              // Trips={Trips}
+              user={user}
+              tripInfo={TripInfo}
+              setIsOnSearch={setIsOnSearch}
+              isOnSearch={isOnSearch}
+              // deleteCard={deleteCard}
+              // onSendMessage={onSendMessage}
+              // deletePicture={deletePicture}
+              // deleteFeedback={deleteFeedback}
+              // deleteFeedbackLive={deleteFeedbackLive}
+              // editCard={editCard}
+            />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
