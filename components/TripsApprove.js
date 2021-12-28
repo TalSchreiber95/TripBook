@@ -4,14 +4,15 @@ import {SafeAreaView, ScrollView, StyleSheet, Text} from 'react-native';
 import Header from './Header';
 import TripCard from './TripCard';
 import GroupTripCard from './GroupTripCard';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
+import {AppContext} from './Context';
 
 const TripsApprove = ({
   // WaitingTrips,
   user,
   // deleteWaitingCard,
-  UpdateTripToDB,
-  deleteTripFromDB,
+  // UpdateTripToDB,
+  // deleteTripFromDB,
   // editCard,
   // onSendMessage,
   // addTrip,
@@ -20,7 +21,14 @@ const TripsApprove = ({
   // deleteFeedbackLive,
   // setWaitingTrips,
 }) => {
-  const [WaitingTrips, setWaitingTrips] = useState([]);
+  // const [WaitingTrips, setWaitingTrips] = useState([]);
+
+  const {
+    // user,
+    WaitingTrips,
+    setWaitingTrips,
+  } = useContext(AppContext);
+  
 
   const fetchWaitingTrips = async () => {
     await fetch(`http://10.0.2.2:8080/api/tripIsWaiting`)
@@ -43,12 +51,15 @@ const TripsApprove = ({
         //   );
         // });
         // // console.log(array);
+        // console.log(setWaitingTrips);
+        // console.log(WaitingTrips);
         setWaitingTrips(json);
       })
       .catch(error => console.error(error));
   };
 
   useEffect(() => {
+    console.log('shribeee');
     fetchWaitingTrips();
   }, []);
 
@@ -132,21 +143,22 @@ const TripsApprove = ({
       <ScrollView>
         <Header user={user} />
         <Text style={styles.text}>Approve trips List:</Text>
-        {WaitingTrips.map(trip => (
-          <TripCard
-            key={trip.trip_id}
-            trip={trip}
-            user={user}
-            deleteCard={deleteWaitingCard}
-            addTrip={addTrip}
-            editCard={editCard}
-            onSendMessage={onSendMessage}
-            deletePicture={deletePicture}
-            // deleteFeedback={deleteFeedback}
-            // deleteFeedbackLive={deleteFeedbackLive}
-            onApprove={true}
-          />
-        ))}
+        {WaitingTrips !== undefined &&
+          WaitingTrips.map(trip => (
+            <TripCard
+              key={trip.trip_id}
+              trip={trip}
+              user={user}
+              // deleteCard={deleteWaitingCard}
+              // addTrip={addTrip}
+              // editCard={editCard}
+              // onSendMessage={onSendMessage}
+              // deletePicture={deletePicture}
+              // deleteFeedback={deleteFeedback}
+              // deleteFeedbackLive={deleteFeedbackLive}
+              onApprove={true}
+            />
+          ))}
         {/* <Text style={styles.text2}>Approve group trips List:</Text> */}
         {/* {WaitingTrips.map(trip => (
           <GroupTripCard

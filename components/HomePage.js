@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -12,14 +12,17 @@ import AddTrip from './AddTrip';
 import Header from './Header';
 import TripFilter from './TripFilter';
 import TripsPage from './TripsPage';
+import {AppContext} from './Context';
 
 const HomePage = ({user, navigation}) => {
+  // const {user} = useContext(AppContext);
+
   const [TripInfo, setTripInfo] = useState({category: []});
   const [isOnSearch, setIsOnSearch] = useState(false);
 
-  useEffect(() => {
-    console.log(user.user_id);
-  }, []);
+  // useEffect(() => {
+  //   console.log(user.user_id);
+  // }, []);
 
   const updateFilter = (categories, tripName, location, price) => {
     let actualCategory = [];

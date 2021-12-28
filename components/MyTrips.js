@@ -14,23 +14,37 @@ import Header from './Header';
 import TripCard from './TripCard';
 import GroupTripCard from './GroupTripCard';
 import {useState, useEffect} from 'react';
+import {AppContext} from './Context';
 
 const MyTrips = ({
   // myTrips,
   // WaitingTrips,
   user,
-  deleteCard,
-  addTrip,
-  editCard,
-  onSendMessage,
-  deletePicture,
+  // deleteCard,
+  // addTrip,
+  // editCard,
+  // onSendMessage,
+  // deletePicture,
   // deleteFeedback,
   // deleteFeedbackLive,
-  setTripEdit,
+  // setTripEdit,
   // fetchTripByOwner
 }) => {
-  const [myTrips, setMyTrips] = useState([]);
-  const [myWaitingTrips, setMyWaitingTrips] = useState([]);
+
+  const {
+    // Trips,
+    // user,
+    // WaitingTrips,
+    myTrips,
+    myWaitingTrips,
+    // setTrips,
+    // setWaitingTrips,
+    setMyTrips,
+    setMyWaitingTrips,
+  } = useContext(AppContext);
+
+  // const [myTrips, setMyTrips] = useState([]);
+  // const [myWaitingTrips, setMyWaitingTrips] = useState([]);
 
   const fetchTripByOwner = async ownerId => {
     try {
@@ -57,11 +71,11 @@ const MyTrips = ({
         <TripCard
           key={trip.trip_id}
           trip={trip}
-          user={user}
-          deleteCard={deleteCard}
-          editCard={editCard}
-          onSendMessage={onSendMessage}
-          deletePicture={deletePicture}
+          // user={user}
+          // deleteCard={deleteCard}
+          // editCard={editCard}
+          // onSendMessage={onSendMessage}
+          // deletePicture={deletePicture}
           // deleteFeedback={deleteFeedback}
           // deleteFeedbackLive={deleteFeedbackLive}
           onApprove={false}
@@ -73,14 +87,14 @@ const MyTrips = ({
           key={trip.trip_id}
           trip={trip}
           user={user}
-          deleteCard={deleteCard}
-          addTrip={addTrip}
-          editCard={editCard}
-          onSendMessage={onSendMessage}
-          deletePicture={deletePicture}
+          // deleteCard={deleteCard}
+          // addTrip={addTrip}
+          // editCard={editCard}
+          // onSendMessage={onSendMessage}
+          // deletePicture={deletePicture}
           // deleteFeedback={deleteFeedback}
           // deleteFeedbackLive={deleteFeedbackLive}
-          setTripEdit={setTripEdit}
+          // setTripEdit={setTripEdit}
           onApprove={true}
         />
       ))}

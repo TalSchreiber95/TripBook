@@ -16,6 +16,7 @@ import GroupTripCard from './GroupTripCard';
 
 import {useState, useEffect} from 'react';
 import {Button} from 'react-native-elements/dist/buttons/Button';
+import {AppContext} from './Context';
 
 const TripsPage = ({
   // Trips,

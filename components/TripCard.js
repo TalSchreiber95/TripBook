@@ -5,25 +5,60 @@ import Icon1 from 'react-native-vector-icons/AntDesign';
 import {View, Text, StyleSheet, ImageBackground, Alert} from 'react-native';
 import CardFooter from './CardFooter';
 import CardHeader from './CardHeader';
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import {Button} from 'react-native-elements/dist/buttons/Button';
+import {AppContext} from './Context';
 
 const TripCard = ({
   trip,
   user,
-  deleteCard,
-  onSendMessage,
-  addTrip,
-  deletePicture,
+  // deleteCard,
+  // onSendMessage,
+  // addTrip,
+  // deletePicture,
   // deleteFeedback,
   // deleteFeedbackLive,
   onApprove,
-  editCard,
+  // editCard,
 }) => {
+  const {
+    Trips,
+    WaitingTrips,
+    myTrips,
+    myWaitingTrips,
+    // user,
+    setTrips,
+    setWaitingTrips,
+    setMyTrips,
+    setMyWaitngTrips,
+  } = useContext(AppContext);
   const [toggler, setToggler] = useState('');
   const [picture, setPicture] = useState(0);
   const [picIndex, setPicIndex] = useState(0);
   // const [pic, setPic] = useState();
+
+  const UpdateTripToDB = async (id, trip) => {
+    await fetch(`http://10.0.2.2:8080/api/trip/${id}`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(trip),
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        // return json;
+      })
+      .catch(error => console.error(error));
+    // fetchWaitingTrips();
+  };
+
+  const deleteTripFromDB = async id => {
+    await fetch(`http://10.0.2.2:8080/api/trip/${id}`, {
+      method: 'DELETE',
+    }).catch(error => console.error(error));
+
+    // fetchWaitingTrips();
+  };
 
   const switchPictureRight = () => {
     setPicIndex((picIndex + 1) % trip.pictures.length);
@@ -98,12 +133,96 @@ const TripCard = ({
       ],
     );
   };
+//think its done
+  const addTrip = id => {
+    UpdateTripToDB(id, {isWaiting: false});
+    setWaitingTrips(prevCards => {
+      return prevCards.filter(card => card.id !== id);
+    });
+    setTrips([...Trips, trip]);
+  };
+
+  const deleteCard = id => {
+    deleteTripFromDB(id);
+    setTrips(prevCards => {
+      return prevCards.filter(card => card.id !== id);
+    });
+  };
+
+  const deleteWaitingCard = id => {
+    deleteTripFromDB(id);
+    setWaitingTrips(prevCards => {
+      return prevCards.filter(card => card.id != id);
+    });
+  };
+
+  const editCard = (updatedTrip, onApprove) => {
+    const updatedWaitingTrip = {
+      tripName: updatedTrip.tripName,
+      category: updatedTrip.category,
+      price: updatedTrip.price,
+      location: updatedTrip.location,
+      description: updatedTrip.description,
+    };
+    UpdateTripToDB(updatedTrip.trip_id, updatedWaitingTrip);
+    if (!onApprove) {
+      const trip = Trips.filter(t => t.id === updatedTrip.id)[0];
+      trip.tripName = updatedTrip.tripName;
+      // trip.category.isRelax = updatedTrip.category.isRelax;
+      // trip.category.isDynamic = updatedTrip.category.isDynamic;
+      // trip.category.isParty = updatedTrip.category.isParty;
+      // trip.category.isPetAllowed = updatedTrip.category.isPetAllowed;
+      // trip.category.isCarTravel = updatedTrip.category.isCarTravel;
+      // trip.category.isPlaneTravel = updatedTrip.category.isPlaneTravel;
+      // trip.category.isTrainTravel = updatedTrip.category.isTrainTravel;
+      trip.location = updatedTrip.location;
+      trip.description = updatedTrip.description;
+      trip.price = updatedTrip.price;
+    } else {
+      const waitingTrip = WaitingTrips.filter(t => t.id === updatedTrip.id)[0];;
+      waitingTrip.tripName = updatedTrip.tripName;
+      // waitingTrip.category.isRelax = updatedTrip.category.isRelax;
+      // waitingTrip.category.isDynamic = updatedTrip.category.isDynamic;
+      // waitingTrip.category.isParty = updatedTrip.category.isParty;
+      // waitingTrip.category.isPetAllowed = updatedTrip.category.isPetAllowed;
+      // waitingTrip.category.isCarTravel = updatedTrip.category.isCarTravel;
+      // waitingTrip.category.isPlaneTravel = updatedTrip.category.isPlaneTravel;
+      // waitingTrip.category.isTrainTravel = updatedTrip.category.isTrainTravel;
+      waitingTrip.location = updatedTrip.location;
+      waitingTrip.description = updatedTrip.description;
+      waitingTrip.price = updatedTrip.price;
+    }
+  };
+
+  const deletePicture = (tripId, pic, onApprove) => {
+    //Add DataBase Update
+
+    if (!onApprove) {
+      const cardDeletePic = Trips.filter(trip => trip.id === tripId)[0];
+      cardDeletePic.pictures.splice(pic, 1);
+    } else {
+      const cardDeletePic = WaitingTrips.filter(trip => trip.id === tripId)[0];
+      cardDeletePic.pictures.splice(pic, 1);
+    }
+  };
+
+  const onSendMessage = (trip, message, onApprove) => {
+    UpdateTripToDB(id, {adminMessage: message});
+    if (!onApprove) {
+      const cardMessage = Trips.filter(t => t.id === trip.id)[0];
+      cardMessage.adminMessage = message;
+    } else {
+      const cardMessage = WaitingTrips.filter(t => t.id === trip.id)[0];
+      cardMessage.adminMessage = message;
+    }
+  };
 
   TripCard.defaultProps = {
     addTrip: () => {},
   };
 
   return (
+    
     <View style={styles.card}>
       <CardHeader
         trip={trip}
