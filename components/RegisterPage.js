@@ -5,17 +5,33 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
+  Vibration,
 } from 'react-native';
 
 import {Form, FormItem} from 'react-native-form-component';
 import Header from './Header';
+import {Button} from 'react-native-elements';
 
-const RegisterPage = ({Users, addNewUser, navigation}) => {
+const RegisterPage = ({navigation}) => {
   const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [passRecoverAnswer, setPassRecoverAnswer] = useState('');
+
+  const AddUserToDB = async trip => {
+    await fetch(`http://10.0.2.2:8080/api/user`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(trip),
+    })
+      .then(res => res.json())
+      .then(json => {
+        // console.log(json);
+        return json;
+      })
+      .catch(error => console.error(error));
+  };
 
   const onRegister = async () => {
     // const userExist = Users.find(user => {
@@ -24,22 +40,22 @@ const RegisterPage = ({Users, addNewUser, navigation}) => {
     // if (userExist) {
     //   Alert.alert('Email is already exists - choose other');
     // } else {
-      if (newEmail != '' && newPassword != '') {
-        const newuser = {
-          email: newEmail, 
-          password: newPassword,
-          first_name: firstName,
-          last_name: lastName,
-          passRecoverAnswer: passRecoverAnswer,
-          admin: false,
-        };
-        await addNewUser(newuser);
-        navigation.navigate('LoginPage');
-        Alert.alert('User added successfully, you can log in now !');
-
-      } else {
-        Alert.alert('Email and Password required');
-      }
+    if (newEmail != '' && newPassword != '') {
+      const newuser = {
+        email: newEmail,
+        password: newPassword,
+        first_name: firstName,
+        last_name: lastName,
+        passRecoverAnswer: passRecoverAnswer,
+        admin: false,
+      };
+      await AddUserToDB(newuser);
+      navigation.navigate('Login');
+      Alert.alert('User added successfully, you can log in now !');
+    } else {
+      Vibration.vibrate();
+      Alert.alert('Email and Password required');
+    }
     // }
   };
 
@@ -49,7 +65,7 @@ const RegisterPage = ({Users, addNewUser, navigation}) => {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.scrollView}>
-        <Header connected={false} />
+        <Header />
         <Form
           onButtonPress={onRegister}
           buttonText="Register"
@@ -117,6 +133,12 @@ const RegisterPage = ({Users, addNewUser, navigation}) => {
             asterik
           />
         </Form>
+        <Button
+          title="Go Back"
+          onPress={() => navigation.navigate('Login')}
+          containerStyle={styles.backButtonContainer}
+          buttonStyle={styles.backButton}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -167,6 +189,29 @@ const styles = StyleSheet.create({
     marginLeft: 100,
     marginRight: 100,
     borderRadius: 20,
+  },
+  backButtonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 20,
+    // color: 'grey',
+    // elevation: 3,
+    // backgroundColor: 'black',
+    marginLeft: 50,
+    marginRight: 50,
+  },
+  backButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 20,
+    // elevation: 3,
+    backgroundColor: 'grey',
+    marginLeft: 50,
+    marginRight: 50,
   },
 });
 

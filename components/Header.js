@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, StyleSheet, ImageBackground} from 'react-native';
-import {Header as H} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import {Button} from 'react-native-elements';
 import {NavigationContainer} from '@react-navigation/native';
+import {AppContext} from './Context';
 
-const Header = ({title, user}) => {
+const Header = ({title}) => {
+  const {user, isUserConnected} = useContext(AppContext);
   return (
     // Added LinearGradient
     <LinearGradient
@@ -15,18 +16,17 @@ const Header = ({title, user}) => {
       end={{x: 0, y: 1.5}}>
       <Text style={styles.text}>{title}</Text>
       <Text style={styles.userName}>
-        Wellcome {user.first_name + ' ' + user.last_name}!
+        Wellcome {isUserConnected && user.first_name + ' ' + user.last_name}!
       </Text>
     </LinearGradient>
   );
 };
 Header.defaultProps = {
   title: 'TripBook',
-  user: {
-    first_name: '',
-    last_name: '',
-  },
-  connected: true,
+  // user: {
+  //   first_name: '',
+  //   last_name: '',
+  // },
 };
 const styles = StyleSheet.create({
   header: {

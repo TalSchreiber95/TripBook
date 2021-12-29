@@ -1,48 +1,77 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Alert,
+  ActivityIndicator,
+  View,
+  Vibration
 } from 'react-native';
 
 import {Form, FormItem} from 'react-native-form-component';
 import Header from './Header';
 import {Button, CheckBox} from 'react-native-elements';
+import { AppContext } from './Context';
 
-const LoginPage = ({
-  setIsUserConnected,
-  authenticateUser,
-  navigation,
-}) => {
-
+const LoginPage = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const {user, setUser, setIsUserConnected} = useContext(AppContext);
+
+  const fetchAuthentication = async user => {
+    setLoading(true);
+    var flag = false;
+    await fetch(`http://10.0.2.2:8080/api/authUser/`, {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(user),
+    })
+      .then(res => {
+        res.ok && (flag = true);
+        return res.json();
+      })
+      .then(json => {
+        if (flag) {
+          console.log(json);
+          // const newJson = json;
+          setUser(json);
+          // console.log(activeUser);
+          return json;
+        }
+      })
+      .catch(error => console.error(error));
+    // console.log(activeUser);
+    setLoading(false);
+    return flag;
+  };
 
   const onLogin = async () => {
-      if (await authenticateUser({email: email, password: password})) {
-        // console.log(email, password, 'xxxx');
-        setIsUserConnected(true);
-        navigation.navigate('Home');
-      } else {
-        Alert.alert('wrong password or email');
-      }
+    if (await fetchAuthentication({email: email, password: password})) {
+      // console.log(email, password, 'xxxx');
+      setIsUserConnected(true);
+      navigation.navigate('Home');
+    } else {
+      Vibration.vibrate();
+      Alert.alert('wrong password or email');
+    }
 
-      // if (Users[index].email === email) {
-      //   if (Users[index].pass === password) {
-      //     ind(index);
-      //     setIsUserConnected(true);
-      //     navigation.navigate('Home');
-      //     // console.log(Users);
+    // if (Users[index].email === email) {
+    //   if (Users[index].pass === password) {
+    //     ind(index);
+    //     setIsUserConnected(true);
+    //     navigation.navigate('Home');
+    //     // console.log(Users);
 
-      //     return;
-      //   } else {
-      //     Alert.alert('wrong password');
-      //     return;
-      //   }
-      // }
-    
+    //     return;
+    //   } else {
+    //     Alert.alert('wrong password');
+    //     return;
+    //   }
+    // }
 
     // Alert.alert('user not exist');
   };
@@ -53,45 +82,49 @@ const LoginPage = ({
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.scrollView}>
-        <Header title="TripBook" connected={false} navigation={navigation} />
-        <Form
-          onButtonPress={onLogin}
-          buttonStyle={styles.formButton}
-          buttonText="Login">
-          <FormItem
-            placeholder="Enter a Valid Email"
-            style={styles.inputView}
-            label="Email:"
-            labelStyle={styles.label}
-            isRequired
-            value={email}
-            onChangeText={email => {
-              setEmail(email);
-            }}
-            asterik
-          />
-          <FormItem
-            placeholder="Enter a Valid Password"
-            style={styles.inputView}
-            label="Password:"
-            labelStyle={styles.label}
-            value={password}
-            onChangeText={password => {
-              setPassword(password);
-            }}
-            asterik
-          />
-        </Form>
-        <Button
-          title="Forgot your password ? Press here!"
-          type="inline"
-          containerStyle={styles.button}
-          titleStyle={styles.buttonText}
-          onPress={() => navigation.navigate('ForgotPassword')}></Button>
-        <Button
-          title="Dont have an account? Sign up"
-          type="clear"
-          onPress={() => navigation.navigate('Register')}></Button>
+        <Header />
+        {loading && <ActivityIndicator size={120} />}
+        { !loading && <View>
+          <Form
+            onButtonPress={onLogin}
+            buttonStyle={styles.formButton}
+            buttonText="Login">
+            <FormItem
+              placeholder="Enter a Valid Email"
+              style={styles.inputView}
+              label="Email:"
+              labelStyle={styles.label}
+              isRequired
+              value={email}
+              onChangeText={email => {
+                setEmail(email);
+              }}
+              asterik
+            />
+            <FormItem
+              placeholder="Enter a Valid Password"
+              style={styles.inputView}
+              label="Password:"
+              labelStyle={styles.label}
+              value={password}
+              onChangeText={password => {
+                setPassword(password);
+              }}
+              asterik
+            />
+          </Form>
+
+          <Button
+            title="Forgot your password ? Press here!"
+            type="inline"
+            containerStyle={styles.button}
+            titleStyle={styles.buttonText}
+            onPress={() => navigation.navigate('ForgotPassword')}></Button>
+          <Button
+            title="Dont have an account? Sign up"
+            type="clear"
+            onPress={() => navigation.navigate('Register')}></Button>
+        </View>}
       </ScrollView>
     </SafeAreaView>
   );

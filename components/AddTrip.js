@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   Alert,
   SafeAreaView,
@@ -7,15 +7,16 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  useColorScheme,
   View,
+  Vibration,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Header from './Header';
+import {AppContext} from './Context';
 
-const AddTrip = ({addWaitingTrip, user, navigation}) => {
+const AddTrip = ({navigation}) => {
   const [tripName, setTripName] = useState('');
   const [location, setLocation] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -36,6 +37,27 @@ const AddTrip = ({addWaitingTrip, user, navigation}) => {
     isTrainTravel: false,
   });
 
+  const {user, WaitingTrips, setWaitingTrips} = useContext(AppContext);
+
+  const addWaitingTrip = waitingTrip => {
+    AddTripToDB(waitingTrip);
+    setWaitingTrips([...WaitingTrips], waitingTrip);
+  };
+
+  const AddTripToDB = async trip => {
+    await fetch(`http://10.0.2.2:8080/api/trip`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(trip),
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        // return json;
+      })
+      .catch(error => console.error(error));
+    // fetchWaitingTrips();
+  };
   const onAddTrip = () => {
     if (
       tripName != '' &&
@@ -48,10 +70,9 @@ const AddTrip = ({addWaitingTrip, user, navigation}) => {
       setFeedbackLive([feedbackLive]);
       let actualCategory = [' '];
       Object.keys(categories).forEach(key => {
-        if (categories[key] === true)
-        actualCategory.push(String(key))
+        if (categories[key] === true) actualCategory.push(String(key));
         // console.log(key, category[key]);
-      })
+      });
 
       const newTrip = {
         // trip_id: '',
@@ -73,6 +94,7 @@ const AddTrip = ({addWaitingTrip, user, navigation}) => {
 
       navigation.navigate('Home');
     } else {
+      Vibration.vibrate();
       Alert.alert('Fill all the required fields !');
     }
   };
@@ -82,7 +104,7 @@ const AddTrip = ({addWaitingTrip, user, navigation}) => {
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
-          <Header title="Add Trip" user={user} navigation={navigation} />
+          <Header title="Add Trip" />
           <Text style={styles.text}>Fill the details below:</Text>
           <Form
             onButtonPress={onAddTrip}

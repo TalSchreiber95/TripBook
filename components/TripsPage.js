@@ -5,37 +5,22 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
-  useColorScheme,
+  ActivityIndicator,
   View,
 } from 'react-native';
 
-import Header from './Header';
 import TripCard from './TripCard';
-import GroupTripCard from './GroupTripCard';
-
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import {Button} from 'react-native-elements/dist/buttons/Button';
 import {AppContext} from './Context';
 
-const TripsPage = ({
-  // Trips,
-  user,
-  tripInfo,
-  deleteCard,
-  editCard,
-  onSendMessage,
-  deletePicture,
-  setIsOnSearch,
-  isOnSearch,
-  // deleteFeedback,
-  // deleteFeedbackLive,
-  // navigation,
-}) => {
-  const [Trips, setTrips] = useState([]);
+const TripsPage = ({tripInfo, setIsOnSearch, isOnSearch}) => {
+  const {user, Trips, setTrips} = useContext(AppContext);
+  const [loading, setLoading] = useState(false);
 
   const fetchTrips = async tripSearchInfo => {
     console.log(tripSearchInfo);
+    setLoading(true);
 
     await fetch(`http://10.0.2.2:8080/api/tripByCategory/`, {
       method: 'POST',
@@ -49,59 +34,42 @@ const TripsPage = ({
         // // console.log(Trips);
       })
       .catch(error => console.error(error));
+
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchTrips(tripInfo);
-    console.log('kruval');
+    console.log('tripspage effected');
   }, [isOnSearch]);
 
   return (
     <ScrollView>
-      {/* <Header user={user} /> */}
-      <View style={styles.backButtonPanel}>
-        <Text style={styles.text}>Search Results:</Text>
-        <Button
-          title="Back to Search"
-          containerStyle={styles.backButton}
-          onPress={() => setIsOnSearch(false)}
-        />
-      </View>
-      <Text style={styles.locationText}>
-        {' '}
-        Showing trips located in {tripInfo.location} not over {tripInfo.price}{' '}
-        ILS{' '}
-      </Text>
-      {Trips.map(trip => (
-        <TripCard
-          key={trip.trip_id}
-          trip={trip}
-          user={user}
-          deleteCard={deleteCard}
-          editCard={editCard}
-          onSendMessage={onSendMessage}
-          deletePicture={deletePicture}
-          // deleteFeedback={deleteFeedback}
-          // deleteFeedbackLive={deleteFeedbackLive}
-          onApprove={false}
-        />
-      ))}
-      {/* <Text style={styles.text2}>Group Trips:</Text> */}
-      {/* {Trips.map(trip => (
-        <GroupTripCard
-          key={trip.id}
-          trip={trip}
-          user={user}
-          deleteCard={deleteCard}
-          editCard={editCard}
-          onSendMessage={onSendMessage}
-          deletePicture={deletePicture}
-          deleteFeedback={deleteFeedback}
-          deleteFeedbackLive={deleteFeedbackLive}
-          onApprove={false}
-          onGroup={true}
-        />
-      ))} */}
+      {loading && <ActivityIndicator size={120} />}
+      {!loading && (
+        <View style={styles.container}>
+          <View style={styles.backButtonPanel}>
+            <Text style={styles.text}>Search Results:</Text>
+            <Button
+              title="Back to Search"
+              containerStyle={styles.backButton}
+              onPress={() => setIsOnSearch(false)}
+            />
+          </View>
+          <Text style={styles.locationText}>
+            Showing trips located in {tripInfo.location} not over{' '}
+            {tripInfo.price}
+            ILS
+          </Text>
+          {Trips.map(trip => (
+            <TripCard
+              key={trip.trip_id}
+              trip={trip}
+              onApprove={false}
+            />
+          ))}
+        </View>
+      )}
     </ScrollView>
   );
 };
@@ -111,27 +79,25 @@ TripsPage.defaultProps = {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 4,
+
+  },
   backButtonPanel: {
-    flex: 3,
+    flex: 1,
     flexDirection: 'row',
+    marginRight: 10,
   },
   backButton: {
     backgroundColor: 'black',
   },
   text: {
-    flex: 1,
+    flex: 3,
     color: 'black',
     fontSize: 23,
     marginLeft: 20,
-    // marginBottom: 20,
   },
-  text2: {
-    color: 'black',
-    fontSize: 23,
-    marginLeft: 10,
-    marginEnd: 260,
-    backgroundColor: 'green',
-  },
+
   locationText: {
     margin: 10,
     marginLeft: 20,
@@ -141,12 +107,3 @@ const styles = StyleSheet.create({
 });
 
 export default TripsPage;
-
-/*
-.filter(
-        trip =>
-          trip.location === tripInfo.location &&
-          trip.category.isRelax === tripInfo.category.isRelax &&
-          trip.price >= tripInfo.price
-      )
- */

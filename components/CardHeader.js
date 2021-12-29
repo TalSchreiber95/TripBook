@@ -2,22 +2,17 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/AntDesign';
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  Alert,
-} from 'react-native';
+import {View, Text, StyleSheet, Alert} from 'react-native';
 import LeftCardHeader from './LeftCardHeader';
 import RightCardHeader from './RightCardHeader';
-import { Button, Header } from 'react-native-elements';
+import {Button, Header} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
-import { Snackbar } from 'react-native-paper';
-import { useState } from 'react';
-import { Form, FormItem } from 'react-native-form-component';
+import {Snackbar} from 'react-native-paper';
+import {useState} from 'react';
+import {Form, FormItem} from 'react-native-form-component';
 import PopUpMessageForm from './PopUpMessageForm';
 import PopUpEditTrip from './PopUpEditTrip';
-import { color } from 'react-native-reanimated';
+import {color} from 'react-native-reanimated';
 
 const CardHeader = ({
   trip,
@@ -29,41 +24,40 @@ const CardHeader = ({
   onSendMessage,
   onApprove,
   editCard,
-  onGroup
 }) => {
   const [toggleDescription, setToggleDescription] = useState(false);
-  const [toggleOnJoin, setToggleOnJoin] = useState(false);
   const [description, setDescription] = useState('');
-
 
   const toggleInfo = iconPressed => {
     setToggleDescription(true);
     setDescription(iconPressed);
   };
-  const setJoinGroup = () => {
-    setToggleOnJoin(!toggleOnJoin);
-    //Note: should add the member to the group here.
-    toggleOnJoin ?
-      Alert.alert("Group join Canceled") :
-      Alert.alert("Group join successfully");
-  }
+
   const showCardInfo = () => {
-    let cate = "Trip's Owner: " + trip.user_id;
-    trip.category.isRelax === true ? cate += "\nRelax," : cate += "\n"
-    trip.category.isDynamic === true ? cate += "Dynamic," : cate += "";
-    trip.category.isParty === true ? cate += "Party," : cate += "";
-    trip.category.isPetAllowed === true ? cate += "\nPet Allowed," : cate += "\n";
-    trip.category.isCarTravel === true ? cate += "Car Travel," : cate += "";
-    trip.category.isPlaneTravel === true ? cate += "Plane Travel," : cate += "";
-    trip.category.isTrainTravel === true ? cate += "Train Travel," : cate += "";
-    Alert.alert(cate);
-  }
+    const owner = 'Trip Owner: ' + user.user_id;
+    let cate = 'Categories: ';
+    trip.category.filter(category => category === 'isRelax')[0] !== undefined &&
+      (cate += 'Relax, ');
+    trip.category.filter(category => category === 'isDynamic')[0] !==
+      undefined && (cate += 'Dynamic, ');
+    trip.category.filter(category => category === 'isParty')[0] !== undefined &&
+      (cate += 'Party, ');
+    trip.category.filter(category => category === 'isPetAllowed')[0] !==
+      undefined && (cate += 'PetAllowed, ');
+    trip.category.filter(category => category === 'isCarTravel')[0] !==
+      undefined && (cate += 'CarTravel, ');
+    trip.category.filter(category => category === 'isPlaneTravel')[0] !==
+      undefined && (cate += 'PlaneTravel, ');
+    trip.category.filter(category => category === 'isTrainTravel')[0] !==
+      undefined && (cate += 'TrainTravel ');
+    Alert.alert(cate, owner);
+  };
 
   return (
     <LinearGradient
       colors={['white', 'steelblue']}
-      start={{ x: 1, y: 4 }}
-      end={{ x: 0, y: 2 }}>
+      start={{x: 1, y: 4}}
+      end={{x: 0, y: 2}}>
       <View style={styles.iconHeader}>
         <Snackbar
           style={styles.snackbar}
@@ -79,27 +73,31 @@ const CardHeader = ({
           color="white"
           onPress={() => showCardInfo()}
           // Alert.alert("Trip's Owner: " + trip.owner)}
-          onLongPress={() => toggleInfo('Trip Owner')}
+          onLongPress={() => toggleInfo('Trip Categories')}
           style={styles.icon}
         />
 
-        <PopUpEditTrip
-          user={user}
-          trip={trip}
-          toggleInfo={toggleInfo}
-          editCard={editCard}
-          onApprove={onApprove}
-        />
+        {(user.admin || user.user_id == trip.user_id) && (
+          <PopUpEditTrip
+            user={user}
+            trip={trip}
+            toggleInfo={toggleInfo}
+            editCard={editCard}
+            onApprove={onApprove}
+          />
+        )}
 
-        <PopUpMessageForm
-          user={user}
-          trip={trip}
-          toggleInfo={toggleInfo}
-          onSendMessage={onSendMessage}
-          onApprove={onApprove}
-        />
+        {user.admin && (
+          <PopUpMessageForm
+            user={user}
+            trip={trip}
+            toggleInfo={toggleInfo}
+            onSendMessage={onSendMessage}
+            onApprove={onApprove}
+          />
+        )}
 
-        {(user.admin || user.email == trip.owner) && (
+        {(user.admin || user.user_id == trip.user_id) && (
           <Icon1
             name="message1"
             size={20}
@@ -110,7 +108,7 @@ const CardHeader = ({
           />
         )}
 
-        {(user.admin || user.email == trip.owner) && (
+        {(user.admin || user.user_id == trip.user_id) && (
           <Icon
             name="trash-o"
             size={20}
@@ -126,6 +124,7 @@ const CardHeader = ({
             size={20}
             color="white"
             onPress={() => onApproveTrip()}
+            onLongPress={() => toggleInfo('Approve Trip')}
             style={styles.icon}
           />
         )}
@@ -141,16 +140,16 @@ const CardHeader = ({
           toggler={toggler}
           updateButton={updateButton}
         />
-        {onGroup &&
+        {/* {onGroup &&
           <Button
-            title={toggleOnJoin ? "Cencel join" : "Join Group"}
+            title={toggleOnJoin ? "Cancel join" : "Join Group"}
             onPress={() => setJoinGroup()}
             type="secondary"
             titleStyle={styles.button}
             containerStyle={styles.buttonContainer}
             raised
           />
-        }
+        } */}
         <RightCardHeader
           trip={trip}
           toggler={toggler}

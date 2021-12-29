@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {ScrollView, StyleSheet, Text, Alert} from 'react-native';
+import {ScrollView, StyleSheet, Text, Alert, Vibration} from 'react-native';
 
 import {Form, FormItem} from 'react-native-form-component';
 import Header from './Header';
+import {Button} from 'react-native-elements';
 
 const ForgotPassword = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -23,37 +24,26 @@ const ForgotPassword = ({navigation}) => {
         if (flag) {
           Alert.alert(`Your password is: ${json.password}`);
         } else {
-          Alert.alert(`Wrong answer!`);
+          Alert.alert(`Wrong answer, Try Again !`);
         }
       })
       .catch(error => console.error(error));
+    return flag;
   };
 
   const onRestorePass = async () => {
-    await recoverPassword({email: email, passRecoverAnswer: answer});
-    navigation.navigate('LoginPage');
-
-    //     for (let index = 0; index < Users.length; index++) {
-    //         if (Users[index].email === email) {
-    //             if (Users[index].passRecoverAnswer === answer) {
-    //                 ind(index)
-    //                 // Note: here it's supposed to send the
-    //                 //       password to the mail of the user!
-    //                 Alert.alert("user password is: " + Users[index].pass);
-    //                 return;
-    //             } else {
-    //                 Alert.alert('Wrong answer!');
-    //                 return;
-    //             }
-    //         }
-    //     }
-
-    //     Alert.alert('User not exist');
+    if (email !== '' && answer !== '') {
+      await recoverPassword({email: email, passRecoverAnswer: answer});
+      // navigation.navigate('Login');
+    } else {
+      Vibration.vibrate();
+      Alert.alert('Email and answer required');
+    }
   };
 
   return (
     <ScrollView>
-      <Header connected={false} />
+      <Header />
       <Form
         onButtonPress={onRestorePass}
         buttonStyle={styles.formButton}
@@ -85,6 +75,12 @@ const ForgotPassword = ({navigation}) => {
           asterik
         />
       </Form>
+      <Button
+        title="Go Back"
+        onPress={() => navigation.navigate('Login')}
+        containerStyle={styles.backButtonContainer}
+        buttonStyle={styles.backButton}
+      />
     </ScrollView>
   );
 };
@@ -144,6 +140,29 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginBottom: 10,
     marginTop: 10,
+  },
+  backButtonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 20,
+    // color: 'grey',
+    // elevation: 3,
+    // backgroundColor: 'black',
+    marginLeft: 50,
+    marginRight: 50,
+  },
+  backButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 20,
+    // elevation: 3,
+    backgroundColor: 'grey',
+    marginLeft: 50,
+    marginRight: 50,
   },
 });
 

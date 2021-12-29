@@ -5,35 +5,18 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
-  useColorScheme,
-  View,
+  ActivityIndicator,
 } from 'react-native';
 
 import Header from './Header';
 import TripCard from './TripCard';
-import GroupTripCard from './GroupTripCard';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import {AppContext} from './Context';
 
-const MyTrips = ({
-  // myTrips,
-  // WaitingTrips,
-  user,
-  // deleteCard,
-  // addTrip,
-  // editCard,
-  // onSendMessage,
-  // deletePicture,
-  // deleteFeedback,
-  // deleteFeedbackLive,
-  // setTripEdit,
-  // fetchTripByOwner
-}) => {
-
+const MyTrips = () => {
   const {
     // Trips,
-    // user,
+    user,
     // WaitingTrips,
     myTrips,
     myWaitingTrips,
@@ -43,10 +26,10 @@ const MyTrips = ({
     setMyWaitingTrips,
   } = useContext(AppContext);
 
-  // const [myTrips, setMyTrips] = useState([]);
-  // const [myWaitingTrips, setMyWaitingTrips] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchTripByOwner = async ownerId => {
+    setLoading(true);
     try {
       const res = await fetch(`http://10.0.2.2:8080/api/tripOwner/${ownerId}`);
       const json = await res.json();
@@ -57,63 +40,35 @@ const MyTrips = ({
     } catch (error) {
       console.error(error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
+    console.log('MyTrips effected');
     fetchTripByOwner(user.user_id);
   }, []);
 
   return (
     <ScrollView>
       <Header user={user} />
-      <Text style={styles.text}>My posted trips:</Text>
+      {!loading && <Text style={styles.text}>My posted trips:</Text>}
+      {loading && <ActivityIndicator size={120} />}
+
       {myTrips.map(trip => (
         <TripCard
           key={trip.trip_id}
           trip={trip}
-          // user={user}
-          // deleteCard={deleteCard}
-          // editCard={editCard}
-          // onSendMessage={onSendMessage}
-          // deletePicture={deletePicture}
-          // deleteFeedback={deleteFeedback}
-          // deleteFeedbackLive={deleteFeedbackLive}
           onApprove={false}
         />
       ))}
-      <Text style={styles.text}>My waiting trips:</Text>
+      {!loading && <Text style={styles.text}>My waiting trips:</Text>}
       {myWaitingTrips.map(trip => (
         <TripCard
           key={trip.trip_id}
           trip={trip}
-          user={user}
-          // deleteCard={deleteCard}
-          // addTrip={addTrip}
-          // editCard={editCard}
-          // onSendMessage={onSendMessage}
-          // deletePicture={deletePicture}
-          // deleteFeedback={deleteFeedback}
-          // deleteFeedbackLive={deleteFeedbackLive}
-          // setTripEdit={setTripEdit}
           onApprove={true}
         />
       ))}
-      {/* <Text style={styles.text2}>My waiting group Trips:</Text>
-      {WaitingTrips.map(trip => (
-        <GroupTripCard
-          key={trip.trip_id}
-          trip={trip}
-          user={user}
-          deleteCard={deleteCard}
-          editCard={editCard}
-          onSendMessage={onSendMessage}
-          deletePicture={deletePicture}
-          deleteFeedback={deleteFeedback}
-          deleteFeedbackLive={deleteFeedbackLive}
-          onApprove={true}
-          onGroup={true}
-        />
-      ))} */}
     </ScrollView>
   );
 };
@@ -123,7 +78,6 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 23,
     marginLeft: 20,
-    // marginBottom: 20,
   },
   text2: {
     color: 'black',
@@ -142,11 +96,3 @@ const styles = StyleSheet.create({
 
 export default MyTrips;
 
-/*
-.filter(
-        trip =>
-          trip.location === tripInfo.location &&
-          trip.category.isRelax === tripInfo.category.isRelax &&
-          trip.price >= tripInfo.price
-      )
- */

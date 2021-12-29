@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Alert,
   Modal,
-  Pressable,
+  TouchableOpacity,
   TextInput,
 } from 'react-native';
 import {useState} from 'react';
@@ -17,7 +17,6 @@ const PopUpEditTrip = ({user, trip, toggleInfo, editCard, onApprove}) => {
 
   return (
     <View>
-      {(user.admin || user.email == trip.owner) && (
         <Icon
           name="edit"
           size={20}
@@ -26,25 +25,23 @@ const PopUpEditTrip = ({user, trip, toggleInfo, editCard, onApprove}) => {
           onLongPress={() => toggleInfo('Edit card')}
           style={styles.icon}
         />
-      )}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={toggleEditCard}
-        onRequestClose={() => {
-          // Alert.alert('Modal has been closed.');
-          setToggleEditCard(!toggleEditCard);
-        }}>
+      <Modal animationType="slide" transparent={true} visible={toggleEditCard}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <EditTrip trip={trip} user={user} editCard={editCard} onApprove={onApprove} setToggleEditCard={setToggleEditCard} />
-            <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
-                  setToggleEditCard(!toggleEditCard);
-                }}>
-                <Text style={styles.textStyle}>Close</Text>
-              </Pressable>
+            <EditTrip
+              trip={trip}
+              user={user}
+              editCard={editCard}
+              onApprove={onApprove}
+              setToggleEditCard={setToggleEditCard}
+            />
+            <TouchableOpacity
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => {
+                setToggleEditCard(!toggleEditCard);
+              }}>
+              <Text style={styles.textStyle}>Close</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>

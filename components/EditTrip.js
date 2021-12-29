@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  useColorScheme,
+  Vibration,
   View,
 } from 'react-native';
 import {Form, FormItem} from 'react-native-form-component';
@@ -51,15 +51,6 @@ const EditTrip = ({trip, editCard, onApprove, setToggleEditCard}) => {
         // adminMessage: 'No new admin messages',
         tripName: tripName,
         category: actualCategory,
-        // {
-        //   isRelax: categories.isRelax,
-        //   isDynamic: categories.isDynamic,
-        //   isParty: categories.isParty,
-        //   isPetAllowed: categories.isPetAllowed,
-        //   isCarTravel: categories.isCarTravel,
-        //   isPlaneTravel: categories.isPlaneTravel,
-        //   isTrainTravel: categories.isTrainTravel,
-        // },
         location: location,
         description: description,
         price: price,
@@ -67,8 +58,13 @@ const EditTrip = ({trip, editCard, onApprove, setToggleEditCard}) => {
       editCard(updatedTrip, onApprove);
       setToggleEditCard(false);
       Alert.alert('trip updated succesfully');
+    } else {
+      Vibration.vibrate();
+      Alert.alert('Fill all the required fields !');
     }
   };
+
+
 
   return (
     <SafeAreaView>

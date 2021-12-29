@@ -5,18 +5,24 @@ import {
   StyleSheet,
   Alert,
   Modal,
-  Pressable,
+  TouchableOpacity,
   TextInput,
 } from 'react-native';
 import {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const PopUpMessageForm = ({user, trip, toggleInfo, onSendMessage,onApprove}) => {
+const PopUpMessageForm = ({
+  user,
+  trip,
+  toggleInfo,
+  onSendMessage,
+  onApprove,
+}) => {
   const [message, setMessage] = useState('');
   const [toggleAddMessage, setToggleAddMessage] = useState(false);
 
   const sendMessage = () => {
-    onSendMessage(trip, message,onApprove);
+    onSendMessage(trip, message, onApprove);
     Alert.alert('Message sent successfully!');
     setMessage('');
     setToggleAddMessage(!toggleAddMessage);
@@ -24,16 +30,16 @@ const PopUpMessageForm = ({user, trip, toggleInfo, onSendMessage,onApprove}) => 
 
   return (
     <View>
-        {user.admin && (
-          <Icon
-            name="send"
-            size={20}
-            color="white"
-            onPress={() => setToggleAddMessage(!toggleAddMessage)}
-            onLongPress={() => toggleInfo('Send admin messages')}
-            style={styles.icon}
-          />
-        )}
+      {user.admin && (
+        <Icon
+          name="send"
+          size={20}
+          color="white"
+          onPress={() => setToggleAddMessage(!toggleAddMessage)}
+          onLongPress={() => toggleInfo('Send admin messages')}
+          style={styles.icon}
+        />
+      )}
       <Modal
         animationType="slide"
         transparent={true}
@@ -57,23 +63,25 @@ const PopUpMessageForm = ({user, trip, toggleInfo, onSendMessage,onApprove}) => 
               multiline={true}
             />
             <View style={styles.modalButtons}>
-              <Pressable
+              <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => {
                   setToggleAddMessage(!toggleAddMessage);
                   setMessage('');
                 }}>
                 <Text style={styles.textStyle}>Close</Text>
-              </Pressable>
-              <Pressable
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={[styles.button, styles.buttonSend]}
                 onPress={() => {
-                  setToggleAddMessage(!toggleAddMessage);
-                  sendMessage();
-                  setMessage('');
+                  if (message !== '') {
+                    setToggleAddMessage(!toggleAddMessage);
+                    sendMessage();
+                    setMessage('');
+                  }
                 }}>
                 <Text style={styles.textStyle}>Send</Text>
-              </Pressable>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

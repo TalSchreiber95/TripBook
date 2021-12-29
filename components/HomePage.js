@@ -14,11 +14,12 @@ import TripFilter from './TripFilter';
 import TripsPage from './TripsPage';
 import {AppContext} from './Context';
 
-const HomePage = ({user, navigation}) => {
-  // const {user} = useContext(AppContext);
+const HomePage = ({navigation}) => {
+  const {user} = useContext(AppContext);
 
   const [TripInfo, setTripInfo] = useState({category: []});
   const [isOnSearch, setIsOnSearch] = useState(false);
+  
 
   // useEffect(() => {
   //   console.log(user.user_id);
@@ -44,23 +45,14 @@ const HomePage = ({user, navigation}) => {
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={styles.container}>
-          <Header user={user} />
-          {!isOnSearch ? (
+          <Header  />
+          {!isOnSearch  ? (
             <TripFilter updateFilter={updateFilter} navigation={navigation} />
           ) : (
             <TripsPage
-              // {...props}
-              // Trips={Trips}
-              user={user}
               tripInfo={TripInfo}
               setIsOnSearch={setIsOnSearch}
               isOnSearch={isOnSearch}
-              // deleteCard={deleteCard}
-              // onSendMessage={onSendMessage}
-              // deletePicture={deletePicture}
-              // deleteFeedback={deleteFeedback}
-              // deleteFeedbackLive={deleteFeedbackLive}
-              // editCard={editCard}
             />
           )}
         </View>
