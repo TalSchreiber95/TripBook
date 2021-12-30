@@ -1,9 +1,10 @@
 import {View, Text, StyleSheet, ImageBackground, Alert} from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useContext} from 'react';
 import {Button, CheckBox} from 'react-native-elements';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import AddFeedbackForm from './AddFeedbackForm';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { AppContext } from './Context';
 
 // import {CheckBox} from 'react-native-elements/dist/checkbox/CheckBox';
 // import {FontAwesomeIcon as Icon} from '@fortawesome/react-fontawesome';
@@ -23,7 +24,7 @@ const LeftCardFooter = ({
   const [toggleFeedbackLive, setToggleFeedbackLive] = useState(false);
   const [posts, setPosts] = useState([]);
   const [livePosts, setLivePosts] = useState([]);
-
+  const { isGuest,isUserConnected } = useContext(AppContext);
   useEffect(() => {
     getPostsByTripID(trip.trip_id);
     getLivePostsByTripID(trip.trip_id);
@@ -182,12 +183,14 @@ const LeftCardFooter = ({
               style={styles.deleteFeedbackIcon}
             />
           )}
+          {(!isGuest || isUserConnected )&&
           <AddFeedbackForm
             trip={trip}
             user={user}
             getPost={getPostsByTripID}
             getLivePost={getLivePostsByTripID}
           />
+          }
         </View>
       )}
     </View>

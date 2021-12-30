@@ -26,6 +26,7 @@ const App: () => Node = () => {
   // const [Trips, setTrips] = useState([]);
   // const [WaitingTrips, setWaitingTrips] = useState([]);
   // const [myTrips, setMyTrips] = useState([]);
+  const [isGuest, setIsGuest] = useState(false);
   const [isUserConnected, setIsUserConnected] = useState(false);
   const [user, setUser] = useState({});
 
@@ -33,7 +34,8 @@ const App: () => Node = () => {
   const [WaitingTrips, setWaitingTrips] = useState([]);
   const [myTrips, setMyTrips] = useState([]);
   const [myWaitingTrips, setMyWaitingTrips] = useState([]);
-
+  
+  
   const fetchUserById = id => {
     fetch(`http://10.0.2.2:8080/api/user/${id}`)
       .then(res => res.json())
@@ -125,16 +127,18 @@ const App: () => Node = () => {
         myTrips,
         myWaitingTrips,
         isUserConnected,
+        isGuest,
         setUser,
         setTrips,
         setWaitingTrips,
         setMyTrips,
         setMyWaitingTrips,
         setIsUserConnected,
+        setIsGuest,
       }}>
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Login">
-          {!isUserConnected && (
+          {(!isUserConnected) && (
             <Drawer.Screen name="Login" component={LoginPage} />
           )}
           {!isUserConnected && (
@@ -143,7 +147,7 @@ const App: () => Node = () => {
           {!isUserConnected && (
             <Drawer.Screen name="ForgotPassword" component={ForgotPassword} />
           )}
-          {isUserConnected && (
+          {(isGuest || isUserConnected ) && (
             <Drawer.Screen
               // options={{headerShown: true}}
               name="Home"
@@ -170,7 +174,7 @@ const App: () => Node = () => {
           {isUserConnected && (
             <Drawer.Screen name="MyTrips" component={MyTrips} />
           )}
-          {isUserConnected && (
+          { (isUserConnected) && (
             <Drawer.Screen name="AddTrip" component={AddTrip} />
           )}
         </Drawer.Navigator>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -10,24 +10,24 @@ import {
   Vibration
 } from 'react-native';
 
-import {Form, FormItem} from 'react-native-form-component';
+import { Form, FormItem } from 'react-native-form-component';
 import Header from './Header';
-import {Button, CheckBox} from 'react-native-elements';
+import { Button, CheckBox } from 'react-native-elements';
 import { AppContext } from './Context';
 
-const LoginPage = ({navigation}) => {
+const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const {user, setUser, setIsUserConnected} = useContext(AppContext);
+  const { user, setUser, setIsUserConnected, setIsGuest } = useContext(AppContext);
 
   const fetchAuthentication = async user => {
     setLoading(true);
     var flag = false;
     await fetch(`http://10.0.2.2:8080/api/authUser/`, {
       method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(user),
     })
       .then(res => {
@@ -50,9 +50,10 @@ const LoginPage = ({navigation}) => {
   };
 
   const onLogin = async () => {
-    if (await fetchAuthentication({email: email, password: password})) {
+    if (await fetchAuthentication({ email: email, password: password })) {
       // console.log(email, password, 'xxxx');
       setIsUserConnected(true);
+      setIsGuest(false);
       navigation.navigate('Home');
     } else {
       Vibration.vibrate();
@@ -75,7 +76,26 @@ const LoginPage = ({navigation}) => {
 
     // Alert.alert('user not exist');
   };
-
+  const onGuest=()=>{
+    Vibration.vibrate();
+    Alert.alert(
+      "Are you sure you want to enter as a guest?",
+      "Logging in as a guest may affect certain permissions on some of the system such as:\n 1. Posting a trip.\n 2. Posting feedback.\n 3. Add photos for existing trips.\n 4. Viewing my trips.\n 5. other future features .. ",
+      [
+        {
+          text: 'Yes',
+          onPress: () => {
+            setIsGuest(true);
+            // console.log("ok");
+            navigation.navigate('Home');
+          },
+        },
+        {
+          text: 'No',
+        },
+      ],
+    );
+  }
   return (
     <SafeAreaView>
       <StatusBar />
@@ -84,7 +104,7 @@ const LoginPage = ({navigation}) => {
         style={styles.scrollView}>
         <Header />
         {loading && <ActivityIndicator size={120} />}
-        { !loading && <View>
+        {!loading && <View>
           <Form
             onButtonPress={onLogin}
             buttonStyle={styles.formButton}
@@ -124,6 +144,10 @@ const LoginPage = ({navigation}) => {
             title="Dont have an account? Sign up"
             type="clear"
             onPress={() => navigation.navigate('Register')}></Button>
+          <Button
+            title="Click here to enter as a guest"
+            type="clear"
+            onPress={() => onGuest()}></Button>
         </View>}
       </ScrollView>
     </SafeAreaView>

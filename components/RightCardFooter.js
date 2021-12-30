@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet, ImageBackground, Alert } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { Button, CheckBox } from 'react-native-elements';
 import { Form, FormItem } from 'react-native-form-component';
-
+import { AppContext } from './Context';
 const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
   // const [picIndex, setPicIndex] = useState(0);
   const [pic, setPic] = useState();
-
+  const { isGuest,isUserConnected } = useContext(AppContext);
 
   const ToggleGallery = () => {
     toggler === 'gallery' ? updateButton('none') : updateButton('gallery');
@@ -28,6 +28,8 @@ const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
 
   return (
     <View style={styles.container}>
+    {(!isGuest || isUserConnected)&&
+    <View>
       <Button
         title='Add Picture +'
         onPress={ToggleGallery}
@@ -58,6 +60,8 @@ const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
           </Form>
         </View>
       )}
+      </View>
+    }
     </View>
   );
 };
