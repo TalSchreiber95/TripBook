@@ -1,12 +1,20 @@
-import { View, Text, StyleSheet, ImageBackground, Alert } from 'react-native';
-import React, { useState, useEffect,useContext } from 'react';
-import { Button, CheckBox } from 'react-native-elements';
-import { Form, FormItem } from 'react-native-form-component';
-import { AppContext } from './Context';
-const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
-  // const [picIndex, setPicIndex] = useState(0);
+import {View, Text, StyleSheet, ImageBackground, Alert} from 'react-native';
+import React, {useState, useEffect, useContext} from 'react';
+import {Button, CheckBox} from 'react-native-elements';
+import {Form, FormItem} from 'react-native-form-component';
+import {AppContext} from './Context';
+import CameraButton from './CameraButton';
+
+
+const RightCardFooter = ({
+  trip,
+  toggler,
+  updateButton,
+  cameraPage,
+  navigation,
+}) => {
   const [pic, setPic] = useState();
-  const { isGuest,isUserConnected } = useContext(AppContext);
+  const {isGuest, isUserConnected, setCameraPage, setActiveTrip} = useContext(AppContext);
 
   const ToggleGallery = () => {
     toggler === 'gallery' ? updateButton('none') : updateButton('gallery');
@@ -15,53 +23,62 @@ const RightCardFooter = ({ trip, setPicture, toggler, updateButton }) => {
   const onAddPicture = () => {
     // Note: should be improved!
     if (pic !== '') {
-      if (trip.pictures[0] === 'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg') {
+      if (
+        trip.pictures[0] ===
+        'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg'
+      ) {
         trip.pictures[0] = pic;
         Alert.alert('new picture');
-      }
-      else {
+      } else {
         trip.pictures.push(pic);
-        Alert.alert("push picture");
+        Alert.alert('push picture');
       }
     }
   };
 
   return (
     <View style={styles.container}>
-    {(!isGuest || isUserConnected)&&
-    <View>
-      <Button
-        title='Add Picture +'
-        onPress={ToggleGallery}
-        type="secondary"
-        titleStyle={styles.buttonTitle}
-        containerStyle={styles.buttonContainer}
-        raised
-      />
-      {toggler === 'gallery' && (
-        <View style={styles.popUp}>
-          <Form
-            onButtonPress={onAddPicture}
-            buttonStyle={styles.formButton}
-            buttonText="Add"
-          >
-            <FormItem
-              placeholder="Add url pic here"
-              style={styles.inputView}
-              label="Url pic:"
-              labelStyle={styles.label}
-              multiline={true}
-              value={pic}
-              onChangeText={pic => {
-                setPic(pic);
-              }}
-              isRequired
-            />
-          </Form>
+      {(!isGuest || isUserConnected) && (
+        <View>
+          <Button
+            title="Add Picture +"
+            onPress={ToggleGallery}
+            type="secondary"
+            titleStyle={styles.buttonTitle}
+            containerStyle={styles.buttonContainer}
+            raised
+          />
+          {toggler === 'gallery' && (
+            <View style={styles.popUp}>
+              <Form
+                onButtonPress={onAddPicture}
+                buttonStyle={styles.formButton}
+                buttonText="Add">
+                <FormItem
+                  placeholder="Add url pic here"
+                  style={styles.inputView}
+                  label="Url pic:"
+                  labelStyle={styles.label}
+                  multiline={true}
+                  value={pic}
+                  onChangeText={pic => {
+                    setPic(pic);
+                  }}
+                  isRequired
+                />
+              </Form>
+              <Button
+                title="Take picture"
+                onPress={() => {
+                  navigation.navigate('Camera');
+                  setCameraPage(cameraPage);
+                  setActiveTrip(trip);
+                }}
+              />
+            </View>
+          )}
         </View>
       )}
-      </View>
-    }
     </View>
   );
 };
@@ -78,7 +95,6 @@ const styles = StyleSheet.create({
     // bottom: 20,
     flex: 1,
     alignItems: 'flex-end',
-
   },
   formButton: {
     backgroundColor: 'steelblue',
@@ -113,7 +129,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 17,
     marginTop: 20,
-
   },
   popUp: {
     // flex: 0.1,
@@ -144,7 +159,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     // width: '120%',
     alignSelf: 'flex-end',
-
   },
   RLbuttons: {
     width: 40,

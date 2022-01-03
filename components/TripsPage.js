@@ -13,13 +13,14 @@ import TripCard from './TripCard';
 import {useState, useEffect, useContext} from 'react';
 import {Button} from 'react-native-elements/dist/buttons/Button';
 import {AppContext} from './Context';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const TripsPage = ({tripInfo, setIsOnSearch, isOnSearch}) => {
-  const {user, Trips, setTrips} = useContext(AppContext);
+const TripsPage = ({navigation, tripInfo, setIsOnSearch, isOnSearch}) => {
+  const {Trips, setTrips} = useContext(AppContext);
   const [loading, setLoading] = useState(false);
 
   const fetchTrips = async tripSearchInfo => {
-    console.log(tripSearchInfo);
+    console.log('shriberhomo', tripSearchInfo.price);
     setLoading(true);
 
     await fetch(`http://10.0.2.2:8080/api/tripByCategory/`, {
@@ -56,16 +57,20 @@ const TripsPage = ({tripInfo, setIsOnSearch, isOnSearch}) => {
               onPress={() => setIsOnSearch(false)}
             />
           </View>
-          <Text style={styles.locationText}>
-            Showing trips located in {tripInfo.location} not over{' '}
-            {tripInfo.price}
-            ILS
-          </Text>
+          <View style={styles.priceView}>
+            <Text style={styles.locationText}>
+              Showing trips located in {tripInfo.location} not over{' '}
+              {tripInfo.price === -1 ? '' : tripInfo.price}
+            </Text>
+            <Icon name="ils" size={14} color="black" style={styles.ilsIcon} />
+          </View>
           {Trips.map(trip => (
             <TripCard
               key={trip.trip_id}
               trip={trip}
               onApprove={false}
+              cameraPage={'Home'}
+              navigation={navigation}
             />
           ))}
         </View>
@@ -81,7 +86,6 @@ TripsPage.defaultProps = {
 const styles = StyleSheet.create({
   container: {
     flex: 4,
-
   },
   backButtonPanel: {
     flex: 1,
@@ -103,6 +107,12 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     fontSize: 15,
     color: 'black',
+  },
+  priceView: {
+    flex: 0.3,
+    flexDirection: 'row',
+    alignItems: 'center',
+    // maxHeight: 35,
   },
 });
 

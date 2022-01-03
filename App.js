@@ -18,24 +18,22 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import type {Node} from 'react';
 import {StyleSheet, Alert, Text, TouchableOpacity} from 'react-native';
-import {Button} from 'react-native-elements';
+import Camera from './components/Camera';
 import {AppContext} from './components/Context';
 const Drawer = createDrawerNavigator();
 
 const App: () => Node = () => {
-  // const [Trips, setTrips] = useState([]);
-  // const [WaitingTrips, setWaitingTrips] = useState([]);
-  // const [myTrips, setMyTrips] = useState([]);
   const [isGuest, setIsGuest] = useState(false);
   const [isUserConnected, setIsUserConnected] = useState(false);
   const [user, setUser] = useState({});
+  const [cameraPage, setCameraPage] = useState('')
+  const [activeTrip, setActiveTrip] = useState({});
 
   const [Trips, setTrips] = useState([]);
   const [WaitingTrips, setWaitingTrips] = useState([]);
   const [myTrips, setMyTrips] = useState([]);
   const [myWaitingTrips, setMyWaitingTrips] = useState([]);
-  
-  
+
   const fetchUserById = id => {
     fetch(`http://10.0.2.2:8080/api/user/${id}`)
       .then(res => res.json())
@@ -45,33 +43,6 @@ const App: () => Node = () => {
       })
       .catch(error => console.error(error));
   };
-
-  // params in url instead of body: email and password on URL, and turn back to GET
-  // const fetchAuthentication = async user => {
-  //   var flag = false;
-  //   await fetch(`http://10.0.2.2:8080/api/authUser/`, {
-  //     method: 'PUT',
-  //     headers: {'Content-Type': 'application/json'},
-  //     body: JSON.stringify(user),
-  //   })
-  //     .then(res => {
-  //       res.ok && (flag = true);
-  //       return res.json();
-  //     })
-  //     .then(json => {
-  //       if (flag) {
-  //         console.log(json);
-  //         // const newJson = json;
-  //         setUser(json);
-  //         // console.log(activeUser);
-  //         return json;
-  //       }
-  //     })
-  //     .catch(error => console.error(error));
-  //   // console.log(activeUser);
-
-  //   return flag;
-  // };
 
   const UpdateUserToDB = async (id, user) => {
     await fetch(`http://10.0.2.2:8080/api/user/${id}`, {
@@ -86,20 +57,6 @@ const App: () => Node = () => {
       })
       .catch(error => console.error(error));
   };
-
-  // const AddUserToDB = async trip => {
-  //   await fetch(`http://10.0.2.2:8080/api/user`, {
-  //     method: 'POST',
-  //     headers: {'Content-Type': 'application/json'},
-  //     body: JSON.stringify(trip),
-  //   })
-  //     .then(res => res.json())
-  //     .then(json => {
-  //       // console.log(json);
-  //       return json;
-  //     })
-  //     .catch(error => console.error(error));
-  // };
 
   const deleteUserFromDB = async id => {
     await fetch(`http://10.0.2.2:8080/api/user/${id}`, {
@@ -117,7 +74,6 @@ const App: () => Node = () => {
       .catch(error => console.error(error));
   };
 
-
   return (
     <AppContext.Provider
       value={{
@@ -128,6 +84,8 @@ const App: () => Node = () => {
         myWaitingTrips,
         isUserConnected,
         isGuest,
+        cameraPage,
+        activeTrip,
         setUser,
         setTrips,
         setWaitingTrips,
@@ -135,10 +93,12 @@ const App: () => Node = () => {
         setMyWaitingTrips,
         setIsUserConnected,
         setIsGuest,
+        setCameraPage,
+        setActiveTrip,
       }}>
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Login">
-          {(!isUserConnected) && (
+          {!isUserConnected && (
             <Drawer.Screen name="Login" component={LoginPage} />
           )}
           {!isUserConnected && (
@@ -147,14 +107,12 @@ const App: () => Node = () => {
           {!isUserConnected && (
             <Drawer.Screen name="ForgotPassword" component={ForgotPassword} />
           )}
-          {(isGuest || isUserConnected ) && (
+          {(isGuest || isUserConnected) && (
             <Drawer.Screen
-              // options={{headerShown: true}}
               name="Home"
               component={HomePage}
               options={{
                 headerShown: true,
-                // headerTitle: props => <LogoTitle {...props} />,
                 headerRight: () => (
                   <TouchableOpacity
                     style={[styles.button, styles.buttonSend]}
@@ -174,8 +132,20 @@ const App: () => Node = () => {
           {isUserConnected && (
             <Drawer.Screen name="MyTrips" component={MyTrips} />
           )}
-          { (isUserConnected) && (
+          {isUserConnected && (
             <Drawer.Screen name="AddTrip" component={AddTrip} />
+          )}
+          {isUserConnected && (
+            <Drawer.Screen
+              name="Camera"
+              component={Camera}
+              options={{
+                headerShown: false,
+                drawerLabel: () => null,
+                title: null,
+                drawerIcon: () => null,
+              }}
+            />
           )}
         </Drawer.Navigator>
       </NavigationContainer>
@@ -194,11 +164,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
-  // buttonClose: {
-  //   backgroundColor: 'grey',
-  //   marginLeft: 10,
-  //   marginRight: 10,
-  // },
   textStyle: {
     color: 'white',
     fontWeight: 'bold',

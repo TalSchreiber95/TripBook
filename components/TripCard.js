@@ -9,7 +9,7 @@ import {useState, useContext, useEffect} from 'react';
 import {Button} from 'react-native-elements/dist/buttons/Button';
 import {AppContext} from './Context';
 
-const TripCard = ({trip, onApprove}) => {
+const TripCard = ({navigation, trip, onApprove, onMyTrip, cameraPage}) => {
   const {
     Trips,
     WaitingTrips,
@@ -162,43 +162,50 @@ const TripCard = ({trip, onApprove}) => {
       description: updatedTrip.description,
     };
     UpdateTripToDB(updatedTrip.trip_id, updatedWaitingTrip);
-    if (!onApprove) {
-      const trip = Trips.filter(t => t.trip_id === updatedTrip.trip_id)[0];
-      // const myTrip = myTrips.filter(t => t.trip_id === updatedTrip.trip_id)[0];
-      trip.tripName = updatedTrip.tripName;
-      trip.category = updatedTrip.category;
-      trip.location = updatedTrip.location;
-      trip.description = updatedTrip.description;
-      trip.price = updatedTrip.price;
-      // if (myTrip !== undefined) {
-      //   myTrip.tripName = updatedTrip.tripName;
-      //   myTrip.category = updatedTrip.category;
-      //   myTrip.location = updatedTrip.location;
-      //   myTrip.description = updatedTrip.description;
-      //   myTrip.price = updatedTrip.price;
-      // }
-      setTrips([...Trips]);
-      // setMyTrips([...myTrips]);
-    } else {
-      const waitingTrip = WaitingTrips.filter(
-        t => t.trip_id === updatedTrip.trip_id,
-      )[0];
-      // const myWaitingTrip = myWaitingTrips.filter(t => t.trip_id === updatedTrip.trip_id)[0];
 
-      waitingTrip.tripName = updatedTrip.tripName;
-      waitingTrip.category = updatedTrip.category;
-      waitingTrip.location = updatedTrip.location;
-      waitingTrip.description = updatedTrip.description;
-      waitingTrip.price = updatedTrip.price;
-      // if (myWaitingTrip !== undefined) {
-      //   myWaitingTrip.tripName = updatedTrip.tripName;
-      //   myWaitingTrip.category = updatedTrip.category;
-      //   myWaitingTrip.location = updatedTrip.location;
-      //   myWaitingTrip.description = updatedTrip.description;
-      //   myWaitingTrip.price = updatedTrip.price;
-      // }
-      setWaitingTrips([...WaitingTrips]);
-      // setMyWaitingTrips([...myWaitingTrips]);
+    if (!onApprove) {
+      if (!onMyTrip) {
+        const trip = Trips.filter(t => t.trip_id === updatedTrip.trip_id)[0];
+        trip.tripName = updatedTrip.tripName;
+        trip.category = updatedTrip.category;
+        trip.location = updatedTrip.location;
+        trip.description = updatedTrip.description;
+        trip.price = updatedTrip.price;
+        setTrips([...Trips]);
+      } else {
+        const myTrip = myTrips.filter(
+          t => t.trip_id === updatedTrip.trip_id,
+        )[0];
+        myTrip.tripName = updatedTrip.tripName;
+        myTrip.category = updatedTrip.category;
+        myTrip.location = updatedTrip.location;
+        myTrip.description = updatedTrip.description;
+        myTrip.price = updatedTrip.price;
+        setMyTrips([...myTrips]);
+      }
+    } else {
+      if (!onMyTrip) {
+        const waitingTrip = WaitingTrips.filter(
+          t => t.trip_id === updatedTrip.trip_id,
+        )[0];
+
+        waitingTrip.tripName = updatedTrip.tripName;
+        waitingTrip.category = updatedTrip.category;
+        waitingTrip.location = updatedTrip.location;
+        waitingTrip.description = updatedTrip.description;
+        waitingTrip.price = updatedTrip.price;
+        setWaitingTrips([...WaitingTrips]);
+      } else {
+        const myWaitingTrip = myWaitingTrips.filter(
+          t => t.trip_id === updatedTrip.trip_id,
+        )[0];
+        myWaitingTrip.tripName = updatedTrip.tripName;
+        myWaitingTrip.category = updatedTrip.category;
+        myWaitingTrip.location = updatedTrip.location;
+        myWaitingTrip.description = updatedTrip.description;
+        myWaitingTrip.price = updatedTrip.price;
+        setMyWaitingTrips([...myWaitingTrips]);
+      }
     }
   };
 
@@ -230,7 +237,8 @@ const TripCard = ({trip, onApprove}) => {
   };
 
   TripCard.defaultProps = {
-    addTrip: () => {},
+    onMyTrip: false,
+    onApprove: false,
   };
 
   return (
@@ -297,6 +305,8 @@ const TripCard = ({trip, onApprove}) => {
         onApprove={onApprove}
         user={user}
         toggler={toggler}
+        cameraPage={cameraPage}
+        navigation={navigation}
       />
     </View>
   );

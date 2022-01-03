@@ -19,40 +19,39 @@ const HomePage = ({navigation}) => {
 
   const [TripInfo, setTripInfo] = useState({category: []});
   const [isOnSearch, setIsOnSearch] = useState(false);
-  
 
   // useEffect(() => {
   //   console.log(user.user_id);
   // }, []);
 
-  const updateFilter = (categories, tripName, location, price) => {
+  const updateFilter = (categories, location, price) => {
     let actualCategory = [];
     Object.keys(categories).forEach(key => {
       if (categories[key] === true) actualCategory.push(String(key));
     });
+    console.log('Yuval hOmo', price);
+
     const tripInfo = {
-      // tripName: tripName,
-      // location: location,
+      location: location,
       category: actualCategory,
-      // price: price,
+      price: price,
     };
-    // addTripInfo(tripInfo);
     setTripInfo(tripInfo);
     setIsOnSearch(true);
-    console.log('shalom omer shalom');
   };
   return (
     <SafeAreaView>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={styles.container}>
-          <Header  />
-          {!isOnSearch  ? (
-            <TripFilter updateFilter={updateFilter} navigation={navigation} />
+          <Header />
+          {!isOnSearch ? (
+            <TripFilter updateFilter={updateFilter} />
           ) : (
             <TripsPage
               tripInfo={TripInfo}
               setIsOnSearch={setIsOnSearch}
               isOnSearch={isOnSearch}
+              navigation={navigation}
             />
           )}
         </View>

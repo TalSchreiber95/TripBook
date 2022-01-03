@@ -15,6 +15,8 @@ const CardFooter = ({
   // deleteFeedbackLive,
   onApprove,
   user,
+  cameraPage,
+  navigation,
 }) => {
   return (
     <LinearGradient
@@ -40,19 +42,21 @@ const CardFooter = ({
           user={user}
         />
         <View style={styles.priceView}>
+        <Text style={styles.priceText}>{trip.price}</Text>
           <Icon
             name="ils"
-            size={20}
+            size={14}
             color="whitesmoke"
             style={styles.ilsIcon}
           />
-          <Text style={styles.priceText}>{trip.price}</Text>
         </View>
         <RightCardFooter
           trip={trip}
           setPicture={setPicture}
           toggler={toggler}
           updateButton={updateButton}
+          cameraPage={cameraPage}
+          navigation={navigation}
         />
       </View>
     </LinearGradient>
@@ -107,8 +111,8 @@ const styles = StyleSheet.create({
     // borderLeftWidth:1,
     // borderColor:"green"
     fontWeight: 'bold',
-    fontSize: 20,
-    margin: 4,
+    fontSize: 13,
+    margin: 2,
     top: 5,
     color: 'whitesmoke',
   },

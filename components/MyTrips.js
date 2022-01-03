@@ -13,7 +13,8 @@ import TripCard from './TripCard';
 import {useState, useEffect, useContext} from 'react';
 import {AppContext} from './Context';
 
-const MyTrips = () => {
+
+const MyTrips = ({navigation}) => {
   const {
     // Trips,
     user,
@@ -46,11 +47,12 @@ const MyTrips = () => {
   useEffect(() => {
     console.log('MyTrips effected');
     fetchTripByOwner(user.user_id);
+
   }, []);
 
   return (
     <ScrollView>
-      <Header user={user} />
+      <Header />
       {!loading && <Text style={styles.text}>My posted trips:</Text>}
       {loading && <ActivityIndicator size={120} />}
 
@@ -58,7 +60,10 @@ const MyTrips = () => {
         <TripCard
           key={trip.trip_id}
           trip={trip}
-          onApprove={false}
+          onMyTrip={true}
+          cameraPage={'MyTrips'}
+          navigation={navigation}
+
         />
       ))}
       {!loading && <Text style={styles.text}>My waiting trips:</Text>}
@@ -67,6 +72,9 @@ const MyTrips = () => {
           key={trip.trip_id}
           trip={trip}
           onApprove={true}
+          onMyTrip={true}
+          cameraPage={'MyTrips'}
+          navigation={navigation}
         />
       ))}
     </ScrollView>

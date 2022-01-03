@@ -12,10 +12,9 @@ import TripCard from './TripCard';
 import {useState, useEffect, useContext} from 'react';
 import {AppContext} from './Context';
 
-const TripsApprove = () => {
+const TripsApprove = ({navigation}) => {
 
   const {
-    user,
     WaitingTrips,
     setWaitingTrips,
   } = useContext(AppContext);
@@ -42,7 +41,7 @@ const TripsApprove = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <Header user={user} />
+        <Header />
         { !loading && <Text style={styles.text}>Approve trips List:</Text>}
         {loading && <ActivityIndicator size={120} />}
         {WaitingTrips !== undefined &&
@@ -51,6 +50,8 @@ const TripsApprove = () => {
               key={trip.trip_id}
               trip={trip}
               onApprove={true}
+              cameraPage={'TripsApprove'}
+              navigation={navigation}
             />
           ))}
       </ScrollView>

@@ -14,12 +14,10 @@ import {Button} from 'react-native-elements';
 import {Form, FormItem} from 'react-native-form-component';
 import Slider from '@react-native-community/slider';
 
-const TripFilter = ({updateFilter, navigation}) => {
-  const [price, setPrice] = useState();
+const TripFilter = ({updateFilter}) => {
+  const [price, setPrice] = useState(0);
   const [location, setLocation] = useState('');
   const [tripName, setTripName] = useState('');
-
-  //categories
   const [categories, setCategories] = useState({
     isRelax: false,
     isDynamic: false,
@@ -29,9 +27,14 @@ const TripFilter = ({updateFilter, navigation}) => {
     isPlaneTravel: false,
     isTrainTravel: false,
   });
+  const [togglePrice, setTogglePrice] = useState(false);
 
   const onSearch = () => {
-    updateFilter(categories, tripName, location, price);
+    if (!togglePrice){
+    updateFilter(categories, location, -1);
+    } else {
+    updateFilter(categories, location, price);
+    }
     setCategories({
       isRelax: false,
       isDynamic: false,
@@ -41,10 +44,9 @@ const TripFilter = ({updateFilter, navigation}) => {
       isPlaneTravel: false,
       isTrainTravel: false,
     });
-    setPrice();
+    setPrice(0);
     setLocation('');
     setTripName('');
-    // navigation.navigate('TripsPage');
   };
   return (
     <View>
@@ -53,26 +55,6 @@ const TripFilter = ({updateFilter, navigation}) => {
         buttonStyle={styles.formButton}
         buttonText="Search Trip">
         <Text style={styles.text}>Enter your desired trip info: </Text>
-        <FormItem
-          style={styles.inputView}
-          label="Trip Name"
-          labelStyle={styles.label}
-          value={tripName}
-          placeholder="Add trip name here"
-          onChangeText={tripName => {
-            setTripName(tripName);
-          }}
-        />
-        {/* <FormItem
-          style={styles.inputView}
-          label="Price limit (NIS)"
-          labelStyle={styles.label}
-          value={price}
-          placeholder="Add price here"
-          onChangeText={price => {
-            setPrice(price);
-          }}
-        /> */}
 
         <FormItem
           style={styles.inputView}
@@ -85,35 +67,51 @@ const TripFilter = ({updateFilter, navigation}) => {
           }}
         />
 
-        <Text style={styles.showTextMoney}>Maximum price the trip cost:</Text>
-        <Slider
-          style={styles.slider}
-          step={1}
-          minimumValue={0}
-          maximumValue={10000}
-          value={price}
-          onValueChange={slideValue => setPrice(parseInt(slideValue))}
-          minimumTrackTintColor="#0074D9"
-          maximumTrackTintColor="grey"
-          thumbTintColor="#0074D9"
+        <BouncyCheckbox
+          style={styles.checkbox}
+          size={25}
+          fillColor="black"
+          unfillColor="silver"
+          iconStyle={styles.icon}
+          textStyle={styles.checkboxText}
+          text="Search by price"
+          onPress={() => setTogglePrice(!togglePrice)}
         />
-        <View style={styles.inputNumberView}>
-          <TextInput
-            keyboardType="number-pad"
-            numeric
-            style={styles.inputNumber}
-            placeholder="Enter Price"
-            underlineColorAndroid="transparent"
-            onChangeText={newSliderValue => {
-              !isNaN(parseInt(newSliderValue))
-                ? setPrice(parseInt(newSliderValue))
-                : setPrice(parseInt(0));
-            }}
-            value={price}
-            maxLength={6}
-          />
-          <Text style={styles.showMoney}>{price} ILS</Text>
-        </View>
+        {togglePrice && (
+          <View>
+            <Text style={styles.showTextMoney}>
+              Maximum price the trip cost:
+            </Text>
+            <Slider
+              style={styles.slider}
+              step={1}
+              minimumValue={0}
+              maximumValue={10000}
+              value={price}
+              onValueChange={slideValue => setPrice(parseInt(slideValue))}
+              minimumTrackTintColor="#0074D9"
+              maximumTrackTintColor="grey"
+              thumbTintColor="#0074D9"
+            />
+            <View style={styles.inputNumberView}>
+              <TextInput
+                keyboardType="number-pad"
+                numeric
+                style={styles.inputNumber}
+                placeholder="Enter Price"
+                underlineColorAndroid="transparent"
+                onChangeText={newSliderValue => {
+                  !isNaN(parseInt(newSliderValue))
+                    ? setPrice(parseInt(newSliderValue))
+                    : setPrice(parseInt(0));
+                }}
+                value={price}
+                maxLength={6}
+              />
+              <Text style={styles.showMoney}>{price} ILS</Text>
+            </View>
+          </View>
+        )}
         <Text style={styles.text}>Filter your trip category</Text>
         <BouncyCheckbox
           style={styles.checkbox}
@@ -326,7 +324,6 @@ const styles = StyleSheet.create({
   showMoney: {
     flex: 3,
     alignSelf: 'center',
-
   },
   slider: {
     margin: 10,
