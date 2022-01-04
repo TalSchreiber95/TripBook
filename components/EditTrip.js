@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import Header from './Header';
 import Slider from '@react-native-community/slider';
 
 const EditTrip = ({trip, editCard, onApprove, setToggleEditCard}) => {
@@ -43,12 +42,9 @@ const EditTrip = ({trip, editCard, onApprove, setToggleEditCard}) => {
       Object.keys(categories).forEach(key => {
         if (categories[key] === true)
         actualCategory.push(String(key))
-        // console.log(key, category[key]);
       })
       const updatedTrip = {
         trip_id: trip.trip_id,
-        // owner: user.email,
-        // adminMessage: 'No new admin messages',
         tripName: tripName,
         category: actualCategory,
         location: location,
@@ -63,7 +59,6 @@ const EditTrip = ({trip, editCard, onApprove, setToggleEditCard}) => {
       Alert.alert('Fill all the required fields !');
     }
   };
-
 
 
   return (
@@ -307,13 +302,11 @@ const styles = StyleSheet.create({
   text: {
     color: 'black',
     fontSize: 23,
-    // marginLeft: 20,
     textAlign: 'center',
     marginBottom: 20,
   },
   label: {
     color: 'black',
-    // paddingLeft: 30,
     fontWeight: 'bold',
     fontSize: 17,
     paddingTop: 2,
@@ -321,11 +314,8 @@ const styles = StyleSheet.create({
   },
   inputView: {
     flex: 0.3,
-    // backgroundColor: '#F5F5F5',
     borderBottomWidth: 0.5,
     marginBottom: 20,
-    // marginLeft: 20,
-    // marginRight: 20,
     fontSize: 20,
     borderRadius: 5,
   },
@@ -351,19 +341,15 @@ const styles = StyleSheet.create({
   },
   showTextMoney: {
     color: 'black',
-    // margin: 10,
     marginRight: 50,
     fontWeight: 'bold',
     fontSize: 17,
   },
   showMoney: {
     flex: 3,
-    // alignSelf: 'center',
   },
   slider: {
     margin: 10,
-    // marginLeft: 25,
-    // marginRight: 25,
   },
   inputNumber: {
     flex: 2,
@@ -372,7 +358,6 @@ const styles = StyleSheet.create({
     flex: 5,
     flexDirection: 'row',
     alignItems: 'center',
-    // marginLeft: 20,
   },
   icon: {
     borderColor: 'black',

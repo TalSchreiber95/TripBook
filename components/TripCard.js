@@ -28,7 +28,8 @@ const TripCard = ({navigation, trip, onApprove, onMyTrip, cameraPage}) => {
 
   useEffect(() => {
     console.log('tripcard effected');
-  }, []);
+    console.log(trip.pictures);
+  }, [trip.pictures]);
 
   const UpdateTripToDB = async (id, trip) => {
     await fetch(`http://10.0.2.2:8080/api/trip/${id}`, {

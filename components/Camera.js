@@ -22,13 +22,17 @@ const Camera = ({navigation}) => {
           onPress: async () => {
             try {
               const data = await takePicture();
-              // console.log(data.uri);
-              // console.log(activeTrip);
-
               const filePath = data.uri;
+              const rand = String(Math.floor(Math.random() * 100000) + 1);
               const date = new Date().toDateString();
+              console.log(date);
               const newFilePath =
-                RNFS.ExternalDirectoryPath + '/' + activeTrip.trip_id + '.jpg';
+                RNFS.ExternalDirectoryPath +
+                '/' +
+                rand +
+                activeTrip.trip_id +
+                date +
+                '.jpg';
               console.log(newFilePath);
               activeTrip.pictures.push('file://' + newFilePath);
               RNFS.moveFile(filePath, newFilePath)

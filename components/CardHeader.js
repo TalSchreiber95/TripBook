@@ -72,7 +72,6 @@ const CardHeader = ({
           size={20}
           color="white"
           onPress={() => showCardInfo()}
-          // Alert.alert("Trip's Owner: " + trip.owner)}
           onLongPress={() => toggleInfo('Trip Categories')}
           style={styles.icon}
         />
@@ -140,16 +139,6 @@ const CardHeader = ({
           toggler={toggler}
           updateButton={updateButton}
         />
-        {/* {onGroup &&
-          <Button
-            title={toggleOnJoin ? "Cancel join" : "Join Group"}
-            onPress={() => setJoinGroup()}
-            type="secondary"
-            titleStyle={styles.button}
-            containerStyle={styles.buttonContainer}
-            raised
-          />
-        } */}
         <RightCardHeader
           trip={trip}
           toggler={toggler}
@@ -160,39 +149,25 @@ const CardHeader = ({
   );
 };
 CardHeader.defaultProps = {
-  // toggleApproveCard: false,
   onApprove: false,
   onGroup: false,
 };
 const styles = StyleSheet.create({
   cardHeader: {
-    // height: 85,
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    // textAlign: 'center',
-    // backgroundColor: '#001f7f',
     flex: 1,
     flexDirection: 'row',
     margin: 10,
     marginTop: 0,
   },
   button: {
-    // backgroundColor: 'green',
     fontSize: 15,
-    // color:'White'
   },
   buttonContainer: {
-    // backgroundColor: 'black',
-    // color:'black',
     width: 91,
   },
   iconHeader: {
-    // flex: 2,
-    // borderRadius: 15,
-
     justifyContent: 'center',
     flexDirection: 'row',
-    // alignItems:"center",
   },
   formButton: {
     backgroundColor: 'firebrick',
@@ -200,17 +175,13 @@ const styles = StyleSheet.create({
     marginRight: 160,
     marginTop: -10,
     marginBottom: -10,
-    // borderRadius: 20,
     color: 'black',
   },
   inputView: {
     flex: 0.3,
-    // backgroundColor: '#F5F5F5',
-    // borderBottomWidth: 0.5,
     marginBottom: 10,
     marginLeft: 20,
     marginRight: 20,
-    // fontSize: 20,
     borderRadius: 5,
   },
   label: {
@@ -225,14 +196,12 @@ const styles = StyleSheet.create({
     flex: 0.5,
     textAlign: 'center',
     marginTop: 20,
-    // marginBottom: 0,
   },
   text: {
     color: 'silver',
     textAlign: 'center',
     fontSize: 30,
     fontWeight: 'bold',
-    // letterSpacing: 2,
     top: -15,
   },
   name: {
@@ -249,10 +218,8 @@ const styles = StyleSheet.create({
 
   snackbar: {
     width: '60%',
-    // textAlign: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    // height: '80%',
   },
 });
 export default CardHeader;

@@ -52,11 +52,9 @@ const AddTrip = ({navigation}) => {
     })
       .then(res => res.json())
       .then(json => {
-        console.log(json);
-        // return json;
+        // console.log(json);
       })
       .catch(error => console.error(error));
-    // fetchWaitingTrips();
   };
   const onAddTrip = () => {
     if (
@@ -71,11 +69,9 @@ const AddTrip = ({navigation}) => {
       let actualCategory = [' '];
       Object.keys(categories).forEach(key => {
         if (categories[key] === true) actualCategory.push(String(key));
-        // console.log(key, category[key]);
       });
 
       const newTrip = {
-        // trip_id: '',
         user_id: user.email,
         isWaiting: true,
         adminMessage: 'No new admin messages',
@@ -91,7 +87,6 @@ const AddTrip = ({navigation}) => {
 
       addWaitingTrip(newTrip);
       Alert.alert('trip posted succesfully');
-
       navigation.navigate('Home');
     } else {
       Vibration.vibrate();

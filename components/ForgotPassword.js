@@ -34,7 +34,6 @@ const ForgotPassword = ({navigation}) => {
   const onRestorePass = async () => {
     if (email !== '' && answer !== '') {
       await recoverPassword({email: email, passRecoverAnswer: answer});
-      // navigation.navigate('Login');
     } else {
       Vibration.vibrate();
       Alert.alert('Email and answer required');
@@ -147,9 +146,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 32,
     borderRadius: 20,
-    // color: 'grey',
-    // elevation: 3,
-    // backgroundColor: 'black',
     marginLeft: 50,
     marginRight: 50,
   },
@@ -159,7 +155,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 32,
     borderRadius: 20,
-    // elevation: 3,
     backgroundColor: 'grey',
     marginLeft: 50,
     marginRight: 50,

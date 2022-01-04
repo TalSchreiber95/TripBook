@@ -14,6 +14,7 @@ import TripFilter from './TripFilter';
 import TripsPage from './TripsPage';
 import {AppContext} from './Context';
 
+
 const HomePage = ({navigation}) => {
   const {user} = useContext(AppContext);
 

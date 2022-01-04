@@ -14,6 +14,8 @@ import { Form, FormItem } from 'react-native-form-component';
 import Header from './Header';
 import { Button, CheckBox } from 'react-native-elements';
 import { AppContext } from './Context';
+import PushNotification from "react-native-push-notification";
+
 
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -21,6 +23,39 @@ const LoginPage = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const { user, setUser, setIsUserConnected, setIsGuest } = useContext(AppContext);
+
+  useEffect(() => {
+    createChannels();
+  }, [])
+
+
+  const createChannels = () => {
+    PushNotification.createChannel(
+        {
+            channelId: "test-channel",
+            channelName: "Test Channel"
+        }
+    )
+}
+
+const handleNotification = () => {
+
+  PushNotification.cancelAllLocalNotifications();
+
+  // PushNotification.localNotification({
+  //     channelId: "test-channel",
+  //     title: "You clicked on " ,
+  //     color: "red",
+  // });
+
+  PushNotification.localNotification({
+      channelId: "test-channel",
+      title: "Wellcome dear traveler",
+      message: "You are logged in as " + email,
+      // date: new Date(Date.now() + 20 * 1000),
+      // allowWhileIdle: true,
+  });
+}
 
   const fetchAuthentication = async user => {
     setLoading(true);
@@ -54,6 +89,7 @@ const LoginPage = ({ navigation }) => {
       // console.log(email, password, 'xxxx');
       setIsUserConnected(true);
       setIsGuest(false);
+      handleNotification();
       navigation.navigate('Home');
     } else {
       Vibration.vibrate();
@@ -96,6 +132,8 @@ const LoginPage = ({ navigation }) => {
       ],
     );
   }
+
+  
   return (
     <SafeAreaView>
       <StatusBar />

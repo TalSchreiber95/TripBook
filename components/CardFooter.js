@@ -11,8 +11,6 @@ const CardFooter = ({
   setPicture,
   toggler,
   updateButton,
-  // deleteFeedback,
-  // deleteFeedbackLive,
   onApprove,
   user,
   cameraPage,
@@ -25,19 +23,11 @@ const CardFooter = ({
       end={{x: 0, y: 2}}>
       <View
         style={styles.cardFooter}
-        // ViewComponent={LinearGradient}
-        // linearGradientProps={{
-        //   colors: ['silver', 'steelblue'],
-        //   start: {x: 1, y: 3.5},
-        //   end: {x: 0, y: 0.5},
-        // }}
       >
         <LeftCardFooter
           trip={trip}
           toggler={toggler}
           updateButton={updateButton}
-          // deleteFeedback={deleteFeedback}
-          // deleteFeedbackLive={deleteFeedbackLive}
           onApprove={onApprove}
           user={user}
         />
@@ -72,16 +62,12 @@ CardFooter.defaultProps = {
 
 const styles = StyleSheet.create({
   cardFooter: {
-    // marginTop: 0,
-    // height: 85,
     flex: 1,
     flexDirection: 'row',
     margin: 10,
     marginTop: 15,
     marginBottom: 15,
-    // alignSelf: 'stretch',
-    // alignItems: 'flex-end',
-    // padding: -30,
+
   },
   text: {
     color: 'gold',
@@ -95,10 +81,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   ilsIcon: {
-    // margin: 10,
-    // marginLeft: 20,
     margin: 4,
-    // marginRight: 20,
     top: 7,
   },
   priceView: {
@@ -108,8 +91,6 @@ const styles = StyleSheet.create({
     maxHeight: 35,
   },
   priceText: {
-    // borderLeftWidth:1,
-    // borderColor:"green"
     fontWeight: 'bold',
     fontSize: 13,
     margin: 2,

@@ -49,8 +49,6 @@ const AddFeedbackForm = ({trip, user, getPost, getLivePost}) => {
     setToggleFeedbackLive(!toggleFeedbackLive);
   };
   const onAddFeedback = () => {
-    //   ? trip.feedbacksLive.push(feedbackLive)
-    //   : trip.feedbacks.push(feedback);
     const newPost = {
       title: !toggleFeedbackLive ? 'post' : 'livepost',
       description: !toggleFeedbackLive ? feedback : feedbackLive,
@@ -59,10 +57,8 @@ const AddFeedbackForm = ({trip, user, getPost, getLivePost}) => {
     };
     if (toggleFeedbackLive) {
       AddLivePostToDB(newPost);
-      // getLivePost(trip.trip_id);
     } else {
       AddPostToDB(newPost);
-      // getPost(trip.trip_id);
     }
     setToggleFeedback(false);
     setFeedback('');

@@ -69,6 +69,8 @@ const RightCardFooter = ({
               </Form>
               <Button
                 title="Take picture"
+                raised
+                type='clear'
                 onPress={() => {
                   navigation.navigate('Camera');
                   setCameraPage(cameraPage);

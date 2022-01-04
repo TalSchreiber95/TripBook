@@ -20,6 +20,10 @@ import type {Node} from 'react';
 import {StyleSheet, Alert, Text, TouchableOpacity} from 'react-native';
 import Camera from './components/Camera';
 import {AppContext} from './components/Context';
+import {LogBox } from 'react-native';
+LogBox.ignoreLogs(['Reanimated 2', 'Warning: Failed']);
+
+
 const Drawer = createDrawerNavigator();
 
 const App: () => Node = () => {
