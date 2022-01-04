@@ -1,16 +1,15 @@
-import React, {useContext} from 'react';
-import {View, StyleSheet, Alert} from 'react-native';
-import {RNCamera} from 'react-native-camera';
-import {useCamera} from 'react-native-camera-hooks';
+import React, { useContext } from 'react';
+import { View, StyleSheet, Alert } from 'react-native';
+import { RNCamera } from 'react-native-camera';
+import { useCamera } from 'react-native-camera-hooks';
 import CameraButton from './CameraButton';
 import RNFS from 'react-native-fs';
-import {Button} from 'react-native-elements';
-import {AppContext} from './Context';
-import TripCard from './TripCard';
+import { Button } from 'react-native-elements';
+import { AppContext } from './Context';
 
-const Camera = ({navigation}) => {
-  const [{cameraRef}, {takePicture}] = useCamera(null);
-  const {cameraPage, activeTrip} = useContext(AppContext);
+const Camera = ({ navigation }) => {
+  const [{ cameraRef }, { takePicture }] = useCamera(null);
+  const { cameraPage, activeTrip } = useContext(AppContext);
 
   const captureHandle = async () => {
     return Alert.alert(

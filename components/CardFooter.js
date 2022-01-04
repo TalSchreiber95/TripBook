@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {Header} from 'react-native-elements';
+import { View, Text, StyleSheet } from 'react-native';
 import LeftCardFooter from './LeftCardFooter';
 import RightCardFooter from './RightCardFooter';
 import LinearGradient from 'react-native-linear-gradient';
@@ -19,8 +18,8 @@ const CardFooter = ({
   return (
     <LinearGradient
       colors={['white', 'steelblue']}
-      start={{x: 1, y: 6}}
-      end={{x: 0, y: 2}}>
+      start={{ x: 1, y: 6 }}
+      end={{ x: 0, y: 2 }}>
       <View
         style={styles.cardFooter}
       >
@@ -32,7 +31,7 @@ const CardFooter = ({
           user={user}
         />
         <View style={styles.priceView}>
-        <Text style={styles.priceText}>{trip.price}</Text>
+          <Text style={styles.priceText}>{trip.price}</Text>
           <Icon
             name="ils"
             size={14}

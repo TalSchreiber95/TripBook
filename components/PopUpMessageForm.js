@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import {useState} from 'react';
+import { useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const PopUpMessageForm = ({

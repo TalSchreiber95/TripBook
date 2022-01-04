@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   SafeAreaView,
@@ -10,11 +10,11 @@ import {
   Vibration,
   View,
 } from 'react-native';
-import {Form, FormItem} from 'react-native-form-component';
+import { Form, FormItem } from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Slider from '@react-native-community/slider';
 
-const EditTrip = ({trip, editCard, onApprove, setToggleEditCard}) => {
+const EditTrip = ({ trip, editCard, onApprove, setToggleEditCard }) => {
   const [tripName, setTripName] = useState(trip.tripName);
   const [location, setLocation] = useState(trip.location);
   const [price, setPrice] = useState(trip.price);
@@ -41,7 +41,7 @@ const EditTrip = ({trip, editCard, onApprove, setToggleEditCard}) => {
       let actualCategory = [' '];
       Object.keys(categories).forEach(key => {
         if (categories[key] === true)
-        actualCategory.push(String(key))
+          actualCategory.push(String(key))
       })
       const updatedTrip = {
         trip_id: trip.trip_id,

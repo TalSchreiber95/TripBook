@@ -9,10 +9,10 @@ import {
 
 import Header from './Header';
 import TripCard from './TripCard';
-import {useState, useEffect, useContext} from 'react';
-import {AppContext} from './Context';
+import { useState, useEffect, useContext } from 'react';
+import { AppContext } from './Context';
 
-const TripsApprove = ({navigation}) => {
+const TripsApprove = ({ navigation }) => {
 
   const {
     WaitingTrips,
@@ -32,9 +32,8 @@ const TripsApprove = ({navigation}) => {
     setLoading(false);
 
   };
-  
+
   useEffect(() => {
-    console.log('shribeee');
     fetchWaitingTrips();
   }, []);
 
@@ -42,7 +41,7 @@ const TripsApprove = ({navigation}) => {
     <SafeAreaView>
       <ScrollView>
         <Header />
-        { !loading && <Text style={styles.text}>Approve trips List:</Text>}
+        {!loading && <Text style={styles.text}>Approve trips List:</Text>}
         {loading && <ActivityIndicator size={120} />}
         {WaitingTrips !== undefined &&
           WaitingTrips.map(trip => (

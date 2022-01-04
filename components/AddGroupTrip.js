@@ -7,7 +7,6 @@ import {
     StyleSheet,
     Text,
     TextInput,
-    useColorScheme,
     View,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
@@ -22,7 +21,7 @@ const AddGroupTrip = ({ addWaitingGroupTrip, user, navigation }) => {
     const [feedbackLive, setFeedbackLive] = useState('');
     const [price, setPrice] = useState(0);
     const [memberLimit, setMemberLimit] = useState(1);
-    
+
     const [description, setDescription] = useState('');
     const [groupDescription, setGroupDescription] = useState('');
     const [picture, setPicture] = useState('');
@@ -44,7 +43,7 @@ const AddGroupTrip = ({ addWaitingGroupTrip, user, navigation }) => {
             location != '' &&
             description != '' &&
             price != null &&
-            memberLimit !=null
+            memberLimit != null
         ) {
             setPicture([picture]);
             setFeedback([feedback]);
@@ -53,11 +52,9 @@ const AddGroupTrip = ({ addWaitingGroupTrip, user, navigation }) => {
             Object.keys(categories).forEach(key => {
                 if (categories[key] === true)
                     actualCategory.push(String(key))
-                // console.log(key, category[key]);
             })
 
             const newTrip = {
-                // trip_id: '',
                 user_id: user.email,
                 isWaiting: true,
                 adminMessage: 'No new admin messages',

@@ -1,8 +1,6 @@
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import React, { useState } from 'react';
 import { Button } from 'react-native-elements';
-//this is other button component (way more better the the previous) - it built in from another directory
-// need to change to this button in the whole app maybe
 
 const RightCardHeader = ({ trip, toggler, updateButton }) => {
   const ToggleInfo = () => {

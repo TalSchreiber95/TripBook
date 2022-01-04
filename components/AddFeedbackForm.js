@@ -1,6 +1,6 @@
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {Button, CheckBox} from 'react-native-elements';
+import {View, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {Button} from 'react-native-elements';
 import {Form, FormItem} from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 

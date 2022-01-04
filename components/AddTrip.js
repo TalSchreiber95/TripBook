@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Alert,
   SafeAreaView,
@@ -11,12 +11,12 @@ import {
   Vibration,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
-import {Form, FormItem} from 'react-native-form-component';
+import { Form, FormItem } from 'react-native-form-component';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Header from './Header';
-import {AppContext} from './Context';
+import { AppContext } from './Context';
 
-const AddTrip = ({navigation}) => {
+const AddTrip = ({ navigation }) => {
   const [tripName, setTripName] = useState('');
   const [location, setLocation] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -37,7 +37,7 @@ const AddTrip = ({navigation}) => {
     isTrainTravel: false,
   });
 
-  const {user, WaitingTrips, setWaitingTrips} = useContext(AppContext);
+  const { user, WaitingTrips, setWaitingTrips } = useContext(AppContext);
 
   const addWaitingTrip = waitingTrip => {
     AddTripToDB(waitingTrip);
@@ -47,12 +47,11 @@ const AddTrip = ({navigation}) => {
   const AddTripToDB = async trip => {
     await fetch(`http://10.0.2.2:8080/api/trip`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(trip),
     })
       .then(res => res.json())
       .then(json => {
-        // console.log(json);
       })
       .catch(error => console.error(error));
   };
@@ -129,20 +128,6 @@ const AddTrip = ({navigation}) => {
               isRequired
               asterik
             />
-            {/* <FormItem
-              placeholder="Add price here"
-              style={styles.inputView}
-              label="Price(NIS)"
-              labelStyle={styles.label}
-              value={price}
-              onChangeText={price => {
-                setPrice(price);
-              }}
-              // demand int instead of string
-              isRequired
-              asterik
-            /> */}
-
             <FormItem
               placeholder="Add description here"
               style={styles.inputView}

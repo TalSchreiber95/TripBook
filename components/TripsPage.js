@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-  SafeAreaView,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   ActivityIndicator,
@@ -10,29 +8,27 @@ import {
 } from 'react-native';
 
 import TripCard from './TripCard';
-import {useState, useEffect, useContext} from 'react';
-import {Button} from 'react-native-elements/dist/buttons/Button';
-import {AppContext} from './Context';
+import { useState, useEffect, useContext } from 'react';
+import { Button } from 'react-native-elements/dist/buttons/Button';
+import { AppContext } from './Context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const TripsPage = ({navigation, tripInfo, setIsOnSearch, isOnSearch}) => {
-  const {Trips, setTrips} = useContext(AppContext);
+const TripsPage = ({ navigation, tripInfo, setIsOnSearch, isOnSearch }) => {
+  const { Trips, setTrips } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
 
   const fetchTrips = async tripSearchInfo => {
-    console.log('shriberhomo', tripSearchInfo.price);
     setLoading(true);
 
     await fetch(`http://10.0.2.2:8080/api/tripByCategory/`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(tripSearchInfo),
     })
       .then(res => res.json())
       .then(json => {
         console.log(json);
         setTrips(json);
-        // // console.log(Trips);
       })
       .catch(error => console.error(error));
 
@@ -41,7 +37,6 @@ const TripsPage = ({navigation, tripInfo, setIsOnSearch, isOnSearch}) => {
 
   useEffect(() => {
     fetchTrips(tripInfo);
-    console.log('tripspage effected');
   }, [isOnSearch]);
 
   return (

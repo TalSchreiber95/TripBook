@@ -1,15 +1,14 @@
-import React, {useReducer} from 'react';
+import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Icon1 from 'react-native-vector-icons/AntDesign';
 
-import {View, Text, StyleSheet, ImageBackground, Alert} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Alert } from 'react-native';
 import CardFooter from './CardFooter';
 import CardHeader from './CardHeader';
-import {useState, useContext, useEffect} from 'react';
-import {Button} from 'react-native-elements/dist/buttons/Button';
-import {AppContext} from './Context';
+import { useState, useContext, useEffect } from 'react';
+import { Button } from 'react-native-elements/dist/buttons/Button';
+import { AppContext } from './Context';
 
-const TripCard = ({navigation, trip, onApprove, onMyTrip, cameraPage}) => {
+const TripCard = ({ navigation, trip, onApprove, onMyTrip, cameraPage }) => {
   const {
     Trips,
     WaitingTrips,
@@ -24,7 +23,6 @@ const TripCard = ({navigation, trip, onApprove, onMyTrip, cameraPage}) => {
   const [toggler, setToggler] = useState('');
   const [picture, setPicture] = useState(0);
   const [picIndex, setPicIndex] = useState(0);
-  // const [pic, setPic] = useState();
 
   useEffect(() => {
     console.log('tripcard effected');
@@ -34,16 +32,14 @@ const TripCard = ({navigation, trip, onApprove, onMyTrip, cameraPage}) => {
   const UpdateTripToDB = async (id, trip) => {
     await fetch(`http://10.0.2.2:8080/api/trip/${id}`, {
       method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(trip),
     })
       .then(res => res.json())
       .then(json => {
         console.log(json);
-        // return json;
       })
       .catch(error => console.error(error));
-    // fetchWaitingTrips();
   };
 
   const deleteTripFromDB = async id => {
@@ -51,7 +47,6 @@ const TripCard = ({navigation, trip, onApprove, onMyTrip, cameraPage}) => {
       method: 'DELETE',
     }).catch(error => console.error(error));
 
-    // fetchWaitingTrips();
   };
 
   const switchPictureRight = () => {
@@ -131,9 +126,8 @@ const TripCard = ({navigation, trip, onApprove, onMyTrip, cameraPage}) => {
       ],
     );
   };
-  //think its done
   const addTrip = id => {
-    UpdateTripToDB(id, {isWaiting: false});
+    UpdateTripToDB(id, { isWaiting: false });
     setWaitingTrips(prevCards => {
       return prevCards.filter(card => card.trip_id != id);
     });
@@ -211,7 +205,6 @@ const TripCard = ({navigation, trip, onApprove, onMyTrip, cameraPage}) => {
   };
 
   const deletePicture = (tripId, pic, onApprove) => {
-    //Add DataBase Update
 
     if (!onApprove) {
       const cardDeletePic = Trips.filter(trip => trip.trip_id === tripId)[0];
@@ -225,7 +218,7 @@ const TripCard = ({navigation, trip, onApprove, onMyTrip, cameraPage}) => {
   };
 
   const onSendMessage = (trip, message, onApprove) => {
-    UpdateTripToDB(trip.trip_id, {adminMessage: message});
+    UpdateTripToDB(trip.trip_id, { adminMessage: message });
     if (!onApprove) {
       const cardMessage = Trips.filter(t => t.trip_id === trip.trip_id)[0];
       cardMessage.adminMessage = message;
@@ -268,7 +261,6 @@ const TripCard = ({navigation, trip, onApprove, onMyTrip, cameraPage}) => {
                 size={20}
                 color="white"
                 onPress={() => onDelPic()}
-                // onLongPress={() => toggleInfo('Remove trip picture')}
                 style={styles.icon}
               />
             )}
@@ -301,8 +293,6 @@ const TripCard = ({navigation, trip, onApprove, onMyTrip, cameraPage}) => {
         trip={trip}
         setPicture={updatePicture}
         updateButton={updateButton}
-        // deleteFeedback={deleteFeedback}
-        // deleteFeedbackLive={deleteFeedbackLive}
         onApprove={onApprove}
         user={user}
         toggler={toggler}

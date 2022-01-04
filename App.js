@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState} from 'react';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import HomePage from './components/HomePage';
@@ -17,11 +17,11 @@ import ForgotPassword from './components/ForgotPassword';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import type {Node} from 'react';
-import {StyleSheet, Alert, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet,Text, TouchableOpacity} from 'react-native';
 import Camera from './components/Camera';
 import {AppContext} from './components/Context';
 import {LogBox } from 'react-native';
-LogBox.ignoreLogs(['Reanimated 2', 'Warning: Failed']);
+LogBox.ignoreLogs(['Reanimated 2', 'Warning: Failed','`new']);
 
 
 const Drawer = createDrawerNavigator();

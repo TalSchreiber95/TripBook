@@ -2,17 +2,14 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/AntDesign';
 
-import {View, Text, StyleSheet, Alert} from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import LeftCardHeader from './LeftCardHeader';
 import RightCardHeader from './RightCardHeader';
-import {Button, Header} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
-import {Snackbar} from 'react-native-paper';
-import {useState} from 'react';
-import {Form, FormItem} from 'react-native-form-component';
+import { Snackbar } from 'react-native-paper';
+import { useState } from 'react';
 import PopUpMessageForm from './PopUpMessageForm';
 import PopUpEditTrip from './PopUpEditTrip';
-import {color} from 'react-native-reanimated';
 
 const CardHeader = ({
   trip,
@@ -56,8 +53,8 @@ const CardHeader = ({
   return (
     <LinearGradient
       colors={['white', 'steelblue']}
-      start={{x: 1, y: 4}}
-      end={{x: 0, y: 2}}>
+      start={{ x: 1, y: 4 }}
+      end={{ x: 0, y: 2 }}>
       <View style={styles.iconHeader}>
         <Snackbar
           style={styles.snackbar}

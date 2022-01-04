@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   SafeAreaView,
@@ -8,11 +8,11 @@ import {
   Vibration,
 } from 'react-native';
 
-import {Form, FormItem} from 'react-native-form-component';
+import { Form, FormItem } from 'react-native-form-component';
 import Header from './Header';
-import {Button} from 'react-native-elements';
+import { Button } from 'react-native-elements';
 
-const RegisterPage = ({navigation}) => {
+const RegisterPage = ({ navigation }) => {
   const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -22,24 +22,17 @@ const RegisterPage = ({navigation}) => {
   const AddUserToDB = async trip => {
     await fetch(`http://10.0.2.2:8080/api/user`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(trip),
     })
       .then(res => res.json())
       .then(json => {
-        // console.log(json);
         return json;
       })
       .catch(error => console.error(error));
   };
 
   const onRegister = async () => {
-    // const userExist = Users.find(user => {
-    //   return user.id === newEmail;
-    // });
-    // if (userExist) {
-    //   Alert.alert('Email is already exists - choose other');
-    // } else {
     if (newEmail != '' && newPassword != '') {
       const newuser = {
         email: newEmail,
@@ -56,7 +49,6 @@ const RegisterPage = ({navigation}) => {
       Vibration.vibrate();
       Alert.alert('Email and Password required');
     }
-    // }
   };
 
   return (
@@ -145,14 +137,7 @@ const RegisterPage = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  // title: {
-  //   fontSize: 90,
-  //   fontWeight: '300',
-  //   textAlign: 'center',
-  //   marginBottom: 15,
-  //   color: 'gold',
-  //   backgroundColor: '#001f3f',
-  // },
+
   scrollView: {
     // backgroundColor: 'white',
   },

@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-  SafeAreaView,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   ActivityIndicator,
@@ -10,19 +8,15 @@ import {
 
 import Header from './Header';
 import TripCard from './TripCard';
-import {useState, useEffect, useContext} from 'react';
-import {AppContext} from './Context';
+import { useState, useEffect, useContext } from 'react';
+import { AppContext } from './Context';
 
 
-const MyTrips = ({navigation}) => {
+const MyTrips = ({ navigation }) => {
   const {
-    // Trips,
     user,
-    // WaitingTrips,
     myTrips,
     myWaitingTrips,
-    // setTrips,
-    // setWaitingTrips,
     setMyTrips,
     setMyWaitingTrips,
   } = useContext(AppContext);
@@ -47,7 +41,6 @@ const MyTrips = ({navigation}) => {
   useEffect(() => {
     console.log('MyTrips effected');
     fetchTripByOwner(user.user_id);
-
   }, []);
 
   return (

@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
 import { Button } from 'react-native-elements';
 
 const LeftCardHeader = ({ trip, toggler, updateButton }) => {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     top: 45,
     backgroundColor: '#000000c0',
     elevation: 0.1,
-    padding: 3,    
+    padding: 3,
   },
   button: {
     // backgroundColor: 'black',

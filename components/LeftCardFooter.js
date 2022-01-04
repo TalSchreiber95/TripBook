@@ -1,6 +1,6 @@
-import {View, Text, StyleSheet, ImageBackground, Alert} from 'react-native';
-import React, {useState, useEffect,useContext} from 'react';
-import {Button, CheckBox} from 'react-native-elements';
+import { View, Text, StyleSheet, Alert } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { Button } from 'react-native-elements';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import AddFeedbackForm from './AddFeedbackForm';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -13,9 +13,6 @@ const LeftCardFooter = ({
   trip,
   updateButton,
   toggler,
-  deleteFeedback,
-  deleteFeedbackLive,
-  onApprove,
   user,
 }) => {
   const [feedbackIndex, setFeedbackIndex] = useState(0);
@@ -24,11 +21,10 @@ const LeftCardFooter = ({
   const [toggleFeedbackLive, setToggleFeedbackLive] = useState(false);
   const [posts, setPosts] = useState([]);
   const [livePosts, setLivePosts] = useState([]);
-  const { isGuest,isUserConnected } = useContext(AppContext);
+  const { isGuest, isUserConnected } = useContext(AppContext);
   useEffect(() => {
     getPostsByTripID(trip.trip_id);
     getLivePostsByTripID(trip.trip_id);
-    console.log('leftCard footer effected');
   }, []);
 
   const getPostsByTripID = async trip_id => {
@@ -37,11 +33,9 @@ const LeftCardFooter = ({
         return res.json();
       })
       .then(json => {
-        // console.log(json);
         setPosts(json);
       })
       .catch(error => console.error(error));
-    // console.log(posts);
   };
 
   const getLivePostsByTripID = async trip_id => {
@@ -50,11 +44,9 @@ const LeftCardFooter = ({
         return res.json();
       })
       .then(json => {
-        // console.log(json);
         setLivePosts(json);
       })
       .catch(error => console.error(error));
-    // console.log(livePosts);
   };
 
   const deletePostFromDB = async id => {
@@ -87,19 +79,15 @@ const LeftCardFooter = ({
   const switchFeedbackLeft = () => {
     toggleFeedbackLive
       ? setFeedbackLiveIndex(
-          (feedbackLiveIndex - 1 + livePosts.length) % livePosts.length,)
+        (feedbackLiveIndex - 1 + livePosts.length) % livePosts.length)
       : setFeedbackIndex((feedbackIndex - 1 + posts.length) % posts.length);
   };
   const delFeed = () => {
     switchFeedbackLeft();
     if (!toggleFeedbackLive && posts.length > 0) {
-      // deleteFeedback(trip.id, feedbackIndex, onApprove);
       deletePostFromDB(posts[feedbackIndex].post_id);
-      // await getPostsByTripID(trip.trip_id);
-    } else if (toggleFeedbackLive && livePosts.length > 0){
-      // deleteFeedbackLive(trip.id, feedbackLiveIndex, onApprove);
+    } else if (toggleFeedbackLive && livePosts.length > 0) {
       deleteLivePostFromDB(livePosts[feedbackLiveIndex].post_id);
-      // await getLivePostsByTripID(trip.trip_id);
     }
   };
   const onDelFeed = () => {
@@ -130,7 +118,6 @@ const LeftCardFooter = ({
         }
         onPress={ToggleFeedback}
         type="secondary"
-        titleStyle={styles.buttonTitle}
         containerStyle={styles.buttonContainer}
         raised
       />
@@ -152,24 +139,20 @@ const LeftCardFooter = ({
               title="<"
               onPress={switchFeedbackLeft}
               type="outline"
-              titleStyle={styles.titleArrowButtons}
-              // containerStyle={styles.buttonContainer}
               buttonStyle={styles.RLbuttons}
             />
             <Text style={styles.text}>
               {toggleFeedbackLive && livePosts.length > 0
                 ? livePosts[feedbackLiveIndex].description
                 : !toggleFeedbackLive && posts.length > 0
-                ? posts[feedbackIndex].description
-                : 'No feedbacks available'}
+                  ? posts[feedbackIndex].description
+                  : 'No feedbacks available'}
             </Text>
 
             <Button
               title=">"
               onPress={switchFeedbackRight}
               type="outline"
-              titleStyle={styles.titleArrowButtons}
-              //   containerStyle={styles.buttonRight}
               buttonStyle={styles.RLbuttons}
             />
           </View>
@@ -179,17 +162,16 @@ const LeftCardFooter = ({
               size={20}
               color="firebrick"
               onPress={() => onDelFeed()}
-              // onLongPress={() => toggleInfo('Remove trip picture')}
               style={styles.deleteFeedbackIcon}
             />
           )}
-          {(!isGuest || isUserConnected )&&
-          <AddFeedbackForm
-            trip={trip}
-            user={user}
-            getPost={getPostsByTripID}
-            getLivePost={getLivePostsByTripID}
-          />
+          {(!isGuest || isUserConnected) &&
+            <AddFeedbackForm
+              trip={trip}
+              user={user}
+              getPost={getPostsByTripID}
+              getLivePost={getLivePostsByTripID}
+            />
           }
         </View>
       )}
@@ -206,53 +188,29 @@ LeftCardFooter.defaultProps = {
 
 const styles = StyleSheet.create({
   container: {
-    // position: 'absolute',
-    // height: 50,
-    // bottom: 20,
     flex: 1,
-    // alignItems: 'flex-start'
   },
 
   popUp: {
-    // flex: 0.1,
     marginTop: 10,
     height: 'auto',
     width: 350,
     borderRadius: 5,
-    // position: 'relative',
-    // top: 65,
-    // left: 10,
     elevation: 5,
     justifyContent: 'center',
     backgroundColor: 'white',
   },
-  buttonTitle: {
-    // backgroundColor: 'black',
-    // color:'black',
-  },
-
-  titleArrowButtons: {
-    // color: 'black',
-  },
   buttonContainer: {
     width: 100,
-    // alignSelf: 'flex-start',
-    // alignItems: 'flex-start',
-    // justifyContent: 'center',
-    // position: 'absolute',
   },
   RLbuttons: {
     width: 40,
     height: 40,
-    // margin: 10,
-    // marginLeft: 20,
-    // marginRight: 20,
     borderRadius: 35,
     borderColor: '#24a0ed',
     borderWidth: 1,
     alignSelf: 'center',
     alignItems: 'center',
-    // backgroundColor: 'black'
   },
 
   RLbuttonsView: {
@@ -261,7 +219,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 10,
   },
-
   text: {
     color: 'black',
     fontSize: 18,
@@ -272,7 +229,6 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     width: '60%',
   },
-
   checkbox: {
     // flex: 1,
     alignSelf: 'center',
@@ -287,7 +243,6 @@ const styles = StyleSheet.create({
     left: -10,
     fontWeight: 'bold',
   },
-
   icon: {
     borderColor: 'grey',
     // backgroundColor: 'silver',

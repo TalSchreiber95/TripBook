@@ -4,7 +4,6 @@ import {
     Text,
     StyleSheet,
 } from 'react-native';
-
 const CameraButton = (props) => {
     return (
         <Pressable

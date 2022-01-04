@@ -1,9 +1,8 @@
-import {View, Text, StyleSheet, ImageBackground, Alert} from 'react-native';
-import React, {useState, useEffect, useContext} from 'react';
-import {Button, CheckBox} from 'react-native-elements';
-import {Form, FormItem} from 'react-native-form-component';
-import {AppContext} from './Context';
-import CameraButton from './CameraButton';
+import { View, StyleSheet, Alert } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { Button } from 'react-native-elements';
+import { Form, FormItem } from 'react-native-form-component';
+import { AppContext } from './Context';
 
 
 const RightCardFooter = ({
@@ -14,7 +13,7 @@ const RightCardFooter = ({
   navigation,
 }) => {
   const [pic, setPic] = useState();
-  const {isGuest, isUserConnected, setCameraPage, setActiveTrip} = useContext(AppContext);
+  const { isGuest, isUserConnected, setCameraPage, setActiveTrip } = useContext(AppContext);
 
   const ToggleGallery = () => {
     toggler === 'gallery' ? updateButton('none') : updateButton('gallery');
@@ -106,20 +105,9 @@ const styles = StyleSheet.create({
     marginTop: 0,
     borderRadius: 20,
   },
-  //   formButton: {
-  //     backgroundColor: 'steelblue',
-  //     marginLeft: 100,
-  //     marginRight: 100,
-  //     marginTop: 0,
-  //     borderRadius: 20,
-  //     color: 'black',
-  //     // height: 40,
-  //   },
   inputView: {
     flex: 0.3,
-    // backgroundColor: '#F5F5F5',
     borderBottomWidth: 0.5,
-    // marginBottom: 20,
     marginLeft: 20,
     marginRight: 20,
     fontSize: 20,

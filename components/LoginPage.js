@@ -12,7 +12,7 @@ import {
 
 import { Form, FormItem } from 'react-native-form-component';
 import Header from './Header';
-import { Button, CheckBox } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import { AppContext } from './Context';
 import PushNotification from "react-native-push-notification";
 
@@ -22,7 +22,7 @@ const LoginPage = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { user, setUser, setIsUserConnected, setIsGuest } = useContext(AppContext);
+  const { setUser, setIsUserConnected, setIsGuest } = useContext(AppContext);
 
   useEffect(() => {
     createChannels();
@@ -31,31 +31,23 @@ const LoginPage = ({ navigation }) => {
 
   const createChannels = () => {
     PushNotification.createChannel(
-        {
-            channelId: "test-channel",
-            channelName: "Test Channel"
-        }
+      {
+        channelId: "test-channel",
+        channelName: "Test Channel"
+      }
     )
-}
+  }
 
-const handleNotification = () => {
+  const handleNotification = () => {
 
-  PushNotification.cancelAllLocalNotifications();
+    PushNotification.cancelAllLocalNotifications();
 
-  // PushNotification.localNotification({
-  //     channelId: "test-channel",
-  //     title: "You clicked on " ,
-  //     color: "red",
-  // });
-
-  PushNotification.localNotification({
+    PushNotification.localNotification({
       channelId: "test-channel",
       title: "Wellcome dear traveler",
       message: "You are logged in as " + email,
-      // date: new Date(Date.now() + 20 * 1000),
-      // allowWhileIdle: true,
-  });
-}
+    });
+  }
 
   const fetchAuthentication = async user => {
     setLoading(true);
@@ -72,21 +64,17 @@ const handleNotification = () => {
       .then(json => {
         if (flag) {
           console.log(json);
-          // const newJson = json;
           setUser(json);
-          // console.log(activeUser);
           return json;
         }
       })
       .catch(error => console.error(error));
-    // console.log(activeUser);
     setLoading(false);
     return flag;
   };
 
   const onLogin = async () => {
     if (await fetchAuthentication({ email: email, password: password })) {
-      // console.log(email, password, 'xxxx');
       setIsUserConnected(true);
       setIsGuest(false);
       handleNotification();
@@ -95,24 +83,8 @@ const handleNotification = () => {
       Vibration.vibrate();
       Alert.alert('wrong password or email');
     }
-
-    // if (Users[index].email === email) {
-    //   if (Users[index].pass === password) {
-    //     ind(index);
-    //     setIsUserConnected(true);
-    //     navigation.navigate('Home');
-    //     // console.log(Users);
-
-    //     return;
-    //   } else {
-    //     Alert.alert('wrong password');
-    //     return;
-    //   }
-    // }
-
-    // Alert.alert('user not exist');
   };
-  const onGuest=()=>{
+  const onGuest = () => {
     Vibration.vibrate();
     Alert.alert(
       "Are you sure you want to enter as a guest?",
@@ -122,7 +94,6 @@ const handleNotification = () => {
           text: 'Yes',
           onPress: () => {
             setIsGuest(true);
-            // console.log("ok");
             navigation.navigate('Home');
           },
         },
@@ -133,7 +104,6 @@ const handleNotification = () => {
     );
   }
 
-  
   return (
     <SafeAreaView>
       <StatusBar />

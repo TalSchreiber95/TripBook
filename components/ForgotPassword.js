@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import {ScrollView, StyleSheet, Text, Alert, Vibration} from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet, Text, Alert, Vibration } from 'react-native';
 
-import {Form, FormItem} from 'react-native-form-component';
+import { Form, FormItem } from 'react-native-form-component';
 import Header from './Header';
-import {Button} from 'react-native-elements';
+import { Button } from 'react-native-elements';
 
-const ForgotPassword = ({navigation}) => {
+const ForgotPassword = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [answer, setAnswer] = useState('');
 
@@ -13,7 +13,7 @@ const ForgotPassword = ({navigation}) => {
     var flag = false;
     await fetch(`http://10.0.2.2:8080/api/recoverUser/`, {
       method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(user),
     })
       .then(res => {
@@ -33,7 +33,7 @@ const ForgotPassword = ({navigation}) => {
 
   const onRestorePass = async () => {
     if (email !== '' && answer !== '') {
-      await recoverPassword({email: email, passRecoverAnswer: answer});
+      await recoverPassword({ email: email, passRecoverAnswer: answer });
     } else {
       Vibration.vibrate();
       Alert.alert('Email and answer required');

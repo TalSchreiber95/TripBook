@@ -1,23 +1,17 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  Alert,
-  ScrollView,
-  SafeAreaView,
-  StatusBar,
   TextInput,
 } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import {Button} from 'react-native-elements';
-import {Form, FormItem} from 'react-native-form-component';
+import { Form, FormItem } from 'react-native-form-component';
 import Slider from '@react-native-community/slider';
 
-const TripFilter = ({updateFilter}) => {
+const TripFilter = ({ updateFilter }) => {
   const [price, setPrice] = useState(0);
   const [location, setLocation] = useState('');
-  const [tripName, setTripName] = useState('');
   const [categories, setCategories] = useState({
     isRelax: false,
     isDynamic: false,
@@ -30,10 +24,10 @@ const TripFilter = ({updateFilter}) => {
   const [togglePrice, setTogglePrice] = useState(false);
 
   const onSearch = () => {
-    if (!togglePrice){
-    updateFilter(categories, location, -1);
+    if (!togglePrice) {
+      updateFilter(categories, location, -1);
     } else {
-    updateFilter(categories, location, price);
+      updateFilter(categories, location, price);
     }
     setCategories({
       isRelax: false,
@@ -46,7 +40,6 @@ const TripFilter = ({updateFilter}) => {
     });
     setPrice(0);
     setLocation('');
-    setTripName('');
   };
   return (
     <View>
@@ -254,7 +247,6 @@ const TripFilter = ({updateFilter}) => {
           }
         />
       </Form>
-      {/* <Button title="Add new trip +" color="red" onPress={onAddTrip} /> */}
     </View>
   );
 };
