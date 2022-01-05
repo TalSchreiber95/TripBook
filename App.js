@@ -17,12 +17,12 @@ import ForgotPassword from './components/ForgotPassword';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import type {Node} from 'react';
-import {StyleSheet,Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import Camera from './components/Camera';
 import {AppContext} from './components/Context';
-import {LogBox } from 'react-native';
-LogBox.ignoreLogs(['Reanimated 2', 'Warning: Failed','`new']);
-
+import {LogBox} from 'react-native';
+import About from './components/About';
+LogBox.ignoreLogs(['Reanimated 2', 'Warning: Failed', '`new', "can't perform a react state update"]);
 
 const Drawer = createDrawerNavigator();
 
@@ -30,7 +30,7 @@ const App: () => Node = () => {
   const [isGuest, setIsGuest] = useState(false);
   const [isUserConnected, setIsUserConnected] = useState(false);
   const [user, setUser] = useState({});
-  const [cameraPage, setCameraPage] = useState('')
+  const [cameraPage, setCameraPage] = useState('');
   const [activeTrip, setActiveTrip] = useState({});
 
   const [Trips, setTrips] = useState([]);
@@ -139,11 +139,14 @@ const App: () => Node = () => {
           {isUserConnected && (
             <Drawer.Screen name="AddTrip" component={AddTrip} />
           )}
+          <Drawer.Screen name="About" component={About} />
+
           {isUserConnected && (
             <Drawer.Screen
               name="Camera"
               component={Camera}
               options={{
+                headerLeft: false,
                 headerShown: false,
                 drawerLabel: () => null,
                 title: null,
