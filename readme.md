@@ -11,3 +11,8 @@ Server and data using FireBase
 * [Yuval Ben Yacov](https://github.com/yuvalbenya)
 * [Natali Djavarov](https://github.com/natalidjavarov)
 
+  ## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome.<br />
+Feel free to check our [issues page](https://github.com/TalSchreiber95/TripBook/issues).
+
